@@ -1,11 +1,23 @@
 ---
-title: "IS415-Project"
+#title:
 ---
 
-This is a Quarto website.
+::: {#quote}
+**"If you're searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!"**
+:::
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-```{r}
-1 + 1
-```
+# IS415 AY22-23 Project
+
+#### Who we are
+
+Hello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.
+
+#### Our Purpose
+
+This project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.
+
+#### Our Theme
+
+Spatial Point Analysis

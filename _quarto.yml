@@ -2,18 +2,39 @@ project:
   type: website
 
 website:
-  title: "IS415-Project"
+  #title: "The Right Place"
+  #image: opengraph.png
+  #page-navigation: true
+  
+  
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-
+    foreground: "#5d5a88"
+    logo: "logo.png"
+    logo-href: "The Right Place" 
+      
+    #left: 
+      
+      
+    right:
+      - text: Home
+        href: index.qmd
+        
+      - text: Project Proposal
+        href: project_proposal.qmd
+        
+      - icon: github
+        href: https://github.com/G1T777/IS415-Project
+        aria-label: GitHub
+        
 format:
   html:
-    theme: cosmo
+    theme: litera
     css: styles.css
     toc: true
+    mainfont: monospace
+    
+    fontcolor: "#5d5a88"
+    
 
 editor: visual
 

@@ -9,8 +9,113 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "IS415-Project",
+    "title": "",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "“If you’re searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!”\n\n______________________________________________________________________________________________\n\nIS415 AY22-23 Project\n\nWho we are\nHello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.\n\n\nOur Purpose\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\n\n\nOur Theme\nSpatial Point Analysis"
+  },
+  {
+    "objectID": "index.html#is415-ay22-23-project-spatial-point-pattern-analysis",
+    "href": "index.html#is415-ay22-23-project-spatial-point-pattern-analysis",
+    "title": "If you’re searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!",
+    "section": "IS415 AY22-23 Project: Spatial Point Pattern Analysis",
+    "text": "IS415 AY22-23 Project: Spatial Point Pattern Analysis\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\nThis project is created by G1T7 - Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee."
+  },
+  {
+    "objectID": "project_proposal.html",
+    "href": "project_proposal.html",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "",
+    "text": "When it comes to buying a home, there are several aspects to consider, such as debt-to-income ratio, down payment, job stability, emotional condition, legal paperwork, and the list goes on. With all of that in mind, one must still maintain track of a list of prospective options, the facilities around the premises, and the ease of it in order to forecast its future potential. As a result, integrating pricing, circumstances surrounding properties, and displaying it geopolitically might alleviate key concerns for purchasers and assist them in making informed judgments."
+  },
+  {
+    "objectID": "project_proposal.html#project-motivation",
+    "href": "project_proposal.html#project-motivation",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Project Motivation",
+    "text": "Project Motivation\nOur main motivation is to assist people who are eligible to purchase HDB flats in gaining complete understanding of the location, surrounding facilities and demand of HDB flats which allows them to feel more confident about the residence they wish to acquire prior to making the major purchase."
+  },
+  {
+    "objectID": "project_proposal.html#project-objectives",
+    "href": "project_proposal.html#project-objectives",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Project Objectives",
+    "text": "Project Objectives\nReal estate companies, property developers, and individuals looking to buy properties find it hard to have a comprehensive understanding of the prices and the ideal location. They desperately seek to have the information that will help to identify areas with high potential for growth and investment, or to determine the impact of new developments on their property values. There is now a lot of data accessible, but it is not as meaningful as individual components. For example, property values are not presented by geographical location. Similarly, other elements that have a significant influence on house prices, such as amenities like car parks, school and shopping malls are additional factors about which one should obtain information each time they locate a suitable property.\nWith that being said, this study seeks to gather crucial data that one might need to analyse and perform spatial point pattern analysis to:\n\nDetermine the spatial distribution of HDB prices and the presence of amenities across the study area.\nIdentify significant spatial clustering or dispersion of HDB prices and amenities.\nIdentify areas of the study area where certain amenities may be lacking or are in high demand, which can inform planning and policy decisions related to urban development and resource allocation.\n\nIn conclusion, geospatial analysis of housing prices and variables influencing housing prices is critical because it offers a more complete insight of the property’s future possibilities, and may assist stakeholders in making better educated decisions based on local, geographical considerations."
+  },
+  {
+    "objectID": "project_proposal.html#background",
+    "href": "project_proposal.html#background",
+    "title": "Our Project Proposal",
+    "section": "Background",
+    "text": "Background\nWhen it comes to buying a home, there are several aspects to consider, such as debt-to-income ratio, down payment, job stability, emotional condition, legal paperwork, and the list goes on. With all of that in mind, one must still maintain track of a list of prospective options, the facilities around the premises, and the ease of it in order to forecast its future potential. As a result, integrating pricing, circumstances surrounding properties, and displaying it geopolitically might alleviate key concerns for purchasers and assist them in making informed judgments."
+  },
+  {
+    "objectID": "project_proposal.html#datasets",
+    "href": "project_proposal.html#datasets",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Datasets",
+    "text": "Datasets\n\n\n\nName\nDescription\nFile Format\n\n\n\n\nMaster Plan 2019 Region Boundary (No Sea)\nConsist of the Indicative polygon of region boundary.\n.xml, .kml, .json\n\n\nHDB Property Information\nConsists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag\n.csv"
+  },
+  {
+    "objectID": "project_proposal.html#literature-review",
+    "href": "project_proposal.html#literature-review",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Literature Review",
+    "text": "Literature Review\n\n#1: Spatial Point Pattern Analysis of Human Settlements and Geographical Associations in Eastern Coastal China - A Case Study (Zhang et al., 2014)\nThis article highlights the potential of spatial point pattern analysis as a tool for gaining insights into the spatial patterns and associations of human settlements in rapidly urbanising regions. The article used spatial point pattern analysis techniques such as Ripley’s K-function and nearest neighbour analysis, to analyse the spatial distribution and clustering of human settlements in eastern coastal China. Based on their results, it demonstrates the importance of considering spatial relationships and locational factors in understanding settlement patterns and provides insights that can be used to inform urban planning and development policies.\n\nHow does it link to our project?\nTo examine the spatial distribution and clustering of HDB prices and facilities in Singapore. We plan to use the following functions referenced from the article:\n\nKernel density estimation: To identify areas with high or low concentrations of HDB prices or facilities, and to explore the relationship between HDB prices and surrounding amenities.\nRipley’s K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB prices or facilities and compare the observed spatial distribution of HDB prices or facilities to a random distribution, and test whether the observed pattern is statistically significant.\n\n\n\n\n#2: Analysing the global and local spatial associations of medical resources across Wuhan city using POI data (Chen, Q et al., 2023)\nThis article highlights the issue of imbalance in the supply and demand of medical resources in provincial capitals of China and emphasises the need to understand the spatial patterns of medical resources to ensure fair and optimal allocation of limited resources. This article utilises the Localised Colocation Quotient (LCLQ) analysis, which is a technique that measures directional spatial associations and heterogeneity between categorical point data. By employing this method and utilising point of interest (POI) data, the study presents a unique analysis of the spatial patterns and directional spatial associations between six medical resources in Wuhan city.\n\nHow does it link to our project?\nFor our project, we need to first define the two types of features of interest which will be HDB prices and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB prices and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB prices, and vice versa."
+  },
+  {
+    "objectID": "project_proposal.html#section",
+    "href": "project_proposal.html#section",
+    "title": "Our Project Proposal",
+    "section": "",
+    "text": "Our Approach\n\nData Preparation\n\nAssemble data from various sources\nData handling and wrangling\n\nEDA\n\nAnalyse the spatial arrangement of data points\nIdentify any outliers or anomalies in the data sets\nChoropleth Mapping\n\nSpatial Point Patterns Analysis\n\nFirst point Analysis\n\nKernel Density Estimation\n\nSecond point Analysis\n\nF-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.\nRipley’s K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.\n\nColocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location."
+  },
+  {
+    "objectID": "project_proposal.html#our-approach",
+    "href": "project_proposal.html#our-approach",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Our Approach",
+    "text": "Our Approach\n\nData Preparation\n\nAssemble data from various sources\nData handling and wrangling\n\nExploratory Data Analysis\n\nAnalyse the spatial arrangement of data points\nIdentify any outliers or anomalies in the data sets\nChoropleth Mapping\n\nSpatial Point Patterns Analysis\n\nFirst point Analysis\n\nKernel Density Estimation\n\nSecond point Analysis\n\nF-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.\nRipley’s K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.\n\nColocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location."
+  },
+  {
+    "objectID": "index.html#is415-ay22-23-project",
+    "href": "index.html#is415-ay22-23-project",
+    "title": "",
+    "section": "IS415 AY22-23 Project",
+    "text": "IS415 AY22-23 Project\n\nWho we are\nHello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.\n\n\nOur Purpose\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\n\n\nOur Theme\nSpatial Point Analysis"
+  },
+  {
+    "objectID": "project_proposal.html#application-system-architecture",
+    "href": "project_proposal.html#application-system-architecture",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Application System Architecture",
+    "text": "Application System Architecture"
+  },
+  {
+    "objectID": "project_proposal.html#timeline",
+    "href": "project_proposal.html#timeline",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Timeline",
+    "text": "Timeline"
+  },
+  {
+    "objectID": "project_proposal.html#early-storyboard-drafts",
+    "href": "project_proposal.html#early-storyboard-drafts",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Early Storyboard Drafts",
+    "text": "Early Storyboard Drafts\nWe used Figma to create a draft designs of our storyboard on how we imagine our Shiny app to look like. Please click here to view it in Figma."
+  },
+  {
+    "objectID": "project_proposal.html#references",
+    "href": "project_proposal.html#references",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "References",
+    "text": "References\nLiterature review #1: https://www.mdpi.com/1660-4601/11/3/2818\nLiterature review #2: https://link.springer.com/article/10.1186/s12913-023-09051-0"
+  },
+  {
+    "objectID": "project_proposal.html#data-sets",
+    "href": "project_proposal.html#data-sets",
+    "title": "G1T7 PROJECT PROPOSAL",
+    "section": "Data Sets",
+    "text": "Data Sets\nBelow is a table of data sets we will be using for our project.\n\n\n\nName\nDescription\nFile Format\n\n\n\n\nMaster Plan 2019 Region Boundary (No Sea)\nConsist of the Indicative polygon of region boundary.\n.xml, .kml, .json\n\n\nHDB Property Information\nConsists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag from January 1, 1937 to December 31, 2022.\n.csv\n\n\nHDB Flats Coordinates\nConsist of the coordinates of HDB flats in Singapore which we geocode using geocoding API.\n.csv\n\n\nPrice Range of HDB Flats Offered\nConsists of information such as town of HDB flat, the max and min selling price as of from April 1, 2008 to March 31, 2022.\n.csv\n\n\nSchool Directory and Information\nConsist of information such as school name, type of subjects offered and CCAs from March 24, 2021 to March 30, 2022.\n.csv\n\n\nHawker Centres\nConsist of the location of hawker centres in Singapore\n.xml\n\n\nMRT stations\nConsist of MRT and LRT coordinates (as of December 2020)\n.csv"
   }
 ]

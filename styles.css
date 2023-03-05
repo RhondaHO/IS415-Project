@@ -1,1 +1,31 @@
 /* css styles */
+.navbar-logo {
+  height: 75px !important;
+  width: 250px!important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
+
+
+.active{
+  color:#5d5a88!important;
+  font-weight: bold;
+}
+
+.nav-link:hover{
+  color:#5d5a88!important;
+}
+
+
+p {
+    font-family: Segoe UI;
+     text-align: justify;
+     text-justify: inter-word;
+}
+
+#quote{
+  font-size: 20pt;
+  font-weight:bold;
+  font-family: Monospace!important;
+}
+

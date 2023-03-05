@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>G1T7 PROJECT PROPOSAL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="The Right Place" class="navbar-brand navbar-brand-logo">
+    <img src="./logo.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./project_proposal.html" aria-current="page">
+ <span class="menu-text">Project Proposal</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/G1T777/IS415-Project"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#project-motivation" id="toc-project-motivation" class="nav-link" data-scroll-target="#project-motivation">Project Motivation</a></li>
+  <li><a href="#project-objectives" id="toc-project-objectives" class="nav-link" data-scroll-target="#project-objectives">Project Objectives</a></li>
+  <li><a href="#data-sets" id="toc-data-sets" class="nav-link" data-scroll-target="#data-sets">Data Sets</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
+  <li><a href="#our-approach" id="toc-our-approach" class="nav-link" data-scroll-target="#our-approach">Our Approach</a></li>
+  <li><a href="#application-system-architecture" id="toc-application-system-architecture" class="nav-link" data-scroll-target="#application-system-architecture">Application System Architecture</a></li>
+  <li><a href="#timeline" id="toc-timeline" class="nav-link" data-scroll-target="#timeline">Timeline</a></li>
+  <li><a href="#early-storyboard-drafts" id="toc-early-storyboard-drafts" class="nav-link" data-scroll-target="#early-storyboard-drafts">Early Storyboard Drafts</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">G1T7 PROJECT PROPOSAL</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>When it comes to buying a home, there are several aspects to consider, such as debt-to-income ratio, down payment, job stability, emotional condition, legal paperwork, and the list goes on. With all of that in mind, one must still maintain track of a list of prospective options, the facilities around the premises, and the ease of it in order to forecast its future potential. As a result, integrating pricing, circumstances surrounding properties, and displaying it geopolitically might alleviate key concerns for purchasers and assist them in making informed judgments.</p>
+</section>
+<section id="project-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="project-motivation">Project Motivation</h2>
+<p>Our main motivation is to assist people who are eligible to purchase HDB flats in gaining complete understanding of the location, surrounding facilities and demand of HDB flats which allows them to feel more confident about the residence they wish to acquire prior to making the major purchase.</p>
+</section>
+<section id="project-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="project-objectives">Project Objectives</h2>
+<p>Real estate companies, property developers, and individuals looking to buy properties find it hard to have a comprehensive understanding of the prices and the ideal location. They desperately seek to have the information that will help to identify areas with high potential for growth and investment, or to determine the impact of new developments on their property values. There is now a lot of data accessible, but it is not as meaningful as individual components. For example, property values are not presented by geographical location. Similarly, other elements that have a significant influence on house prices, such as amenities like car parks, school and shopping malls are additional factors about which one should obtain information each time they locate a suitable property.</p>
+<p>With that being said, this study seeks to gather crucial data that one might need to analyse and perform spatial point pattern analysis to:</p>
+<ul>
+<li><p>Determine the spatial distribution of HDB prices and the presence of amenities across the study area.</p></li>
+<li><p>Identify significant spatial clustering or dispersion of HDB prices and amenities.</p></li>
+<li><p>Identify areas of the study area where certain amenities may be lacking or are in high demand, which can inform planning and policy decisions related to urban development and resource allocation.</p></li>
+</ul>
+<p>In conclusion, geospatial analysis of housing prices and variables influencing housing prices is critical because it offers a more complete insight of the property’s future possibilities, and may assist stakeholders in making better educated decisions based on local, geographical considerations.</p>
+</section>
+<section id="data-sets" class="level2">
+<h2 class="anchored" data-anchor-id="data-sets">Data Sets</h2>
+<p>Below is a table of data sets we will be using for our project.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+<th>File Format</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://dataportal.asia/dataset/203030733_master-plan-2019-region-boundary-no-sea">Master Plan 2019 Region Boundary (No Sea)</a></td>
+<td>Consist of the Indicative polygon of region boundary.</td>
+<td>.xml, .kml, .json</td>
+</tr>
+<tr class="even">
+<td><a href="https://data.gov.sg/dataset/hdb-property-information" style="color: &quot;#5D5A88&quot;,">HDB Property Information</a></td>
+<td>Consists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag from January 1, 1937 to December 31, 2022.</td>
+<td>.csv</td>
+</tr>
+<tr class="odd">
+<td><a href="https://drive.google.com/drive/folders/1KAM-G9G2KI3ZX1NlcbwTwz_lAQ2IUvfj?usp=sharing">HDB Flats Coordinates</a></td>
+<td>Consist of the coordinates of HDB flats in Singapore which we geocode using geocoding API.</td>
+<td>.csv</td>
+</tr>
+<tr class="even">
+<td><a href="https://data.gov.sg/dataset/price-range-of-hdb-flats-offered">Price Range of HDB Flats Offered</a></td>
+<td>Consists of information such as town of HDB flat, the max and min selling price as of from April 1, 2008 to March 31, 2022.</td>
+<td>.csv</td>
+</tr>
+<tr class="odd">
+<td><a href="https://data.gov.sg/dataset/school-directory-and-information">School Directory and Information</a></td>
+<td>Consist of information such as school name, type of subjects offered and CCAs from March 24, 2021 to March 30, 2022.</td>
+<td>.csv</td>
+</tr>
+<tr class="even">
+<td><a href="https://data.gov.sg/dataset/hawker-centres">Hawker Centres</a></td>
+<td>Consist of the location of hawker centres in Singapore</td>
+<td>.xml</td>
+</tr>
+<tr class="odd">
+<td><a href="https://data.world/hxchua/train-stations-in-singapore">MRT stations</a></td>
+<td>Consist of MRT and LRT coordinates (as of December 2020)</td>
+<td>.csv</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="literature-review" class="level2">
+<h2 class="anchored" data-anchor-id="literature-review">Literature Review</h2>
+<section id="spatial-point-pattern-analysis-of-human-settlements-and-geographical-associations-in-eastern-coastal-china---a-case-study-zhang-et-al.-2014" class="level4 review">
+<h4 class="review anchored" data-anchor-id="spatial-point-pattern-analysis-of-human-settlements-and-geographical-associations-in-eastern-coastal-china---a-case-study-zhang-et-al.-2014">#1: Spatial Point Pattern Analysis of Human Settlements and Geographical Associations in Eastern Coastal China - A Case Study <a href="https://www.mdpi.com/1660-4601/11/3/2818">(Zhang et al., 2014)</a></h4>
+<p>This article highlights the potential of spatial point pattern analysis as a tool for gaining insights into the spatial patterns and associations of human settlements in rapidly urbanising regions. The article used spatial point pattern analysis techniques such as Ripley’s K-function and nearest neighbour analysis, to analyse the spatial distribution and clustering of human settlements in eastern coastal China. Based on their results, it demonstrates the importance of considering spatial relationships and locational factors in understanding settlement patterns and provides insights that can be used to inform urban planning and development policies.</p>
+<section id="how-does-it-link-to-our-project" class="level5">
+<h5 class="anchored" data-anchor-id="how-does-it-link-to-our-project">How does it link to our project?</h5>
+<p>To examine the spatial distribution and clustering of HDB prices and facilities in Singapore. We plan to use the following functions referenced from the article:</p>
+<ol type="1">
+<li><p>Kernel density estimation: To identify areas with high or low concentrations of HDB prices or facilities, and to explore the relationship between HDB prices and surrounding amenities.</p></li>
+<li><p>Ripley’s K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB prices or facilities and compare the observed spatial distribution of HDB prices or facilities to a random distribution, and test whether the observed pattern is statistically significant.</p></li>
+</ol>
+</section>
+</section>
+<section id="analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data-chen-q-et-al.-2023" class="level4">
+<h4 class="anchored" data-anchor-id="analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data-chen-q-et-al.-2023">#2: Analysing the global and local spatial associations of medical resources across Wuhan city using POI data <a href="https://link.springer.com/article/10.1186/s12913-023-09051-0">(Chen, Q et al., 2023)</a></h4>
+<p>This article highlights the issue of imbalance in the supply and demand of medical resources in provincial capitals of China and emphasises the need to understand the spatial patterns of medical resources to ensure fair and optimal allocation of limited resources. This article utilises the Localised Colocation Quotient (LCLQ) analysis, which is a technique that measures directional spatial associations and heterogeneity between categorical point data. By employing this method and utilising point of interest (POI) data, the study presents a unique analysis of the spatial patterns and directional spatial associations between six medical resources in Wuhan city.</p>
+<section id="how-does-it-link-to-our-project-1" class="level5">
+<h5 class="anchored" data-anchor-id="how-does-it-link-to-our-project-1">How does it link to our project?</h5>
+<p>For our project, we need to first define the two types of features of interest which will be HDB prices and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB prices and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB prices, and vice versa.</p>
+</section>
+</section>
+</section>
+<section id="our-approach" class="level2">
+<h2 class="anchored" data-anchor-id="our-approach">Our Approach</h2>
+<ol type="1">
+<li><p>Data Preparation</p>
+<ul>
+<li><p>Assemble data from various sources</p></li>
+<li><p>Data handling and wrangling</p></li>
+</ul></li>
+<li><p>Exploratory Data Analysis</p>
+<ul>
+<li><p>Analyse the spatial arrangement of data points</p></li>
+<li><p>Identify any outliers or anomalies in the data sets</p></li>
+<li><p>Choropleth Mapping</p></li>
+</ul></li>
+<li><p>Spatial Point Patterns Analysis</p>
+<ul>
+<li><p>First point Analysis</p>
+<ul>
+<li>Kernel Density Estimation</li>
+</ul></li>
+<li><p>Second point Analysis</p>
+<ul>
+<li><p>F-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.</p></li>
+<li><p>Ripley’s K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.</p></li>
+</ul></li>
+<li><p>Colocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location.</p></li>
+</ul></li>
+</ol>
+</section>
+<section id="application-system-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="application-system-architecture">Application System Architecture</h2>
+<p><img src="img/architecture.PNG" class="img-fluid" width="658"></p>
+</section>
+<section id="timeline" class="level2">
+<h2 class="anchored" data-anchor-id="timeline">Timeline</h2>
+<p><img src="img/timeline.PNG" class="img-fluid" width="735"></p>
+</section>
+<section id="early-storyboard-drafts" class="level2">
+<h2 class="anchored" data-anchor-id="early-storyboard-drafts">Early Storyboard Drafts</h2>
+<p>We used Figma to create a draft designs of our storyboard on how we imagine our Shiny app to look like. Please click <a href="https://www.figma.com/file/xSVmDxxrKS9le1u5vu5TVg/GAA-Wireframe?node-id=0%3A1&amp;t=3MQUviIz5JP2tEkD-1">here</a> to view it in Figma.</p>
+<p><img src="img/storyboard1.PNG" class="img-fluid" width="658"> <img src="img/storyboard2.PNG" class="img-fluid" width="658"> <img src="img/storyboard3.PNG" class="img-fluid" width="658"> <img src="img/storyboard4.PNG" class="img-fluid" width="658"> <img src="img/storyboard5.PNG" class="img-fluid" width="658"></p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Literature review #1: <a href="https://www.mdpi.com/1660-4601/11/3/2818" class="uri">https://www.mdpi.com/1660-4601/11/3/2818</a></p>
+<p>Literature review #2: <a href="https://link.springer.com/article/10.1186/s12913-023-09051-0" class="uri">https://link.springer.com/article/10.1186/s12913-023-09051-0</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
