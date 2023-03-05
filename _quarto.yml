@@ -16,7 +16,7 @@ website:
       
       
     right:
-      - text: Home
+      - text: About Us
         href: index.qmd
         
       - text: Project Proposal

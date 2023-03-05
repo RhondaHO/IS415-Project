@@ -26,7 +26,7 @@ In conclusion, geospatial analysis of housing prices and variables influencing h
 
 ## Data Sets
 
-Below is a table of data sets we will be using for our project.
+Below is a table of the data sets we will be using for our project.
 
 | Name                                                                                                                           | Description                                                                                                                                                           | File Format       |
 |---------------------|---------------------------------|------------------|
@@ -92,7 +92,7 @@ For our project, we need to first define the two types of features of interest w
 
 ## Application System Architecture
 
-![](img/architecture.PNG){width="658"}
+![](img/architecture.PNG){width="699"}
 
 ## Timeline
 
