@@ -29,7 +29,7 @@ In conclusion, geospatial analysis of housing prices and variables influencing h
 Below is a table of the data sets we will be using for our project.
 
 | Name                                                                                                                           | Description                                                                                                                                                           | File Format       |
-|---------------------|---------------------------------|------------------|
+|--------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
 | [Master Plan 2019 Region Boundary (No Sea)](https://dataportal.asia/dataset/203030733_master-plan-2019-region-boundary-no-sea) | Consist of the Indicative polygon of region boundary.                                                                                                                 | .xml, .kml, .json |
 | [HDB Property Information](https://data.gov.sg/dataset/hdb-property-information){style="color: \"#5D5A88\","}                  | Consists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag from January 1, 1937 to December 31, 2022. | .csv              |
 | [HDB Flats Coordinates](https://drive.google.com/drive/folders/1KAM-G9G2KI3ZX1NlcbwTwz_lAQ2IUvfj?usp=sharing)                  | Consist of the coordinates of HDB flats in Singapore which we geocode using geocoding API.                                                                            | .csv              |
@@ -89,6 +89,24 @@ For our project, we need to first define the two types of features of interest w
         -   Ripley's K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.
 
     -   Colocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location.
+
+## Packages
+
+Below is the list of packages we will be using for our project:
+
+-   **sf**: import and handle geospatial data
+
+-   **tidyverse**: data wrangling (tidyr, dplyr, ggplot2, tibble)
+
+-   **tmap**: plot choropleth maps
+
+-   **maptools**: a set of tools for manipulating geographic data
+
+-   **raster**: convert grid output to raster layer for visualisation (Kernel Density Estimation)
+
+-   **spatstat**: conversion from spatial object to ppp format (Spatial Point Pattern plot)
+
+-   **funModeling**: plotting EDA
 
 ## Application System Architecture
 
