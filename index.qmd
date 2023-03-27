@@ -21,5 +21,3 @@ This project is created for an IS415 Geospatial Analytics & Application, a modul
 #### Our Theme
 
 Spatial Point Analysis
-
-test

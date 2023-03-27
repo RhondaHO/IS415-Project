@@ -1,35 +1,44 @@
 ---
-title: "G1T7 PROJECT PROPOSAL"
+title: "G1T7 Project Proposal"
+
+subtitle: "Analyzing Spatial Point Patterns of HDB Locations and Amenities: Insights for Urban Planning and Resource Allocation"
+
+title-block-banner: true
+
+date-modified: last-modified
+
+author:
+  - "Nguyen Mai Phuong"
+  - "Kwan Kai Xuan Belle"
+  - "Rhonda Ho Kah Yee"
 ---
-
-## Background
-
-When it comes to buying a home, there are several aspects to consider, such as debt-to-income ratio, down payment, job stability, emotional condition, legal paperwork, and the list goes on. With all of that in mind, one must still maintain track of a list of prospective options, the facilities around the premises, and the ease of it in order to forecast its future potential. As a result, integrating pricing, circumstances surrounding properties, and displaying it geopolitically might alleviate key concerns for purchasers and assist them in making informed judgments.
 
 ## Project Motivation
 
-Our main motivation is to assist people who are eligible to purchase HDB flats in gaining complete understanding of the location, surrounding facilities and demand of HDB flats which allows them to feel more confident about the residence they wish to acquire prior to making the major purchase.
+Many prospective HDB buyers struggle to visualize and understand the amenities and facilities available in the vicinity of their desired location, often having to resort to manual searches on platforms like Google to determine the location of specific types of amenities. Additionally, current mapping tools do not provide a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process and make it easier for HDB buyers to view and understand the surrounding amenities through our analytical app. By providing a customized view of amenities relevant to HDB buyers, utilizing spatial point pattern analysis to visualize their distribution and clustering, and offering a user-friendly interface, we aim to help HDB buyers make more informed decisions about their purchases and feel more confident in their chosen residence.
 
 ## Project Objectives
 
-Real estate companies, property developers, and individuals looking to buy properties find it hard to have a comprehensive understanding of the prices and the ideal location. They desperately seek to have the information that will help to identify areas with high potential for growth and investment, or to determine the impact of new developments on their property values. There is now a lot of data accessible, but it is not as meaningful as individual components. For example, property values are not presented by geographical location. Similarly, other elements that have a significant influence on house prices, such as amenities like car parks, school and shopping malls are additional factors about which one should obtain information each time they locate a suitable property.
+This study seeks to gather crucial data that one might need to analyse and visualise to perform spatial point pattern analysis to:
 
-With that being said, this study seeks to gather crucial data that one might need to analyse and perform spatial point pattern analysis to:
+1.  Estimate the intensity of HDB locations and amenities across the study area using Kernel Density Estimation.
 
--   Determine the spatial distribution of HDB prices and the presence of amenities across the study area.
+2.  Determine whether the distribution of amenities around HDBs is random or clustered, and calculate the ratio of observed to expected nearest neighbor distances using F-Function analysis.
 
--   Identify significant spatial clustering or dispersion of HDB prices and amenities.
+3.  Measure the degree of clustering or dispersion of HDB locations and surrounding amenities using Ripley's K-function and L-function analysis.
 
--   Identify areas of the study area where certain amenities may be lacking or are in high demand, which can inform planning and policy decisions related to urban development and resource allocation.
+4.  Quantify the extent of spatial association and heterogeneity between HDB locations and surrounding amenities using Colocation Quotients (CLQs) analysis.
 
-In conclusion, geospatial analysis of housing prices and variables influencing housing prices is critical because it offers a more complete insight of the property's future possibilities, and may assist stakeholders in making better educated decisions based on local, geographical considerations.
+5.  Conduct Network Constrained Spatial Point Patterns Analysis to analyze the spatial distribution of HDB flats over a street network.
+
+By achieving these objectives, our study aims to gain insights into the spatial distribution of HDB and amenities across the study area, identify significant spatial patterns and trends, and help inform planning and policy decisions related to urban development and resource allocation.
 
 ## Data Sets
 
 Below is a table of the data sets we will be using for our project.
 
 | Name                                                                                                                           | Description                                                                                                                                                           | File Format       |
-|--------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+|------------------------|------------------------------|------------------|
 | [Master Plan 2019 Region Boundary (No Sea)](https://dataportal.asia/dataset/203030733_master-plan-2019-region-boundary-no-sea) | Consist of the Indicative polygon of region boundary.                                                                                                                 | .xml, .kml, .json |
 | [HDB Property Information](https://data.gov.sg/dataset/hdb-property-information){style="color: \"#5D5A88\","}                  | Consists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag from January 1, 1937 to December 31, 2022. | .csv              |
 | [HDB Flats Coordinates](https://drive.google.com/drive/folders/1KAM-G9G2KI3ZX1NlcbwTwz_lAQ2IUvfj?usp=sharing)                  | Consist of the coordinates of HDB flats in Singapore which we geocode using geocoding API.                                                                            | .csv              |
@@ -46,11 +55,11 @@ This article highlights the potential of spatial point pattern analysis as a too
 
 ##### How does it link to our project?
 
-To examine the spatial distribution and clustering of HDB prices and facilities in Singapore. We plan to use the following functions referenced from the article:
+To examine the spatial distribution and clustering of HDB locations and facilities in Singapore. We plan to use the following functions referenced from the article:
 
-1.  Kernel density estimation: To identify areas with high or low concentrations of HDB prices or facilities, and to explore the relationship between HDB prices and surrounding amenities.
+1.  Kernel density estimation: To identify areas with high or low concentrations of HDB locations or facilities, and to explore the relationship between HDB locations and surrounding amenities.
 
-2.  Ripley's K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB prices or facilities and compare the observed spatial distribution of HDB prices or facilities to a random distribution, and test whether the observed pattern is statistically significant.
+2.  Ripley's K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB locations or facilities and compare the observed spatial distribution of HDB locations or facilities to a random distribution, and test whether the observed pattern is statistically significant.
 
 #### #2: Analysing the global and local spatial associations of medical resources across Wuhan city using POI data [(Chen, Q et al., 2023)](https://link.springer.com/article/10.1186/s12913-023-09051-0)
 
@@ -58,7 +67,7 @@ This article highlights the issue of imbalance in the supply and demand of medic
 
 ##### How does it link to our project?
 
-For our project, we need to first define the two types of features of interest which will be HDB prices and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB prices and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB prices, and vice versa.
+For our project, we need to first define the two types of features of interest which will be HDB locations and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB locations and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB locations, and vice versa.
 
 ## Our Approach
 
@@ -76,19 +85,21 @@ For our project, we need to first define the two types of features of interest w
 
     -   Choropleth Mapping
 
-3.  Spatial Point Patterns Analysis
+3.  Spatial Point Patterns Analysis (Filter by: Sub-district/Region)
 
-    -   First point Analysis
+    1.  First point Analysis
 
-        -   Kernel Density Estimation
+        1.  Kernel Density Estimation:
 
-    -   Second point Analysis
+    2.  Second point Analysis
 
-        -   F-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.
+        1.  F-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.
 
-        -   Ripley's K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.
+        2.  Ripley's K-function and L function: To measure the degree of clustering or dispersion of HDB locations and surrounding amenities, and help identify significant spatial patterns and trends.
 
-    -   Colocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location.
+        3.  Colocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB locations and surrounding amenities, helping to identify areas of high or low co-location.
+
+        4.  Network Constrained Spatial Point Patterns Analysis: To analyse the spatial distribution of HDB flats over a street network
 
 ## Packages
 
