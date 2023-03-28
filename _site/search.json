@@ -124,5 +124,89 @@
     "title": "G1T7 Project Proposal",
     "section": "Packages",
     "text": "Packages\nBelow is the list of packages we will be using for our project:\n\nsf: import and handle geospatial data\ntidyverse: data wrangling (tidyr, dplyr, ggplot2, tibble)\ntmap: plot choropleth maps\nmaptools: a set of tools for manipulating geographic data\nraster: convert grid output to raster layer for visualisation (Kernel Density Estimation)\nspatstat: conversion from spatial object to ppp format (Spatial Point Pattern plot)\nfunModeling: plotting EDA"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html",
+    "href": "code_draft/data_pre_processing.html",
+    "title": "Data Pre-processing",
+    "section": "",
+    "text": "pacman::p_load(readxl, sf, tidyverse, tmap, sfdep, rvest, httr, jsonlite, onemapsgapi, ggpubr, olsrr,ggplot2, plotly)"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#resale-flat-prices-aspatial",
+    "href": "code_draft/data_pre_processing.html#resale-flat-prices-aspatial",
+    "title": "Data Pre-processing",
+    "section": "Resale Flat Prices (Aspatial)",
+    "text": "Resale Flat Prices (Aspatial)\nExtract locations over study area 12 months, January 2022 to December 2022\n\nresale <- read_csv(\"data/aspatial/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv\")\n\n\n#extract HDB study are of January 2022 to December 2022\nresale<- resale %>% \n  filter(flat_type == \"5 ROOM\") %>%\n  filter(month >= \"2022-01\" & month <= \"2022-12\")\n\n\nresale$street_name <- gsub(\"ST\\\\.\", \"SAINT\", resale$street_name)\n\n#filter only unique HDB blocks\nresale %>% distinct(street_name, block)\n\n\ngeocode <- function(block, streetname) {\n  base_url <- \"https://developers.onemap.sg/commonapi/search\"\n  address <- paste(block, streetname, sep = \" \")\n  query <- list(\"searchVal\" = address, \n                \"returnGeom\" = \"Y\",\n                \"getAddrDetails\" = \"N\",\n                \"pageNum\" = \"1\")\n  \n  res <- GET(base_url, query = query)\n  restext<-content(res, as=\"text\")\n  \n  output <- fromJSON(restext)  %>% \n    as.data.frame %>%\n    select(results.LATITUDE, results.LONGITUDE)\n\n  return(output)\n}\n\n\nresale$LATITUDE <- 0\nresale$LONGITUDE <- 0\n\nfor (i in 1:nrow(resale)){\n  temp_output <- geocode(resale[i, 4], resale[i, 5])\n  \n  resale$LATITUDE[i] <- temp_output$results.LATITUDE\n  resale$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\n# resale flat with lat and long\nwrite_rds(resale, \"data/rds/resale_locations(1year).rds\")\n\n\nresale_locations<-readRDS(\"data/rds/resale_locations(1year).rds\")\n\n#Transform\nresale_sf <- st_as_sf(resale_locations, \n                      coords = c(\"LONGITUDE\", \n                                 \"LATITUDE\"), \n                      crs=4326) %>%\n  st_transform(crs = 3414)\n\n#Missing values\nsum(is.na(resale_sf))\n\n#correct CRS\nst_crs(resale_sf)\n\n\n#invalid geometries\nlength(which(st_is_valid(resale_sf) == FALSE))\n\n\nwrite_rds(resale_sf, \"data/rds/resale_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#master-plan-2019-boundary",
+    "href": "code_draft/data_pre_processing.html#master-plan-2019-boundary",
+    "title": "Data Pre-processing",
+    "section": "Master Plan 2019 Boundary",
+    "text": "Master Plan 2019 Boundary\n\nmpsz <- st_read(dsn=\"data/geospatial\", layer=\"MPSZ-2019\") %>%\n  st_transform(crs=3414)"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#locational-factors-extracted-via-onemapapi-token",
+    "href": "code_draft/data_pre_processing.html#locational-factors-extracted-via-onemapapi-token",
+    "title": "Data Pre-processing",
+    "section": "Locational Factors Extracted via onemapAPI token",
+    "text": "Locational Factors Extracted via onemapAPI token\n\ntoken <- get_token(\"email\", \"password\")\n\n\navail_themes <-search_themes(token)\nwrite_rds(avail_themes, \"data/rds/available_themes.rds\")\n\n\n#read the file for available themes\navail_themes<-readRDS(\"data/rds/available_themes.rds\")\n\n#sort by alphabetical order\navail_themes<-avail_themes[order(avail_themes$THEMENAME),]\navail_themes\n\n\n#childcare\n#retrieve the data such as the geometry and name  accordingly to the theme\nchildcare_tibble <- get_theme(token, \"childcare\")\n\n# to convert a data frame of coordinates to an sf object and transform the crs information and create a shapefile for it\nchildcare_sf <- st_as_sf(childcare_tibble, coords=c(\"Lng\", \"Lat\"),\n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(childcare_sf, \"data/rds/childcare_sf.rds\")\n\n\n#eldercare\neldercare_tibble <- get_theme(token, \"eldercare\")\n\neldercare_sf <- st_as_sf(eldercare_tibble, coords=c(\"Lng\", \"Lat\"),\n                         crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(eldercare_sf, \"data/rds/eldercare_sf.rds\")\n\n\n#kindergatens\nkindergartens_tibble <- get_theme(token, \"kindergartens\")\n\nkindergartens_sf <- st_as_sf(kindergartens_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\nwrite_rds(kindergartens_sf, \"data/rds/kindergartens_sf.rds\")\n\n#hawker Centres\nhawkercentre_new_tibble <- get_theme(token, \"hawkercentre_new\")\n\nhawkercentre_new_sf <- st_as_sf(hawkercentre_new_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(hawkercentre_new_sf, \"data/rds/hawkercentre_new_sf.rds\")\n\n\n#Healthier Hawker Centres, healthier_hawker_centres\nhawkercentre_healthy_tibble <- get_theme(token, \"healthier_hawker_centres\")\n\nhawkercentre_healthy_sf <- st_as_sf(hawkercentre_healthy_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(hawkercentre_healthy_sf, \"data/rds/hawkercentre_healthy_sf.rds\")\n\n#parks\nnationalparks_tibble <- get_theme(token, \"nationalparks\")\n\nnationalparks_sf <- st_as_sf(nationalparks_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(nationalparks_sf, \"data/rds/nationalparks_sf.rds\")\n\n#Gyms@SG, exercisefacilities\ngyms_tibble <- get_theme(token, \"exercisefacilities\")\n\ngyms_sf <- st_as_sf(gyms_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(gyms_sf, \"data/rds/gyms_sf.rds\")\n\n#Retail pharmacy locations , registered_pharmacy\npharmacy_tibble <- get_theme(token, \"registered_pharmacy\")\n\npharmacy_sf <- st_as_sf(pharmacy_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(pharmacy_sf, \"data/rds/pharmacy_sf.rds\")\n\n#spf establishments, spf_establishments\nspf_tibble <- get_theme(token, \"spf_establishments\")\n\nspf_sf <- st_as_sf(spf_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(spf_sf, \"data/rds/spf_sf.rds\")\n\n\n#HDB Car Park Information,  hdb_car_park_information\nHDB_carpark_tibble <- get_theme(token, \"hdb_car_park_information\")\n\nHDB_carpark_sf <- st_as_sf(HDB_carpark_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(HDB_carpark_sf, \"data/rds/HDB_carpark_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#supermarket",
+    "href": "code_draft/data_pre_processing.html#supermarket",
+    "title": "Data Pre-processing",
+    "section": "Supermarket",
+    "text": "Supermarket\n\nsupermarket_sf <- st_read(\"data/geospatial/supermarkets-geojson.geojson\") \nsupermarket_sf <- supermarket_sf %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(supermarket_sf, \"data/rds/supermarket_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#bus-stop",
+    "href": "code_draft/data_pre_processing.html#bus-stop",
+    "title": "Data Pre-processing",
+    "section": "Bus Stop",
+    "text": "Bus Stop\n\nbus_stop<- st_read(dsn = \"data/geospatial\", layer = \"BusStop\")\nbus_stop_sf <- bus_stop %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(bus_stop_sf, \"data/rds/bus_stop_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#mrtlrt",
+    "href": "code_draft/data_pre_processing.html#mrtlrt",
+    "title": "Data Pre-processing",
+    "section": "MRT/LRT",
+    "text": "MRT/LRT\n\nmrt = st_read(dsn = \"data/geospatial/\", layer = \"Train_Station_Exit_Layer\")\nmrt_sf <- mrt %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(mrt_sf, \"data/rds/mrt_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#primary-school",
+    "href": "code_draft/data_pre_processing.html#primary-school",
+    "title": "Data Pre-processing",
+    "section": "Primary School",
+    "text": "Primary School\n\nprimary_school <- read_csv(\"data/geospatial/general-information-of-schools.csv\")\n\nprimary_school <- primary_school %>%\n  filter(mainlevel_code == \"PRIMARY\") %>%\n  select(school_name, address, postal_code)\n\nprimary_school<-primary_school %>%  \n  filter(school_name!='JUYING PRIMARY SCHOOL')\n\n\nprimary_school$LATITUDE <- 0\nprimary_school$LONGITUDE <- 0\n\nfor (i in 1:nrow(primary_school)){\n  temp_output <- geocode(primary_school[i, 1],\"\")\n\n  primary_school$LATITUDE[i] <- temp_output$results.LATITUDE\n  primary_school$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\nwrite_rds(primary_school, \"data/rds/primary_school_locations.rds\")\n\n\nprimary_school_sf <- st_as_sf(primary_school,\n                    coords = c(\"LONGITUDE\", \n                               \"LATITUDE\"),\n                    crs=4326) %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(primary_school_sf, \"data/rds/primary_school_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#top-10-primary-schools",
+    "href": "code_draft/data_pre_processing.html#top-10-primary-schools",
+    "title": "Data Pre-processing",
+    "section": "Top 10 Primary Schools",
+    "text": "Top 10 Primary Schools\n\n#reference to:https://schoolbell.sg/primary-school-ranking/\npopular_primary_schools <-c(\"Pei Hwa Presbyterian Primary School\",\n                            \"Gongshang Primary School\",\n                            \"Riverside Primary School\",\n                            \"Red Swastika School\",\n                            \"Punggol Green Primary School\",\n                            \"Princess Elizabeth Primary School\",\n                            \"Westwood Primary School\",\n                            \"St. Hilda’s Primary School\",\n                            \"Catholic High School (Primary Section)\",\n                            \"Ai Tong School\")\n\n#make school names all uppercase\npopular_primary_schools <- lapply(popular_primary_schools, toupper) \n\n# to check both primary school datasets matches\npopular_primary_schools_sf <- primary_school_sf %>%\n  filter(school_name %in% popular_primary_schools)\n\npopular_primary_schools_sf <- popular_primary_schools_sf %>%\n  rbind(primary_school_sf %>% filter(school_name == \"CANOSSA CATHOLIC PRIMARY SCHOOL\"))\n\npopular_primary_schools_sf <- popular_primary_schools_sf %>%\n  rbind(primary_school_sf %>% filter(school_name == \"ST. HILDA'S PRIMARY SCHOOL\"))\n\nnrow(popular_primary_schools_sf)\n\n\nwrite_rds(popular_primary_schools_sf, \"data/rds/top10_primary_school_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#shopping-mall",
+    "href": "code_draft/data_pre_processing.html#shopping-mall",
+    "title": "Data Pre-processing",
+    "section": "Shopping Mall",
+    "text": "Shopping Mall\n\nshopping_mall <- read.csv(\"data/geospatial/mall_coordinates_updated.csv\")\n\nshopping_mall <- shopping_mall %>%\n  select(name, latitude, longitude)\n\nshopping_mall_sf <- st_as_sf(shopping_mall,\n                        coords = c(\"longitude\",\n                                   \"latitude\"),\n                        crs = 4326) %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(shopping_mall_sf, \"data/rds/shopping_mall_sf.rds\")\n\nPreprocess\n\n#remove irrelevant columns\n\n#childcare_sf\nchildcare_sf <- childcare_sf %>% select(\"NAME\")\n\n#eldercare_sf\neldercare_sf <- eldercare_sf %>% select(\"NAME\")\n\n#kindergartens_sf\nkindergartens_sf <- kindergartens_sf %>% select(\"NAME\")\n\n#hawkercentre_new_sf\nhawkercentre_new_sf <- hawkercentre_new_sf %>% select(\"NAME\")\n\n#hawkercentre_healthy_sf \nhawkercentre_healthy_sf  <- hawkercentre_healthy_sf  %>% select(\"NAME\")\n\n#nationalparks_sf\nnationalparks_sf <- nationalparks_sf %>% select(\"NAME\")\n\n#gyms_sf\ngyms_sf <- gyms_sf %>% select(\"NAME\")\n#pharmacy_sf\npharmacy_sf <- pharmacy_sf %>% select(\"NAME\")\n#spf_sf\nspf_sf <- spf_sf %>% select(\"NAME\")\n#HDB_carpark_sf\nHDB_carpark_sf <- HDB_carpark_sf %>% select(\"NAME\",\"CAR_PARK_TYPE\",\"TYPE_OF_PARKING_SYSTEM\", \"NIGHT_PARKING\", \"FREE_PARKING\")\n\n#supermarket\nsupermarket_sf$LIC_NAME <- str_extract(supermarket_sf$Description, \"(?<=LIC_NAME<\\\\/th> <td>)[^<]+\")\nsupermarket_sf <- supermarket_sf %>% select(\"LIC_NAME\")\n\n#bus stop\nbus_stop_sf$stop_name <- paste(bus_stop_sf$BUS_STOP_N, bus_stop_sf$BUS_ROOF_N, bus_stop_sf$LOC_DESC)\nbus_stop_sf <- bus_stop_sf %>% select(\"stop_name\")\n\n#mrt\n#combine stn name and exit to make each row unique\nmrt_sf$stn <- paste(mrt_sf$stn_name, mrt_sf$exit_code)\nmrt_sf <- mrt_sf %>% select(\"stn\")\n\n\n#missing values\nsum(is.na(mpsz))\nsum(is.na(childcare_sf))\nsum(is.na(eldercare_sf))\nsum(is.na(kindergartens_sf))\nsum(is.na(hawkercentre_new_sf))\nsum(is.na(hawkercentre_healthy_sf))\nsum(is.na(nationalparks_sf))\nsum(is.na(gyms_sf))\nsum(is.na(pharmacy_sf))\nsum(is.na(spf_sf))\nsum(is.na(HDB_carpark_sf))\nsum(is.na(supermarket_sf))\nsum(is.na(bus_stop_sf))\nsum(is.na(mrt_sf))\nsum(is.na(primary_school_sf))\nsum(is.na(popular_primary_schools_sf))\nsum(is.na(shopping_mall_sf))\n\n\nlength(which(st_is_valid(mpsz) == FALSE))\nlength(which(st_is_valid(childcare_sf) == FALSE))\nlength(which(st_is_valid(eldercare_sf) == FALSE))\nlength(which(st_is_valid(kindergartens_sf) == FALSE))\nlength(which(st_is_valid(hawkercentre_new_sf) == FALSE))\nlength(which(st_is_valid(hawkercentre_healthy_sf) == FALSE))\nlength(which(st_is_valid(nationalparks_sf) == FALSE))\nlength(which(st_is_valid(gyms_sf) == FALSE))\nlength(which(st_is_valid(pharmacy_sf) == FALSE))\nlength(which(st_is_valid(HDB_carpark_sf) == FALSE))\nlength(which(st_is_valid(supermarket_sf) == FALSE))\nlength(which(st_is_valid(bus_stop_sf) == FALSE))\nlength(which(st_is_valid(mrt_sf) == FALSE))\nlength(which(st_is_valid(primary_school_sf) == FALSE))\nlength(which(st_is_valid(popular_primary_schools_sf) == FALSE))\nlength(which(st_is_valid(shopping_mall_sf) == FALSE))\n\n\nmpsz <- st_make_valid(mpsz)\nlength(which(st_is_valid(mpsz) == FALSE))"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#rewrite-sf.rds-files-with-processed-ver",
+    "href": "code_draft/data_pre_processing.html#rewrite-sf.rds-files-with-processed-ver",
+    "title": "Data Pre-processing",
+    "section": "Rewrite sf.rds files with processed ver",
+    "text": "Rewrite sf.rds files with processed ver\n\nwrite_rds(mpsz, \"data/rds/mpsz_sf.rds\")\nwrite_rds(childcare_sf, \"data/rds/childcare_sf.rds\")\nwrite_rds(eldercare_sf, \"data/rds/eldercare_sf.rds\")\nwrite_rds(kindergartens_sf, \"data/rds/kindergartens_sf.rds\")\nwrite_rds(hawkercentre_new_sf, \"data/rds/hawkercentre_new_sf.rds\")\nwrite_rds(hawkercentre_healthy_sf, \"data/rds/hawkercentre_healthy_sf.rds\")\nwrite_rds(nationalparks_sf, \"data/rds/nationalparks_sf.rds\")\nwrite_rds(gyms_sf, \"data/rds/gyms_sf.rds\")\nwrite_rds(pharmacy_sf, \"data/rds/pharmacy_sf.rds\")\nwrite_rds(spf_sf, \"data/rds/spf_sf.rds\")\nwrite_rds(HDB_carpark_sf, \"data/rds/HDB_carpark_sf.rds\")\nwrite_rds(supermarket_sf, \"data/rds/supermarket_sf.rds\")\nwrite_rds(bus_stop_sf, \"data/rds/bus_stop_sf.rds\")\nwrite_rds(mrt_sf, \"data/rds/mrt_sf.rds\")\nwrite_rds(primary_school_sf, \"data/rds/primary_school_sf.rds\")\nwrite_rds(popular_primary_schools_sf, \"data/rds/top10_primary_school_sf.rds\")\nwrite_rds(shopping_mall_sf, \"data/rds/shopping_mall_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data/geospatial/MPSZ-2019.html",
+    "href": "code_draft/data/geospatial/MPSZ-2019.html",
+    "title": "",
+    "section": "",
+    "text": "<!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’>     dataset\n\n\n        0 0     false"
   }
 ]

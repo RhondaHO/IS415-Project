@@ -10,5 +10,8 @@
   },
   "code_draft/data_pre_processing.qmd": {
     "data_pre_processing.html": "b69068ce"
+  },
+  "code_draft/data/geospatial/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "b9db12ab"
   }
 }
