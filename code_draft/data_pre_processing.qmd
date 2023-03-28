@@ -109,7 +109,7 @@ write_rds(resale_sf, "data/rds/resale_sf.rds")
 
 # Geospatial
 
-## Master Plan 2019 Boundary 
+## Master Plan 2019 Boundary
 
 ```{r}
 mpsz <- st_read(dsn="data/geospatial", layer="MPSZ-2019") %>%
@@ -281,7 +281,7 @@ write_rds(mrt_sf, "data/rds/mrt_sf.rds")
 
 ```{r}
 #| eval: false
-primary_school <- read_csv("data/geospatial/general-information-of-schools.csv")
+primary_school <- read_csv("data/aspatial/general-information-of-schools.csv")
 
 primary_school <- primary_school %>%
   filter(mainlevel_code == "PRIMARY") %>%
