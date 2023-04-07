@@ -1,0 +1,12 @@
+/* css styles */
+.navbar {
+  background-color: #FFFFFF;
+}
+.navbar li a {
+  color: #8D8BA7;
+}
+.navbar li a:active {
+  color: #5D5A88;
+}
+
+
