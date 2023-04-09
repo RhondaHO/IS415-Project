@@ -107,6 +107,13 @@ length(which(st_is_valid(resale_sf) == FALSE))
 write_rds(resale_sf, "data/rds/resale_sf.rds")
 ```
 
+```{r}
+# based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)
+
+#resale_sf<- subset(resale_sf, full_address != "BLK 27 MARINE CRES")
+
+```
+
 # Geospatial
 
 ## Master Plan 2019 Boundary

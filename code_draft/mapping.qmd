@@ -62,6 +62,9 @@ tm_shape(mpsz_sf) +
                          "Remaining Lease:" = "remaining_lease"
                          ),
           title = "Resale Prices")
+
+
+
 ```
 
 **HDB and Supermarket**
