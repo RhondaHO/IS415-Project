@@ -13,5 +13,12 @@
   },
   "code_draft/data/geospatial/MPSZ-2019.qmd": {
     "MPSZ-2019.html": "b9db12ab"
+  },
+  "aps/template.qmd": {
+    "template.tex": "78fd4350",
+    "template.html": "92189739"
+  },
+  "research_paper/research_paper.qmd": {
+    "research_paper.tex": "8abfdd80"
   }
 }
