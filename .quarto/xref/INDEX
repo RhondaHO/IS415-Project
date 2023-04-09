@@ -20,5 +20,11 @@
   },
   "research_paper/research_paper.qmd": {
     "research_paper.tex": "8abfdd80"
+  },
+  "code_draft/mapping.qmd": {
+    "mapping.html": "3c06219d"
+  },
+  "the-right-space/data/geospatial/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "c9aa12ae"
   }
 }

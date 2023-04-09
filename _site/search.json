@@ -5,5 +5,201 @@
     "title": "Aps Template",
     "section": "",
     "text": "TODO Create a template that demonstrates the appearance, formatting, layout, and functionality of your format. Learn more about journal formats at https://quarto.org/docs/journals/."
+  },
+  {
+    "objectID": "project_proposal.html",
+    "href": "project_proposal.html",
+    "title": "G1T7 Project Proposal",
+    "section": "",
+    "text": "Many prospective HDB buyers struggle to visualize and understand the amenities and facilities available in the vicinity of their desired location, often having to resort to manual searches on platforms like Google to determine the location of specific types of amenities. Additionally, current mapping tools do not provide a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process and make it easier for HDB buyers to view and understand the surrounding amenities through our analytical app. By providing a customized view of amenities relevant to HDB buyers, utilizing spatial point pattern analysis to visualize their distribution and clustering, and offering a user-friendly interface, we aim to help HDB buyers make more informed decisions about their purchases and feel more confident in their chosen residence."
+  },
+  {
+    "objectID": "project_proposal.html#project-objectives",
+    "href": "project_proposal.html#project-objectives",
+    "title": "G1T7 Project Proposal",
+    "section": "Project Objectives",
+    "text": "Project Objectives\nThis study seeks to gather crucial data that one might need to analyse and visualise to perform spatial point pattern analysis to:\n\nEstimate the intensity of HDB locations and amenities across the study area using Kernel Density Estimation.\nDetermine whether the distribution of amenities around HDBs is random or clustered, and calculate the ratio of observed to expected nearest neighbor distances using F-Function analysis.\nMeasure the degree of clustering or dispersion of HDB locations and surrounding amenities using Ripley’s K-function and L-function analysis.\nQuantify the extent of spatial association and heterogeneity between HDB locations and surrounding amenities using Colocation Quotients (CLQs) analysis.\nConduct Network Constrained Spatial Point Patterns Analysis to analyze the spatial distribution of HDB flats over a street network.\n\nBy achieving these objectives, our study aims to gain insights into the spatial distribution of HDB and amenities across the study area, identify significant spatial patterns and trends, and help inform planning and policy decisions related to urban development and resource allocation."
+  },
+  {
+    "objectID": "project_proposal.html#data-sets",
+    "href": "project_proposal.html#data-sets",
+    "title": "G1T7 Project Proposal",
+    "section": "Data Sets",
+    "text": "Data Sets\nBelow is a table of the data sets we will be using for our project.\n\n\n\nName\nDescription\nFile Format\n\n\n\n\n\n\n\nHDB Resale Flat Prices\nProvides HDB addresses, blocks and street name | Data.gov.sg\n.csv\n\n\n\n\n\nSchool Directory and Information\nProvides a list of primary schools in Singapore | Data.gov.sg\n.csv\n\n\n\n\n\nShopping Malls\nProvides a list of shopping mall and its geometry in Singapore | Web scrapped shopping mall data in 2019 by Valery Lim\n.csv\n\n\n\n\n\nURA Master Plan 2019 Subzone Boundary\nProvides region boundary data | Referenced/taken from Prof Kam\nshp\n\n\n\n\n\nBus Stops\nProvides a list of bus stops and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nTrain Station\nProvides a list of MRT/LTR exits and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nSupermarkets\nProvides a list of supermarkets in Singapore | Data.gov.sg\n.geojson\n\n\n\n\n\nChildcare Centres\nProvides a list of names, addresses and relevant information for childcare centres in Singapore | Extracted via onemapAPI API Docs | Registration\n.rds\n\n\n\n\n\nEldercare Centres\nProvides a list of names, addresses and relevant information for eldercare centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nKindergartens\nProvides a list of names, addresses and relevant information for kindergartens in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHawker Centres\nProvides a list of names, addresses and relevant information for hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHealthier Hawker Centres\nProvides a list of names, addresses and relevant information for healthier hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nNational Parks\nProvides a list of names, addresses and relevant information for national parks in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nGyms\nProvides a list of names, addresses and relevant information for gyms in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nRetail Pharmacies\nProvides a list of names, addresses and relevant information for retail pharmacies in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nSingapore Police Force (SPF) Establishments\nProvides a list of names, addresses and relevant information for SPF establishments in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nCarparks\nProvides a list of names, addresses and relevant information for carparks in Singapore | Extracted via onemapAPI\n.rds"
+  },
+  {
+    "objectID": "project_proposal.html#literature-review",
+    "href": "project_proposal.html#literature-review",
+    "title": "G1T7 Project Proposal",
+    "section": "Literature Review",
+    "text": "Literature Review\n\n#1: Spatial Point Pattern Analysis of Human Settlements and Geographical Associations in Eastern Coastal China - A Case Study (Zhang et al., 2014)\nThis article highlights the potential of spatial point pattern analysis as a tool for gaining insights into the spatial patterns and associations of human settlements in rapidly urbanising regions. The article used spatial point pattern analysis techniques such as Ripley’s K-function and nearest neighbour analysis, to analyse the spatial distribution and clustering of human settlements in eastern coastal China. Based on their results, it demonstrates the importance of considering spatial relationships and locational factors in understanding settlement patterns and provides insights that can be used to inform urban planning and development policies.\n\nHow does it link to our project?\nTo examine the spatial distribution and clustering of HDB locations and facilities in Singapore. We plan to use the following functions referenced from the article:\n\nKernel density estimation: To identify areas with high or low concentrations of HDB locations or facilities, and to explore the relationship between HDB locations and surrounding amenities.\nRipley’s K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB locations or facilities and compare the observed spatial distribution of HDB locations or facilities to a random distribution, and test whether the observed pattern is statistically significant.\n\n\n\n\n#2: Analysing the global and local spatial associations of medical resources across Wuhan city using POI data (Chen, Q et al., 2023)\nThis article highlights the issue of imbalance in the supply and demand of medical resources in provincial capitals of China and emphasises the need to understand the spatial patterns of medical resources to ensure fair and optimal allocation of limited resources. This article utilises the Localised Colocation Quotient (LCLQ) analysis, which is a technique that measures directional spatial associations and heterogeneity between categorical point data. By employing this method and utilising point of interest (POI) data, the study presents a unique analysis of the spatial patterns and directional spatial associations between six medical resources in Wuhan city.\n\nHow does it link to our project?\nFor our project, we need to first define the two types of features of interest which will be HDB locations and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB locations and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB locations, and vice versa."
+  },
+  {
+    "objectID": "project_proposal.html#our-approach",
+    "href": "project_proposal.html#our-approach",
+    "title": "G1T7 Project Proposal",
+    "section": "Our Approach",
+    "text": "Our Approach\n\nData Preparation\n\nAssemble data from various sources\nData handling and wrangling\n\nExploratory Data Analysis\n\nAnalyse the spatial arrangement of data points\nIdentify any outliers or anomalies in the data sets\nChoropleth Mapping\n\nSpatial Point Patterns Analysis (Filter by: Sub-district/Region)\n\nFirst point Analysis\n\nKernel Density Estimation:\n\nSecond point Analysis\n\nF-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.\nRipley’s K-function and L function: To measure the degree of clustering or dispersion of HDB locations and surrounding amenities, and help identify significant spatial patterns and trends.\nColocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB locations and surrounding amenities, helping to identify areas of high or low co-location.\nNetwork Constrained Spatial Point Patterns Analysis: To analyse the spatial distribution of HDB flats over a street network"
+  },
+  {
+    "objectID": "project_proposal.html#packages",
+    "href": "project_proposal.html#packages",
+    "title": "G1T7 Project Proposal",
+    "section": "Packages",
+    "text": "Packages\nBelow is the list of packages we will be using for our project:\n\nsf: import and handle geospatial data\ntidyverse: data wrangling (tidyr, dplyr, ggplot2, tibble)\ntmap: plot choropleth maps\nmaptools: a set of tools for manipulating geographic data\nraster: convert grid output to raster layer for visualisation (Kernel Density Estimation)\nspatstat: conversion from spatial object to ppp format (Spatial Point Pattern plot)\nfunModeling: plotting EDA"
+  },
+  {
+    "objectID": "project_proposal.html#application-system-architecture",
+    "href": "project_proposal.html#application-system-architecture",
+    "title": "G1T7 Project Proposal",
+    "section": "Application System Architecture",
+    "text": "Application System Architecture"
+  },
+  {
+    "objectID": "project_proposal.html#timeline",
+    "href": "project_proposal.html#timeline",
+    "title": "G1T7 Project Proposal",
+    "section": "Timeline",
+    "text": "Timeline"
+  },
+  {
+    "objectID": "project_proposal.html#early-storyboard-drafts",
+    "href": "project_proposal.html#early-storyboard-drafts",
+    "title": "G1T7 Project Proposal",
+    "section": "Early Storyboard Drafts",
+    "text": "Early Storyboard Drafts\nWe used Figma to create a draft designs of our storyboard on how we imagine our Shiny app to look like. Please click here to view it in Figma."
+  },
+  {
+    "objectID": "project_proposal.html#references",
+    "href": "project_proposal.html#references",
+    "title": "G1T7 Project Proposal",
+    "section": "References",
+    "text": "References\nLiterature review #1: https://www.mdpi.com/1660-4601/11/3/2818\nLiterature review #2: https://link.springer.com/article/10.1186/s12913-023-09051-0"
+  },
+  {
+    "objectID": "code_draft/data/geospatial/MPSZ-2019.html",
+    "href": "code_draft/data/geospatial/MPSZ-2019.html",
+    "title": "",
+    "section": "",
+    "text": "<!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’>     dataset\n\n\n        0 0     false"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html",
+    "href": "code_draft/data_pre_processing.html",
+    "title": "Data Pre-processing",
+    "section": "",
+    "text": "pacman::p_load(readxl, sf, tidyverse, tmap, sfdep, rvest, httr, jsonlite, onemapsgapi, ggpubr, olsrr,ggplot2, plotly)"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#resale-flat-prices-aspatial",
+    "href": "code_draft/data_pre_processing.html#resale-flat-prices-aspatial",
+    "title": "Data Pre-processing",
+    "section": "Resale Flat Prices (Aspatial)",
+    "text": "Resale Flat Prices (Aspatial)\nExtract locations over study area 12 months, January 2022 to December 2022\n\nresale <- read_csv(\"data/aspatial/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv\")\n\n\n#extract HDB study are of January 2022 to December 2022\nresale<- resale %>% \n  filter(flat_type == \"5 ROOM\") %>%\n  filter(month >= \"2022-01\" & month <= \"2022-12\")\n\n\nresale$street_name <- gsub(\"ST\\\\.\", \"SAINT\", resale$street_name)\n\n#filter only unique HDB blocks\nresale %>% distinct(street_name, block)\n\n\ngeocode <- function(block, streetname) {\n  base_url <- \"https://developers.onemap.sg/commonapi/search\"\n  address <- paste(block, streetname, sep = \" \")\n  query <- list(\"searchVal\" = address, \n                \"returnGeom\" = \"Y\",\n                \"getAddrDetails\" = \"N\",\n                \"pageNum\" = \"1\")\n  \n  res <- GET(base_url, query = query)\n  restext<-content(res, as=\"text\")\n  \n  output <- fromJSON(restext)  %>% \n    as.data.frame %>%\n    select(results.LATITUDE, results.LONGITUDE)\n\n  return(output)\n}\n\n\nresale$LATITUDE <- 0\nresale$LONGITUDE <- 0\n\nfor (i in 1:nrow(resale)){\n  temp_output <- geocode(resale[i, 4], resale[i, 5])\n  \n  resale$LATITUDE[i] <- temp_output$results.LATITUDE\n  resale$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\n# resale flat with lat and long\nwrite_rds(resale, \"data/rds/resale_locations(1year).rds\")\n\n\nresale_locations<-readRDS(\"data/rds/resale_locations(1year).rds\")\n\n#Transform\nresale_sf <- st_as_sf(resale_locations, \n                      coords = c(\"LONGITUDE\", \n                                 \"LATITUDE\"), \n                      crs=4326) %>%\n  st_transform(crs = 3414)\n\n#Missing values\nsum(is.na(resale_sf))\n\n#correct CRS\nst_crs(resale_sf)\n\n\n#invalid geometries\nlength(which(st_is_valid(resale_sf) == FALSE))\n\n\nwrite_rds(resale_sf, \"data/rds/resale_sf.rds\")\n\n\n# based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)\n\n#resale_sf<- subset(resale_sf, full_address != \"BLK 27 MARINE CRES\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#master-plan-2019-boundary",
+    "href": "code_draft/data_pre_processing.html#master-plan-2019-boundary",
+    "title": "Data Pre-processing",
+    "section": "Master Plan 2019 Boundary",
+    "text": "Master Plan 2019 Boundary\n\nmpsz <- st_read(dsn=\"data/geospatial\", layer=\"MPSZ-2019\") %>%\n  st_transform(crs=3414)"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#locational-factors-extracted-via-onemapapi-token",
+    "href": "code_draft/data_pre_processing.html#locational-factors-extracted-via-onemapapi-token",
+    "title": "Data Pre-processing",
+    "section": "Locational Factors Extracted via onemapAPI token",
+    "text": "Locational Factors Extracted via onemapAPI token\n\ntoken <- get_token(\"email\", \"password\")\n\n\navail_themes <-search_themes(token)\nwrite_rds(avail_themes, \"data/rds/available_themes.rds\")\n\n\n#read the file for available themes\navail_themes<-readRDS(\"data/rds/available_themes.rds\")\n\n#sort by alphabetical order\navail_themes<-avail_themes[order(avail_themes$THEMENAME),]\navail_themes\n\n\n#childcare\n#retrieve the data such as the geometry and name  accordingly to the theme\nchildcare_tibble <- get_theme(token, \"childcare\")\n\n# to convert a data frame of coordinates to an sf object and transform the crs information and create a shapefile for it\nchildcare_sf <- st_as_sf(childcare_tibble, coords=c(\"Lng\", \"Lat\"),\n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(childcare_sf, \"data/rds/childcare_sf.rds\")\n\n\n#eldercare\neldercare_tibble <- get_theme(token, \"eldercare\")\n\neldercare_sf <- st_as_sf(eldercare_tibble, coords=c(\"Lng\", \"Lat\"),\n                         crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(eldercare_sf, \"data/rds/eldercare_sf.rds\")\n\n\n#kindergatens\nkindergartens_tibble <- get_theme(token, \"kindergartens\")\n\nkindergartens_sf <- st_as_sf(kindergartens_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\nwrite_rds(kindergartens_sf, \"data/rds/kindergartens_sf.rds\")\n\n#hawker Centres\nhawkercentre_new_tibble <- get_theme(token, \"hawkercentre_new\")\n\nhawkercentre_new_sf <- st_as_sf(hawkercentre_new_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(hawkercentre_new_sf, \"data/rds/hawkercentre_new_sf.rds\")\n\n\n#Healthier Hawker Centres, healthier_hawker_centres\nhawkercentre_healthy_tibble <- get_theme(token, \"healthier_hawker_centres\")\n\nhawkercentre_healthy_sf <- st_as_sf(hawkercentre_healthy_tibble, coords=c(\"Lng\", \"Lat\"), \n                        crs=4326) %>% \n  st_transform(crs = 3414)\n\nwrite_rds(hawkercentre_healthy_sf, \"data/rds/hawkercentre_healthy_sf.rds\")\n\n#parks\nnationalparks_tibble <- get_theme(token, \"nationalparks\")\n\nnationalparks_sf <- st_as_sf(nationalparks_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(nationalparks_sf, \"data/rds/nationalparks_sf.rds\")\n\n#Gyms@SG, exercisefacilities\ngyms_tibble <- get_theme(token, \"exercisefacilities\")\n\ngyms_sf <- st_as_sf(gyms_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(gyms_sf, \"data/rds/gyms_sf.rds\")\n\n#Retail pharmacy locations , registered_pharmacy\npharmacy_tibble <- get_theme(token, \"registered_pharmacy\")\n\npharmacy_sf <- st_as_sf(pharmacy_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(pharmacy_sf, \"data/rds/pharmacy_sf.rds\")\n\n#spf establishments, spf_establishments\nspf_tibble <- get_theme(token, \"spf_establishments\")\n\nspf_sf <- st_as_sf(spf_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(spf_sf, \"data/rds/spf_sf.rds\")\n\n\n#HDB Car Park Information,  hdb_car_park_information\nHDB_carpark_tibble <- get_theme(token, \"hdb_car_park_information\")\n\nHDB_carpark_sf <- st_as_sf(HDB_carpark_tibble, \n                             coords=c(\"Lng\", \"Lat\"), crs=4326) %>%\n  st_transform(crs = 3414)\n\nwrite_rds(HDB_carpark_sf, \"data/rds/HDB_carpark_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#supermarket",
+    "href": "code_draft/data_pre_processing.html#supermarket",
+    "title": "Data Pre-processing",
+    "section": "Supermarket",
+    "text": "Supermarket\n\nsupermarket_sf <- st_read(\"data/geospatial/supermarkets-geojson.geojson\") \nsupermarket_sf <- supermarket_sf %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(supermarket_sf, \"data/rds/supermarket_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#bus-stop",
+    "href": "code_draft/data_pre_processing.html#bus-stop",
+    "title": "Data Pre-processing",
+    "section": "Bus Stop",
+    "text": "Bus Stop\n\nbus_stop<- st_read(dsn = \"data/geospatial\", layer = \"BusStop\")\nbus_stop_sf <- bus_stop %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(bus_stop_sf, \"data/rds/bus_stop_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#mrtlrt",
+    "href": "code_draft/data_pre_processing.html#mrtlrt",
+    "title": "Data Pre-processing",
+    "section": "MRT/LRT",
+    "text": "MRT/LRT\n\nmrt = st_read(dsn = \"data/geospatial/\", layer = \"Train_Station_Exit_Layer\")\nmrt_sf <- mrt %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(mrt_sf, \"data/rds/mrt_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#primary-school",
+    "href": "code_draft/data_pre_processing.html#primary-school",
+    "title": "Data Pre-processing",
+    "section": "Primary School",
+    "text": "Primary School\n\nprimary_school <- read_csv(\"data/aspatial/general-information-of-schools.csv\")\n\nprimary_school <- primary_school %>%\n  filter(mainlevel_code == \"PRIMARY\") %>%\n  select(school_name, address, postal_code)\n\nprimary_school<-primary_school %>%  \n  filter(school_name!='JUYING PRIMARY SCHOOL')\n\n\nprimary_school$LATITUDE <- 0\nprimary_school$LONGITUDE <- 0\n\nfor (i in 1:nrow(primary_school)){\n  temp_output <- geocode(primary_school[i, 1],\"\")\n\n  primary_school$LATITUDE[i] <- temp_output$results.LATITUDE\n  primary_school$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\nwrite_rds(primary_school, \"data/rds/primary_school_locations.rds\")\n\n\nprimary_school_sf <- st_as_sf(primary_school,\n                    coords = c(\"LONGITUDE\", \n                               \"LATITUDE\"),\n                    crs=4326) %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(primary_school_sf, \"data/rds/primary_school_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#top-10-primary-schools",
+    "href": "code_draft/data_pre_processing.html#top-10-primary-schools",
+    "title": "Data Pre-processing",
+    "section": "Top 10 Primary Schools",
+    "text": "Top 10 Primary Schools\n\n#reference to:https://schoolbell.sg/primary-school-ranking/\npopular_primary_schools <-c(\"Pei Hwa Presbyterian Primary School\",\n                            \"Gongshang Primary School\",\n                            \"Riverside Primary School\",\n                            \"Red Swastika School\",\n                            \"Punggol Green Primary School\",\n                            \"Princess Elizabeth Primary School\",\n                            \"Westwood Primary School\",\n                            \"St. Hilda’s Primary School\",\n                            \"Catholic High School (Primary Section)\",\n                            \"Ai Tong School\")\n\n#make school names all uppercase\npopular_primary_schools <- lapply(popular_primary_schools, toupper) \n\n# to check both primary school datasets matches\npopular_primary_schools_sf <- primary_school_sf %>%\n  filter(school_name %in% popular_primary_schools)\n\npopular_primary_schools_sf <- popular_primary_schools_sf %>%\n  rbind(primary_school_sf %>% filter(school_name == \"CANOSSA CATHOLIC PRIMARY SCHOOL\"))\n\npopular_primary_schools_sf <- popular_primary_schools_sf %>%\n  rbind(primary_school_sf %>% filter(school_name == \"ST. HILDA'S PRIMARY SCHOOL\"))\n\nnrow(popular_primary_schools_sf)\n\n\nwrite_rds(popular_primary_schools_sf, \"data/rds/top10_primary_school_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#shopping-mall",
+    "href": "code_draft/data_pre_processing.html#shopping-mall",
+    "title": "Data Pre-processing",
+    "section": "Shopping Mall",
+    "text": "Shopping Mall\n\nshopping_mall <- read.csv(\"data/geospatial/mall_coordinates_updated.csv\")\n\nshopping_mall <- shopping_mall %>%\n  select(name, latitude, longitude)\n\nshopping_mall_sf <- st_as_sf(shopping_mall,\n                        coords = c(\"longitude\",\n                                   \"latitude\"),\n                        crs = 4326) %>%\n  st_transform(crs = 3414)\n\n\nwrite_rds(shopping_mall_sf, \"data/rds/shopping_mall_sf.rds\")\n\nPreprocess\n\n#remove irrelevant columns\n\n#childcare_sf\nchildcare_sf <- childcare_sf %>% select(\"NAME\")\n\n#eldercare_sf\neldercare_sf <- eldercare_sf %>% select(\"NAME\")\n\n#kindergartens_sf\nkindergartens_sf <- kindergartens_sf %>% select(\"NAME\")\n\n#hawkercentre_new_sf\nhawkercentre_new_sf <- hawkercentre_new_sf %>% select(\"NAME\")\n\n#hawkercentre_healthy_sf \nhawkercentre_healthy_sf  <- hawkercentre_healthy_sf  %>% select(\"NAME\")\n\n#nationalparks_sf\nnationalparks_sf <- nationalparks_sf %>% select(\"NAME\")\n\n#gyms_sf\ngyms_sf <- gyms_sf %>% select(\"NAME\")\n#pharmacy_sf\npharmacy_sf <- pharmacy_sf %>% select(\"NAME\")\n#spf_sf\nspf_sf <- spf_sf %>% select(\"NAME\")\n#HDB_carpark_sf\nHDB_carpark_sf <- HDB_carpark_sf %>% select(\"NAME\",\"CAR_PARK_TYPE\",\"TYPE_OF_PARKING_SYSTEM\", \"NIGHT_PARKING\", \"FREE_PARKING\")\n\n#supermarket\nsupermarket_sf$LIC_NAME <- str_extract(supermarket_sf$Description, \"(?<=LIC_NAME<\\\\/th> <td>)[^<]+\")\nsupermarket_sf <- supermarket_sf %>% select(\"LIC_NAME\")\n\n#bus stop\nbus_stop_sf$stop_name <- paste(bus_stop_sf$BUS_STOP_N, bus_stop_sf$BUS_ROOF_N, bus_stop_sf$LOC_DESC)\nbus_stop_sf <- bus_stop_sf %>% select(\"stop_name\")\n\n#mrt\n#combine stn name and exit to make each row unique\nmrt_sf$stn <- paste(mrt_sf$stn_name, mrt_sf$exit_code)\nmrt_sf <- mrt_sf %>% select(\"stn\")\n\n\n#missing values\nsum(is.na(mpsz))\nsum(is.na(childcare_sf))\nsum(is.na(eldercare_sf))\nsum(is.na(kindergartens_sf))\nsum(is.na(hawkercentre_new_sf))\nsum(is.na(hawkercentre_healthy_sf))\nsum(is.na(nationalparks_sf))\nsum(is.na(gyms_sf))\nsum(is.na(pharmacy_sf))\nsum(is.na(spf_sf))\nsum(is.na(HDB_carpark_sf))\nsum(is.na(supermarket_sf))\nsum(is.na(bus_stop_sf))\nsum(is.na(mrt_sf))\nsum(is.na(primary_school_sf))\nsum(is.na(popular_primary_schools_sf))\nsum(is.na(shopping_mall_sf))\n\n\nlength(which(st_is_valid(mpsz) == FALSE))\nlength(which(st_is_valid(childcare_sf) == FALSE))\nlength(which(st_is_valid(eldercare_sf) == FALSE))\nlength(which(st_is_valid(kindergartens_sf) == FALSE))\nlength(which(st_is_valid(hawkercentre_new_sf) == FALSE))\nlength(which(st_is_valid(hawkercentre_healthy_sf) == FALSE))\nlength(which(st_is_valid(nationalparks_sf) == FALSE))\nlength(which(st_is_valid(gyms_sf) == FALSE))\nlength(which(st_is_valid(pharmacy_sf) == FALSE))\nlength(which(st_is_valid(HDB_carpark_sf) == FALSE))\nlength(which(st_is_valid(supermarket_sf) == FALSE))\nlength(which(st_is_valid(bus_stop_sf) == FALSE))\nlength(which(st_is_valid(mrt_sf) == FALSE))\nlength(which(st_is_valid(primary_school_sf) == FALSE))\nlength(which(st_is_valid(popular_primary_schools_sf) == FALSE))\nlength(which(st_is_valid(shopping_mall_sf) == FALSE))\n\n\nmpsz <- st_make_valid(mpsz)\nlength(which(st_is_valid(mpsz) == FALSE))"
+  },
+  {
+    "objectID": "code_draft/data_pre_processing.html#rewrite-sf.rds-files-with-processed-ver",
+    "href": "code_draft/data_pre_processing.html#rewrite-sf.rds-files-with-processed-ver",
+    "title": "Data Pre-processing",
+    "section": "Rewrite sf.rds files with processed ver",
+    "text": "Rewrite sf.rds files with processed ver\n\nwrite_rds(mpsz, \"data/rds/mpsz_sf.rds\")\nwrite_rds(childcare_sf, \"data/rds/childcare_sf.rds\")\nwrite_rds(eldercare_sf, \"data/rds/eldercare_sf.rds\")\nwrite_rds(kindergartens_sf, \"data/rds/kindergartens_sf.rds\")\nwrite_rds(hawkercentre_new_sf, \"data/rds/hawkercentre_new_sf.rds\")\nwrite_rds(hawkercentre_healthy_sf, \"data/rds/hawkercentre_healthy_sf.rds\")\nwrite_rds(nationalparks_sf, \"data/rds/nationalparks_sf.rds\")\nwrite_rds(gyms_sf, \"data/rds/gyms_sf.rds\")\nwrite_rds(pharmacy_sf, \"data/rds/pharmacy_sf.rds\")\nwrite_rds(spf_sf, \"data/rds/spf_sf.rds\")\nwrite_rds(HDB_carpark_sf, \"data/rds/HDB_carpark_sf.rds\")\nwrite_rds(supermarket_sf, \"data/rds/supermarket_sf.rds\")\nwrite_rds(bus_stop_sf, \"data/rds/bus_stop_sf.rds\")\nwrite_rds(mrt_sf, \"data/rds/mrt_sf.rds\")\nwrite_rds(primary_school_sf, \"data/rds/primary_school_sf.rds\")\nwrite_rds(popular_primary_schools_sf, \"data/rds/top10_primary_school_sf.rds\")\nwrite_rds(shopping_mall_sf, \"data/rds/shopping_mall_sf.rds\")"
+  },
+  {
+    "objectID": "code_draft/mapping.html",
+    "href": "code_draft/mapping.html",
+    "title": "Mapping and LCLQ",
+    "section": "",
+    "text": "pacman::p_load(readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table)"
+  },
+  {
+    "objectID": "code_draft/mapping.html#import-data",
+    "href": "code_draft/mapping.html#import-data",
+    "title": "Mapping and LCLQ",
+    "section": "Import Data",
+    "text": "Import Data\n\n#import data\nresale_sf<-readRDS(\"data/rds/resale_sf.rds\")\n\nmpsz_sf<-readRDS(\"data/rds/mpsz_sf.rds\")\n\nchildcare_sf <- readRDS(\"data/rds/childcare_sf.rds\")\neldercare_sf<- readRDS(\"data/rds/eldercare_sf.rds\")\nkindergartens_sf <- readRDS(\"data/rds/kindergartens_sf.rds\")\nhawkercentre_new_sf <- readRDS(\"data/rds/hawkercentre_new_sf.rds\")\nhawkercentre_healthy_sf<-readRDS(\"data/rds/hawkercentre_healthy_sf.rds\")\nnationalparks_sf<-readRDS(\"data/rds/nationalparks_sf.rds\")\ngyms_sf <-readRDS(\"data/rds/gyms_sf.rds\")\npharmacy_sf<-readRDS(\"data/rds/pharmacy_sf.rds\")\nspf_sf<-readRDS(\"data/rds/spf_sf.rds\")\nHDB_carpark_sf<-readRDS(\"data/rds/HDB_carpark_sf.rds\")\n\nsupermarket_sf<-readRDS(\"data/rds/supermarket_sf.rds\")\nbus_stop_sf<-readRDS(\"data/rds/bus_stop_sf.rds\")\nmrt_sf<-readRDS(\"data/rds/mrt_sf.rds\")\nprimary_school_sf<-readRDS(\"data/rds/primary_school_sf.rds\")\ntop10_primary_school_sf<-readRDS(\"data/rds/top10_primary_school_sf.rds\")\nshopping_mall_sf<-readRDS(\"data/rds/shopping_mall_sf.rds\")\n\n# combine street name and blk for HDB full address\nresale_sf$full_address <- paste(\"BLK\", resale_sf$block, resale_sf$street_name)"
+  },
+  {
+    "objectID": "code_draft/mapping.html#mapping",
+    "href": "code_draft/mapping.html#mapping",
+    "title": "Mapping and LCLQ",
+    "section": "Mapping",
+    "text": "Mapping\nHDB locations and relevant information\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\")\n\nHDB and Supermarket\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\") +\n  tm_shape(supermarket_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nHDB and Kindergartens\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(resale_sf_address) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#FCE883\",\n          size=0.05)+\ntm_shape(kindergartens_sf) +\n  tm_dots(alpha=0.5,\n          col=\"#FFD1DC\",\n          size=0.05)\n\nEarly Childhood/Primary Schools\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(childcare_sf) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#FCE883\",\n          size=0.05)+\ntm_shape(kindergartens_sf) +\n  tm_dots(alpha=0.5,\n          col=\"#FFD1DC\",\n          size=0.05) +\ntm_shape(primary_school_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nTransport (Bus)\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(bus_stop_sf) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#007FFF\",\n          size=0.05)\n  tm_view(set.zoom.limits = c(10, 14))\n\nTransport(Train)\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) + \ntm_shape(mrt_sf)+ \n  tm_dots(col = \"red\",\n             size = 0.01,\n             border.col = \"black\",\n             border.lwd = 0.5,\n           legend.show = FALSE) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nHDB and another amenity function\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\") +\n  tm_shape(supermarket_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))"
+  },
+  {
+    "objectID": "code_draft/mapping.html#lclq",
+    "href": "code_draft/mapping.html#lclq",
+    "title": "Mapping and LCLQ",
+    "section": "LCLQ",
+    "text": "LCLQ\n\n#HDB locations\nhdb_a <- resale_sf %>%\n  select(geometry) %>% \n  mutate(geometry= geometry,\n         type = \"HDB\") \n\n\n#formula to get the LCLQ data\n\n#hdb_a, amenity df, amenity name\ncql_func <- function(df1,df2,nameB){\n  df2_b <- df2 %>%\n  select(geometry) %>% \n  mutate(geometry= geometry,\n         type = nameB) \n  combined <- rbindlist(list(df1, df2_b),use.names=FALSE)\n  combined_sf <- st_as_sf(combined) %>%\n  st_transform(crs = 3414)\n  \n  nb <- include_self(\n  st_knn(st_geometry(combined_sf), 6))\n  \n  wt <- st_kernel_weights(nb, \n                        combined_sf, \n                        \"gaussian\", \n                        adaptive = TRUE)\n  \n  hdb_locations <- combined_sf %>%\n  filter(type == \"HDB\")\n  A <- hdb_locations$type\n  \n  df2_locations <- combined_sf %>%\n  filter(type == nameB)\n  \n  B <- df2_locations$type\n  \n  LCLQ <- local_colocation(A, B, wt, nb, 99) # 100 simulations\n  LCLQ_stores <- cbind(combined_sf, LCLQ)\n  \n  write_rds(LCLQ_stores, paste0(\"data/rds/clq/hdb_\",nameB,\".rds\"))\n  }\n\n\n# dont run again\ncql_func(hdb_a,childcare_sf,\"Childcare\")\ncql_func(hdb_a,eldercare_sf,\"Eldercare\")\ncql_func(hdb_a,kindergartens_sf,\"Kindegarten\")\ncql_func(hdb_a,nationalparks_sf,\"NationalParks\")\ncql_func(hdb_a,gyms_sf,\"Gym\")\ncql_func(hdb_a,pharmacy_sf,\"Pharmacy\")\ncql_func(hdb_a,supermarket_sf,\"Supermarket\")\ncql_func(hdb_a,bus_stop_sf,\"Bus\")\ncql_func(hdb_a,HDB_carpark_sf,\"Carparks\")\ncql_func(hdb_a,mrt_sf,\"Mrt\")\ncql_func(hdb_a,primary_school_sf,\"PrimarySchool\")\ncql_func(hdb_a,hawkercentre_new_sf,\"Hawker\")\ncql_func(hdb_a,shopping_mall_sf,\"ShoppingMall\")"
+  },
+  {
+    "objectID": "code_draft/mapping.html#import-lclq-data",
+    "href": "code_draft/mapping.html#import-lclq-data",
+    "title": "Mapping and LCLQ",
+    "section": "Import LCLQ Data",
+    "text": "Import LCLQ Data\n\n# import the clq files\nchildcare_clq<- readRDS(\"data/rds/clq/hdb_Childcare.rds\")\neldercare_clq<- readRDS(\"data/rds/clq/hdb_Eldercare.rds\")\nkindergarten_clq<- readRDS(\"data/rds/clq/hdb_Kindegarten.rds\")\nnationalParks_clq<- readRDS(\"data/rds/clq/hdb_NationalParks.rds\")\ngym_clq<- readRDS(\"data/rds/clq/hdb_Gym.rds\")\npharmacy_clq<- readRDS(\"data/rds/clq/hdb_Pharmacy.rds\")\nsupermarket_clq<- readRDS(\"data/rds/clq/hdb_Supermarket.rds\")\nbus_clq<- readRDS(\"data/rds/clq/hdb_Bus.rds\")\ncarpark_clq<- readRDS(\"data/rds/clq/hdb_Carparks.rds\")\nmrt_clq<- readRDS(\"data/rds/clq/hdb_Mrt.rds\")\nprimarySchool_clq<- readRDS(\"data/rds/clq/hdb_PrimarySchool.rds\")\nhawker_clq<- readRDS(\"data/rds/clq/hdb_Hawker.rds\")\nshoppingMall_clq<- readRDS(\"data/rds/clq/hdb_ShoppingMall.rds\")\n\n#\nmpsz_sf<-readRDS(\"data/rds/mpsz_sf.rds\")\n\n\n#check pvalues\n\n unique(st_drop_geometry(childcare_clq)[, 3])\n unique(st_drop_geometry(eldercare_clq)[, 3])\n unique(st_drop_geometry(kindergarten_clq)[, 3])\n unique(st_drop_geometry(nationalParks_clq)[, 3])\n unique(st_drop_geometry(gym_clq)[, 3])\n unique(st_drop_geometry(pharmacy_clq)[, 3])\n unique(st_drop_geometry(supermarket_clq)[, 3])\n unique(st_drop_geometry(bus_clq)[, 3]) # has p-value above 0.05\n unique(st_drop_geometry(carpark_clq)[, 3])\n unique(st_drop_geometry(mrt_clq)[, 3])\n unique(st_drop_geometry(primarySchool_clq)[, 3])\n unique(st_drop_geometry(hawker_clq)[, 3])\n unique(st_drop_geometry(shoppingMall_clq)[, 3])\n\n\n#intepretation reference: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm\n\n# filtered_data <- subset(eldercare_clq, p_sim_Eldercare < 0.05)\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons() +\ntm_shape(bus_clq)+ \n  tm_dots(col = \"Bus\",\n             size = 0.01,\n             border.col = \"black\",\n             border.lwd = 0.5) \n#+ tm_view(set.zoom.limits = c(12, 16))"
+  },
+  {
+    "objectID": "the-right-space/data/geospatial/MPSZ-2019.html",
+    "href": "the-right-space/data/geospatial/MPSZ-2019.html",
+    "title": "",
+    "section": "",
+    "text": "<!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’>     dataset\n\n\n        0 0     false"
   }
 ]
