@@ -1,9 +1,8 @@
-pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table,leaflet)
+pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table)
 # for each tabPanel, can add fluidPage() to add content
 
-#import our data
+# import data
 resale_sf<-readRDS("data/rds/resale_sf.rds")
-
 mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
 
 childcare_sf <- readRDS("data/rds/childcare_sf.rds")
