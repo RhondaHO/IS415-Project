@@ -99,12 +99,36 @@ for (file in files) {
   assign(df_name, readRDS(file))
 }
 
-# setwd("../../kfunc/childcare/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
+setwd("../../kfunc/childcare/multi")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../eldercare/multi")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../hawker_new/multi")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../gym/multi")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../hdb_carpark/multi")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
 
 #theme
 my_theme <- bs_theme(
@@ -255,11 +279,12 @@ tabPanel("Spatial Point Pattern Analysis",
              tabPanel("Ripley (K-Function)"),
              tabPanel("Network Constraint Analysis", fluidPage(
                sidebarLayout(
+                 position = "right",
                  sidebarPanel(
                    h2("Variables"),
                    selectInput("net_areaName", label = h4("Area Name"), 
                                choices = area_names, 
-                               selected = "ANG_MO_KIO"),
+                               selected = "BISHAN"),
                    selectInput("net_facility", label = h4("Area Name"), 
                                choices = list("Childcare" = "childcare",
                                               "Eldercare" = "eldercare",
@@ -269,7 +294,9 @@ tabPanel("Spatial Point Pattern Analysis",
                                selected = "Childcare"),
                  ),
                  mainPanel(
+                   h3("Lixel Plot"),
                    plotOutput("networkLixel"),
+                   h3("K-Function Plot"),
                    plotOutput("networkKFunc")
                  )
                )
@@ -388,9 +415,14 @@ server <- function(input, output) {
       tm_shape(get(paste0("hdb_",input$net_facility, "_", input$net_areaName)))+
       tm_dots(col = "Point Type", palette=c('blue', 'red'))
   )
-  # output$networkKFunc <- renderPlot(
-  #   get(paste0("kfunc_", input$net_facility, "_", input$net_areaName))$plotk
-  # )
+  output$networkKFunc <- renderPlot(
+    if(exists(paste0("kfunc_", input$net_facility, "_", input$net_areaName))) {
+      get(paste0("kfunc_", input$net_facility, "_", input$net_areaName))$plotk
+    } else {
+      message("There is no K-Function generated for this area")
+      p("There is no K-Function generated for this area")
+    }
+  )
 }
 
 
