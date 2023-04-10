@@ -1,0 +1,306 @@
+---
+title: "Mapping and LCLQ"
+
+execute: 
+  message: false
+  warning: false
+  eval: false
+---
+
+## Packages
+
+```{r}
+pacman::p_load(readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table)
+```
+
+## Import Data
+
+```{r}
+#import data
+resale_sf<-readRDS("data/rds/resale_sf.rds")
+
+mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+
+childcare_sf <- readRDS("data/rds/childcare_sf.rds")
+eldercare_sf<- readRDS("data/rds/eldercare_sf.rds")
+kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
+hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
+hawkercentre_healthy_sf<-readRDS("data/rds/hawkercentre_healthy_sf.rds")
+nationalparks_sf<-readRDS("data/rds/nationalparks_sf.rds")
+gyms_sf <-readRDS("data/rds/gyms_sf.rds")
+pharmacy_sf<-readRDS("data/rds/pharmacy_sf.rds")
+spf_sf<-readRDS("data/rds/spf_sf.rds")
+HDB_carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
+
+supermarket_sf<-readRDS("data/rds/supermarket_sf.rds")
+bus_stop_sf<-readRDS("data/rds/bus_stop_sf.rds")
+mrt_sf<-readRDS("data/rds/mrt_sf.rds")
+primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
+top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
+shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
+
+# combine street name and blk for HDB full address
+resale_sf$full_address <- paste("BLK", resale_sf$block, resale_sf$street_name)
+```
+
+## Mapping
+
+**HDB locations and relevant information**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+  tm_shape(resale_sf) +
+  tm_dots(col = "resale_price", 
+          id = "full_address", # bold in popup
+          popup.vars = c("Resale Price:" = "resale_price",
+                         "Flat Type:" = "flat_type", 
+                         "Flat Model:" = "flat_model",
+                         "Floor Area (sqm):" = "floor_area_sqm",
+                         "Remaining Lease:" = "remaining_lease"
+                         ),
+          title = "Resale Prices")
+
+
+
+```
+
+**HDB and Supermarket**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+  tm_shape(resale_sf) +
+  tm_dots(col = "resale_price", 
+          id = "full_address", # bold in popup
+          popup.vars = c("Resale Price:" = "resale_price",
+                         "Flat Type:" = "flat_type", 
+                         "Flat Model:" = "flat_model",
+                         "Floor Area (sqm):" = "floor_area_sqm",
+                         "Remaining Lease:" = "remaining_lease"
+                         ),
+          title = "Resale Prices") +
+  tm_shape(supermarket_sf) +
+  tm_dots(alpha=0.5,
+        col="#FF0000",
+        size=0.05) +
+  tm_view(set.zoom.limits = c(10, 16))
+
+```
+
+**HDB and Kindergartens**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+tm_shape(resale_sf_address) +
+  tm_dots(alpha=0.5, #affects transparency of points
+          col="#FCE883",
+          size=0.05)+
+tm_shape(kindergartens_sf) +
+  tm_dots(alpha=0.5,
+          col="#FFD1DC",
+          size=0.05)
+```
+
+**Early Childhood/Primary Schools**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+tm_shape(childcare_sf) +
+  tm_dots(alpha=0.5, #affects transparency of points
+          col="#FCE883",
+          size=0.05)+
+tm_shape(kindergartens_sf) +
+  tm_dots(alpha=0.5,
+          col="#FFD1DC",
+          size=0.05) +
+tm_shape(primary_school_sf) +
+  tm_dots(alpha=0.5,
+        col="#FF0000",
+        size=0.05) +
+  tm_view(set.zoom.limits = c(10, 16))
+```
+
+**Transport (Bus)**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+tm_shape(bus_stop_sf) +
+  tm_dots(alpha=0.5, #affects transparency of points
+          col="#007FFF",
+          size=0.05)
+  tm_view(set.zoom.limits = c(10, 14))
+```
+
+**Transport(Train)**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) + 
+tm_shape(mrt_sf)+ 
+  tm_dots(col = "red",
+             size = 0.01,
+             border.col = "black",
+             border.lwd = 0.5,
+           legend.show = FALSE) +
+  tm_view(set.zoom.limits = c(10, 16))
+```
+
+**HDB and another amenity function**
+
+```{r}
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons("REGION_N",
+              alpha = 0.2) +
+  tm_shape(resale_sf) +
+  tm_dots(col = "resale_price", 
+          id = "full_address", # bold in popup
+          popup.vars = c("Resale Price:" = "resale_price",
+                         "Flat Type:" = "flat_type", 
+                         "Flat Model:" = "flat_model",
+                         "Floor Area (sqm):" = "floor_area_sqm",
+                         "Remaining Lease:" = "remaining_lease"
+                         ),
+          title = "Resale Prices") +
+  tm_shape(supermarket_sf) +
+  tm_dots(alpha=0.5,
+        col="#FF0000",
+        size=0.05) +
+  tm_view(set.zoom.limits = c(10, 16))
+```
+
+## **LCLQ**
+
+```{r}
+#HDB locations
+hdb_a <- resale_sf %>%
+  select(geometry) %>% 
+  mutate(geometry= geometry,
+         type = "HDB") 
+```
+
+```{r}
+#formula to get the LCLQ data
+
+#hdb_a, amenity df, amenity name
+cql_func <- function(df1,df2,nameB){
+  df2_b <- df2 %>%
+  select(geometry) %>% 
+  mutate(geometry= geometry,
+         type = nameB) 
+  combined <- rbindlist(list(df1, df2_b),use.names=FALSE)
+  combined_sf <- st_as_sf(combined) %>%
+  st_transform(crs = 3414)
+  
+  nb <- include_self(
+  st_knn(st_geometry(combined_sf), 6))
+  
+  wt <- st_kernel_weights(nb, 
+                        combined_sf, 
+                        "gaussian", 
+                        adaptive = TRUE)
+  
+  hdb_locations <- combined_sf %>%
+  filter(type == "HDB")
+  A <- hdb_locations$type
+  
+  df2_locations <- combined_sf %>%
+  filter(type == nameB)
+  
+  B <- df2_locations$type
+  
+  LCLQ <- local_colocation(A, B, wt, nb, 99) # 100 simulations
+  LCLQ_stores <- cbind(combined_sf, LCLQ)
+  
+  write_rds(LCLQ_stores, paste0("data/rds/clq/hdb_",nameB,".rds"))
+  }
+```
+
+```{r}
+# dont run again
+cql_func(hdb_a,childcare_sf,"Childcare")
+cql_func(hdb_a,eldercare_sf,"Eldercare")
+cql_func(hdb_a,kindergartens_sf,"Kindegarten")
+cql_func(hdb_a,nationalparks_sf,"NationalParks")
+cql_func(hdb_a,gyms_sf,"Gym")
+cql_func(hdb_a,pharmacy_sf,"Pharmacy")
+cql_func(hdb_a,supermarket_sf,"Supermarket")
+cql_func(hdb_a,bus_stop_sf,"Bus")
+cql_func(hdb_a,HDB_carpark_sf,"Carparks")
+cql_func(hdb_a,mrt_sf,"Mrt")
+cql_func(hdb_a,primary_school_sf,"PrimarySchool")
+cql_func(hdb_a,hawkercentre_new_sf,"Hawker")
+cql_func(hdb_a,shopping_mall_sf,"ShoppingMall")
+```
+
+## Import LCLQ Data
+
+```{r}
+# import the clq files
+childcare_clq<- readRDS("data/rds/clq/hdb_Childcare.rds")
+eldercare_clq<- readRDS("data/rds/clq/hdb_Eldercare.rds")
+kindergarten_clq<- readRDS("data/rds/clq/hdb_Kindegarten.rds")
+nationalParks_clq<- readRDS("data/rds/clq/hdb_NationalParks.rds")
+gym_clq<- readRDS("data/rds/clq/hdb_Gym.rds")
+pharmacy_clq<- readRDS("data/rds/clq/hdb_Pharmacy.rds")
+supermarket_clq<- readRDS("data/rds/clq/hdb_Supermarket.rds")
+bus_clq<- readRDS("data/rds/clq/hdb_Bus.rds")
+carpark_clq<- readRDS("data/rds/clq/hdb_Carparks.rds")
+mrt_clq<- readRDS("data/rds/clq/hdb_Mrt.rds")
+primarySchool_clq<- readRDS("data/rds/clq/hdb_PrimarySchool.rds")
+hawker_clq<- readRDS("data/rds/clq/hdb_Hawker.rds")
+shoppingMall_clq<- readRDS("data/rds/clq/hdb_ShoppingMall.rds")
+
+#
+mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+```
+
+```{r}
+#check pvalues
+
+ unique(st_drop_geometry(childcare_clq)[, 3])
+ unique(st_drop_geometry(eldercare_clq)[, 3])
+ unique(st_drop_geometry(kindergarten_clq)[, 3])
+ unique(st_drop_geometry(nationalParks_clq)[, 3])
+ unique(st_drop_geometry(gym_clq)[, 3])
+ unique(st_drop_geometry(pharmacy_clq)[, 3])
+ unique(st_drop_geometry(supermarket_clq)[, 3])
+ unique(st_drop_geometry(bus_clq)[, 3]) # has p-value above 0.05
+ unique(st_drop_geometry(carpark_clq)[, 3])
+ unique(st_drop_geometry(mrt_clq)[, 3])
+ unique(st_drop_geometry(primarySchool_clq)[, 3])
+ unique(st_drop_geometry(hawker_clq)[, 3])
+ unique(st_drop_geometry(shoppingMall_clq)[, 3])
+```
+
+```{r}
+
+#intepretation reference: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm
+
+# filtered_data <- subset(eldercare_clq, p_sim_Eldercare < 0.05)
+tmap_mode("view")
+tm_shape(mpsz_sf) +
+  tm_polygons() +
+tm_shape(bus_clq)+ 
+  tm_dots(col = "Bus",
+             size = 0.01,
+             border.col = "black",
+             border.lwd = 0.5) 
+#+ tm_view(set.zoom.limits = c(12, 16))
+```

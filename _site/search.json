@@ -1,24 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "aps/template.html",
+    "href": "aps/template.html",
+    "title": "Aps Template",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "",
-    "section": "",
-    "text": "“If you’re searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!” 🏘️\n\n\n\nIS415 AY22-23 Project\n\nWho we are\nHello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.\n\n\nOur Purpose\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\n\n\nOur Theme\nSpatial Point Analysis"
-  },
-  {
-    "objectID": "index.html#is415-ay22-23-project-spatial-point-pattern-analysis",
-    "href": "index.html#is415-ay22-23-project-spatial-point-pattern-analysis",
-    "title": "If you’re searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!",
-    "section": "IS415 AY22-23 Project: Spatial Point Pattern Analysis",
-    "text": "IS415 AY22-23 Project: Spatial Point Pattern Analysis\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\nThis project is created by G1T7 - Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee."
+    "text": "TODO Create a template that demonstrates the appearance, formatting, layout, and functionality of your format. Learn more about journal formats at https://quarto.org/docs/journals/."
   },
   {
     "objectID": "project_proposal.html",
@@ -28,13 +14,6 @@
     "text": "Many prospective HDB buyers struggle to visualize and understand the amenities and facilities available in the vicinity of their desired location, often having to resort to manual searches on platforms like Google to determine the location of specific types of amenities. Additionally, current mapping tools do not provide a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process and make it easier for HDB buyers to view and understand the surrounding amenities through our analytical app. By providing a customized view of amenities relevant to HDB buyers, utilizing spatial point pattern analysis to visualize their distribution and clustering, and offering a user-friendly interface, we aim to help HDB buyers make more informed decisions about their purchases and feel more confident in their chosen residence."
   },
   {
-    "objectID": "project_proposal.html#project-motivation",
-    "href": "project_proposal.html#project-motivation",
-    "title": "",
-    "section": "Project Motivation",
-    "text": "Project Motivation\nMany prospective HDB buyers struggle to visualize and understand the amenities and facilities available in the vicinity of their desired location, often having to resort to manual searches on platforms like Google to determine the location of specific types of amenities. Additionally, current mapping tools do not provide a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process and make it easier for HDB buyers to view and understand the surrounding amenities through our analytical app. By providing a customized view of amenities relevant to HDB buyers, utilizing spatial point pattern analysis to visualize their distribution and clustering, and offering a user-friendly interface, we aim to help HDB buyers make more informed decisions about their purchases and feel more confident in their chosen residence."
-  },
-  {
     "objectID": "project_proposal.html#project-objectives",
     "href": "project_proposal.html#project-objectives",
     "title": "G1T7 Project Proposal",
@@ -42,18 +21,11 @@
     "text": "Project Objectives\nThis study seeks to gather crucial data that one might need to analyse and visualise to perform spatial point pattern analysis to:\n\nEstimate the intensity of HDB locations and amenities across the study area using Kernel Density Estimation.\nDetermine whether the distribution of amenities around HDBs is random or clustered, and calculate the ratio of observed to expected nearest neighbor distances using F-Function analysis.\nMeasure the degree of clustering or dispersion of HDB locations and surrounding amenities using Ripley’s K-function and L-function analysis.\nQuantify the extent of spatial association and heterogeneity between HDB locations and surrounding amenities using Colocation Quotients (CLQs) analysis.\nConduct Network Constrained Spatial Point Patterns Analysis to analyze the spatial distribution of HDB flats over a street network.\n\nBy achieving these objectives, our study aims to gain insights into the spatial distribution of HDB and amenities across the study area, identify significant spatial patterns and trends, and help inform planning and policy decisions related to urban development and resource allocation."
   },
   {
-    "objectID": "project_proposal.html#background",
-    "href": "project_proposal.html#background",
-    "title": "Our Project Proposal",
-    "section": "Background",
-    "text": "Background\nWhen it comes to buying a home, there are several aspects to consider, such as debt-to-income ratio, down payment, job stability, emotional condition, legal paperwork, and the list goes on. With all of that in mind, one must still maintain track of a list of prospective options, the facilities around the premises, and the ease of it in order to forecast its future potential. As a result, integrating pricing, circumstances surrounding properties, and displaying it geopolitically might alleviate key concerns for purchasers and assist them in making informed judgments."
-  },
-  {
-    "objectID": "project_proposal.html#datasets",
-    "href": "project_proposal.html#datasets",
-    "title": "G1T7 PROJECT PROPOSAL",
-    "section": "Datasets",
-    "text": "Datasets\n\n\n\nName\nDescription\nFile Format\n\n\n\n\nMaster Plan 2019 Region Boundary (No Sea)\nConsist of the Indicative polygon of region boundary.\n.xml, .kml, .json\n\n\nHDB Property Information\nConsists of property information related to HDB such as type of property(residential), market and hawker tag, car park tag\n.csv"
+    "objectID": "project_proposal.html#data-sets",
+    "href": "project_proposal.html#data-sets",
+    "title": "G1T7 Project Proposal",
+    "section": "Data Sets",
+    "text": "Data Sets\nBelow is a table of the data sets we will be using for our project.\n\n\n\nName\nDescription\nFile Format\n\n\n\n\n\n\n\nHDB Resale Flat Prices\nProvides HDB addresses, blocks and street name | Data.gov.sg\n.csv\n\n\n\n\n\nSchool Directory and Information\nProvides a list of primary schools in Singapore | Data.gov.sg\n.csv\n\n\n\n\n\nShopping Malls\nProvides a list of shopping mall and its geometry in Singapore | Web scrapped shopping mall data in 2019 by Valery Lim\n.csv\n\n\n\n\n\nURA Master Plan 2019 Subzone Boundary\nProvides region boundary data | Referenced/taken from Prof Kam\nshp\n\n\n\n\n\nBus Stops\nProvides a list of bus stops and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nTrain Station\nProvides a list of MRT/LTR exits and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nSupermarkets\nProvides a list of supermarkets in Singapore | Data.gov.sg\n.geojson\n\n\n\n\n\nChildcare Centres\nProvides a list of names, addresses and relevant information for childcare centres in Singapore | Extracted via onemapAPI API Docs | Registration\n.rds\n\n\n\n\n\nEldercare Centres\nProvides a list of names, addresses and relevant information for eldercare centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nKindergartens\nProvides a list of names, addresses and relevant information for kindergartens in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHawker Centres\nProvides a list of names, addresses and relevant information for hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHealthier Hawker Centres\nProvides a list of names, addresses and relevant information for healthier hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nNational Parks\nProvides a list of names, addresses and relevant information for national parks in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nGyms\nProvides a list of names, addresses and relevant information for gyms in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nRetail Pharmacies\nProvides a list of names, addresses and relevant information for retail pharmacies in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nSingapore Police Force (SPF) Establishments\nProvides a list of names, addresses and relevant information for SPF establishments in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nCarparks\nProvides a list of names, addresses and relevant information for carparks in Singapore | Extracted via onemapAPI\n.rds"
   },
   {
     "objectID": "project_proposal.html#literature-review",
@@ -63,13 +35,6 @@
     "text": "Literature Review\n\n#1: Spatial Point Pattern Analysis of Human Settlements and Geographical Associations in Eastern Coastal China - A Case Study (Zhang et al., 2014)\nThis article highlights the potential of spatial point pattern analysis as a tool for gaining insights into the spatial patterns and associations of human settlements in rapidly urbanising regions. The article used spatial point pattern analysis techniques such as Ripley’s K-function and nearest neighbour analysis, to analyse the spatial distribution and clustering of human settlements in eastern coastal China. Based on their results, it demonstrates the importance of considering spatial relationships and locational factors in understanding settlement patterns and provides insights that can be used to inform urban planning and development policies.\n\nHow does it link to our project?\nTo examine the spatial distribution and clustering of HDB locations and facilities in Singapore. We plan to use the following functions referenced from the article:\n\nKernel density estimation: To identify areas with high or low concentrations of HDB locations or facilities, and to explore the relationship between HDB locations and surrounding amenities.\nRipley’s K-function: To measure the degree of spatial clustering or dispersion of point locations, which can help identify hotspots or coldspots of HDB locations or facilities and compare the observed spatial distribution of HDB locations or facilities to a random distribution, and test whether the observed pattern is statistically significant.\n\n\n\n\n#2: Analysing the global and local spatial associations of medical resources across Wuhan city using POI data (Chen, Q et al., 2023)\nThis article highlights the issue of imbalance in the supply and demand of medical resources in provincial capitals of China and emphasises the need to understand the spatial patterns of medical resources to ensure fair and optimal allocation of limited resources. This article utilises the Localised Colocation Quotient (LCLQ) analysis, which is a technique that measures directional spatial associations and heterogeneity between categorical point data. By employing this method and utilising point of interest (POI) data, the study presents a unique analysis of the spatial patterns and directional spatial associations between six medical resources in Wuhan city.\n\nHow does it link to our project?\nFor our project, we need to first define the two types of features of interest which will be HDB locations and the presence of certain amenities. Some examples are schools, carparks, shopping centres and MRT stations. By comparing the observed and expected frequencies of co-occurrence using the LCLQ, we can determine whether HDB locations and surrounding amenities are spatially associated in a non-random way. This can provide insights into the degree to which the availability of amenities in an area affects HDB locations, and vice versa."
   },
   {
-    "objectID": "project_proposal.html#section",
-    "href": "project_proposal.html#section",
-    "title": "Our Project Proposal",
-    "section": "",
-    "text": "Our Approach\n\nData Preparation\n\nAssemble data from various sources\nData handling and wrangling\n\nEDA\n\nAnalyse the spatial arrangement of data points\nIdentify any outliers or anomalies in the data sets\nChoropleth Mapping\n\nSpatial Point Patterns Analysis\n\nFirst point Analysis\n\nKernel Density Estimation\n\nSecond point Analysis\n\nF-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.\nRipley’s K-function and L function: To measure the degree of clustering or dispersion of HDB prices and surrounding amenities, and help identify significant spatial patterns and trends.\n\nColocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB prices and surrounding amenities, helping to identify areas of high or low co-location."
-  },
-  {
     "objectID": "project_proposal.html#our-approach",
     "href": "project_proposal.html#our-approach",
     "title": "G1T7 Project Proposal",
@@ -77,11 +42,11 @@
     "text": "Our Approach\n\nData Preparation\n\nAssemble data from various sources\nData handling and wrangling\n\nExploratory Data Analysis\n\nAnalyse the spatial arrangement of data points\nIdentify any outliers or anomalies in the data sets\nChoropleth Mapping\n\nSpatial Point Patterns Analysis (Filter by: Sub-district/Region)\n\nFirst point Analysis\n\nKernel Density Estimation:\n\nSecond point Analysis\n\nF-Function: Identify whether the distribution of amenities around HDBs is random or clustered, and the ratio of observed to expected nearest neighbor distances.\nRipley’s K-function and L function: To measure the degree of clustering or dispersion of HDB locations and surrounding amenities, and help identify significant spatial patterns and trends.\nColocation Quotients CLQs: To measure the extent of spatial association and heterogeneity between HDB locations and surrounding amenities, helping to identify areas of high or low co-location.\nNetwork Constrained Spatial Point Patterns Analysis: To analyse the spatial distribution of HDB flats over a street network"
   },
   {
-    "objectID": "index.html#is415-ay22-23-project",
-    "href": "index.html#is415-ay22-23-project",
-    "title": "",
-    "section": "IS415 AY22-23 Project",
-    "text": "IS415 AY22-23 Project\n\nWho we are\nHello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.\n\n\nOur Purpose\nThis project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.\n\n\nOur Theme\nSpatial Point Analysis"
+    "objectID": "project_proposal.html#packages",
+    "href": "project_proposal.html#packages",
+    "title": "G1T7 Project Proposal",
+    "section": "Packages",
+    "text": "Packages\nBelow is the list of packages we will be using for our project:\n\nsf: import and handle geospatial data\ntidyverse: data wrangling (tidyr, dplyr, ggplot2, tibble)\ntmap: plot choropleth maps\nmaptools: a set of tools for manipulating geographic data\nraster: convert grid output to raster layer for visualisation (Kernel Density Estimation)\nspatstat: conversion from spatial object to ppp format (Spatial Point Pattern plot)\nfunModeling: plotting EDA"
   },
   {
     "objectID": "project_proposal.html#application-system-architecture",
@@ -112,18 +77,11 @@
     "text": "References\nLiterature review #1: https://www.mdpi.com/1660-4601/11/3/2818\nLiterature review #2: https://link.springer.com/article/10.1186/s12913-023-09051-0"
   },
   {
-    "objectID": "project_proposal.html#data-sets",
-    "href": "project_proposal.html#data-sets",
-    "title": "G1T7 Project Proposal",
-    "section": "Data Sets",
-    "text": "Data Sets\nBelow is a table of the data sets we will be using for our project.\n\n\n\nName\nDescription\nFile Format\n\n\n\n\n\n\n\nHDB Resale Flat Prices\nProvides HDB addresses, blocks and street name | Data.gov.sg\n.csv\n\n\n\n\n\nSchool Directory and Information\nProvides a list of primary schools in Singapore | Data.gov.sg\n.csv\n\n\n\n\n\nShopping Malls\nProvides a list of shopping mall and its geometry in Singapore | Web scrapped shopping mall data in 2019 by Valery Lim\n.csv\n\n\n\n\n\nURA Master Plan 2019 Subzone Boundary\nProvides region boundary data | Referenced/taken from Prof Kam\nshp\n\n\n\n\n\nBus Stops\nProvides a list of bus stops and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nTrain Station\nProvides a list of MRT/LTR exits and its geometry in Singapore | Datamall LTA\n.shp\n\n\n\n\n\nSupermarkets\nProvides a list of supermarkets in Singapore | Data.gov.sg\n.geojson\n\n\n\n\n\nChildcare Centres\nProvides a list of names, addresses and relevant information for childcare centres in Singapore | Extracted via onemapAPI API Docs | Registration\n.rds\n\n\n\n\n\nEldercare Centres\nProvides a list of names, addresses and relevant information for eldercare centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nKindergartens\nProvides a list of names, addresses and relevant information for kindergartens in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHawker Centres\nProvides a list of names, addresses and relevant information for hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nHealthier Hawker Centres\nProvides a list of names, addresses and relevant information for healthier hawker centres in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nNational Parks\nProvides a list of names, addresses and relevant information for national parks in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nGyms\nProvides a list of names, addresses and relevant information for gyms in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nRetail Pharmacies\nProvides a list of names, addresses and relevant information for retail pharmacies in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nSingapore Police Force (SPF) Establishments\nProvides a list of names, addresses and relevant information for SPF establishments in Singapore | Extracted via onemapAPI\n.rds\n\n\n\n\n\nCarparks\nProvides a list of names, addresses and relevant information for carparks in Singapore | Extracted via onemapAPI\n.rds"
-  },
-  {
-    "objectID": "project_proposal.html#packages",
-    "href": "project_proposal.html#packages",
-    "title": "G1T7 Project Proposal",
-    "section": "Packages",
-    "text": "Packages\nBelow is the list of packages we will be using for our project:\n\nsf: import and handle geospatial data\ntidyverse: data wrangling (tidyr, dplyr, ggplot2, tibble)\ntmap: plot choropleth maps\nmaptools: a set of tools for manipulating geographic data\nraster: convert grid output to raster layer for visualisation (Kernel Density Estimation)\nspatstat: conversion from spatial object to ppp format (Spatial Point Pattern plot)\nfunModeling: plotting EDA"
+    "objectID": "code_draft/data/geospatial/MPSZ-2019.html",
+    "href": "code_draft/data/geospatial/MPSZ-2019.html",
+    "title": "",
+    "section": "",
+    "text": "<!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’>     dataset\n\n\n        0 0     false"
   },
   {
     "objectID": "code_draft/data_pre_processing.html",
@@ -137,7 +95,7 @@
     "href": "code_draft/data_pre_processing.html#resale-flat-prices-aspatial",
     "title": "Data Pre-processing",
     "section": "Resale Flat Prices (Aspatial)",
-    "text": "Resale Flat Prices (Aspatial)\nExtract locations over study area 12 months, January 2022 to December 2022\n\nresale <- read_csv(\"data/aspatial/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv\")\n\n\n#extract HDB study are of January 2022 to December 2022\nresale<- resale %>% \n  filter(flat_type == \"5 ROOM\") %>%\n  filter(month >= \"2022-01\" & month <= \"2022-12\")\n\n\nresale$street_name <- gsub(\"ST\\\\.\", \"SAINT\", resale$street_name)\n\n#filter only unique HDB blocks\nresale %>% distinct(street_name, block)\n\n\ngeocode <- function(block, streetname) {\n  base_url <- \"https://developers.onemap.sg/commonapi/search\"\n  address <- paste(block, streetname, sep = \" \")\n  query <- list(\"searchVal\" = address, \n                \"returnGeom\" = \"Y\",\n                \"getAddrDetails\" = \"N\",\n                \"pageNum\" = \"1\")\n  \n  res <- GET(base_url, query = query)\n  restext<-content(res, as=\"text\")\n  \n  output <- fromJSON(restext)  %>% \n    as.data.frame %>%\n    select(results.LATITUDE, results.LONGITUDE)\n\n  return(output)\n}\n\n\nresale$LATITUDE <- 0\nresale$LONGITUDE <- 0\n\nfor (i in 1:nrow(resale)){\n  temp_output <- geocode(resale[i, 4], resale[i, 5])\n  \n  resale$LATITUDE[i] <- temp_output$results.LATITUDE\n  resale$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\n# resale flat with lat and long\nwrite_rds(resale, \"data/rds/resale_locations(1year).rds\")\n\n\nresale_locations<-readRDS(\"data/rds/resale_locations(1year).rds\")\n\n#Transform\nresale_sf <- st_as_sf(resale_locations, \n                      coords = c(\"LONGITUDE\", \n                                 \"LATITUDE\"), \n                      crs=4326) %>%\n  st_transform(crs = 3414)\n\n#Missing values\nsum(is.na(resale_sf))\n\n#correct CRS\nst_crs(resale_sf)\n\n\n#invalid geometries\nlength(which(st_is_valid(resale_sf) == FALSE))\n\n\nwrite_rds(resale_sf, \"data/rds/resale_sf.rds\")"
+    "text": "Resale Flat Prices (Aspatial)\nExtract locations over study area 12 months, January 2022 to December 2022\n\nresale <- read_csv(\"data/aspatial/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv\")\n\n\n#extract HDB study are of January 2022 to December 2022\nresale<- resale %>% \n  filter(flat_type == \"5 ROOM\") %>%\n  filter(month >= \"2022-01\" & month <= \"2022-12\")\n\n\nresale$street_name <- gsub(\"ST\\\\.\", \"SAINT\", resale$street_name)\n\n#filter only unique HDB blocks\nresale %>% distinct(street_name, block)\n\n\ngeocode <- function(block, streetname) {\n  base_url <- \"https://developers.onemap.sg/commonapi/search\"\n  address <- paste(block, streetname, sep = \" \")\n  query <- list(\"searchVal\" = address, \n                \"returnGeom\" = \"Y\",\n                \"getAddrDetails\" = \"N\",\n                \"pageNum\" = \"1\")\n  \n  res <- GET(base_url, query = query)\n  restext<-content(res, as=\"text\")\n  \n  output <- fromJSON(restext)  %>% \n    as.data.frame %>%\n    select(results.LATITUDE, results.LONGITUDE)\n\n  return(output)\n}\n\n\nresale$LATITUDE <- 0\nresale$LONGITUDE <- 0\n\nfor (i in 1:nrow(resale)){\n  temp_output <- geocode(resale[i, 4], resale[i, 5])\n  \n  resale$LATITUDE[i] <- temp_output$results.LATITUDE\n  resale$LONGITUDE[i] <- temp_output$results.LONGITUDE\n}\n\n\n# resale flat with lat and long\nwrite_rds(resale, \"data/rds/resale_locations(1year).rds\")\n\n\nresale_locations<-readRDS(\"data/rds/resale_locations(1year).rds\")\n\n#Transform\nresale_sf <- st_as_sf(resale_locations, \n                      coords = c(\"LONGITUDE\", \n                                 \"LATITUDE\"), \n                      crs=4326) %>%\n  st_transform(crs = 3414)\n\n#Missing values\nsum(is.na(resale_sf))\n\n#correct CRS\nst_crs(resale_sf)\n\n\n#invalid geometries\nlength(which(st_is_valid(resale_sf) == FALSE))\n\n\nwrite_rds(resale_sf, \"data/rds/resale_sf.rds\")\n\n\n# based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)\n\n#resale_sf<- subset(resale_sf, full_address != \"BLK 27 MARINE CRES\")"
   },
   {
     "objectID": "code_draft/data_pre_processing.html#master-plan-2019-boundary",
@@ -203,8 +161,43 @@
     "text": "Rewrite sf.rds files with processed ver\n\nwrite_rds(mpsz, \"data/rds/mpsz_sf.rds\")\nwrite_rds(childcare_sf, \"data/rds/childcare_sf.rds\")\nwrite_rds(eldercare_sf, \"data/rds/eldercare_sf.rds\")\nwrite_rds(kindergartens_sf, \"data/rds/kindergartens_sf.rds\")\nwrite_rds(hawkercentre_new_sf, \"data/rds/hawkercentre_new_sf.rds\")\nwrite_rds(hawkercentre_healthy_sf, \"data/rds/hawkercentre_healthy_sf.rds\")\nwrite_rds(nationalparks_sf, \"data/rds/nationalparks_sf.rds\")\nwrite_rds(gyms_sf, \"data/rds/gyms_sf.rds\")\nwrite_rds(pharmacy_sf, \"data/rds/pharmacy_sf.rds\")\nwrite_rds(spf_sf, \"data/rds/spf_sf.rds\")\nwrite_rds(HDB_carpark_sf, \"data/rds/HDB_carpark_sf.rds\")\nwrite_rds(supermarket_sf, \"data/rds/supermarket_sf.rds\")\nwrite_rds(bus_stop_sf, \"data/rds/bus_stop_sf.rds\")\nwrite_rds(mrt_sf, \"data/rds/mrt_sf.rds\")\nwrite_rds(primary_school_sf, \"data/rds/primary_school_sf.rds\")\nwrite_rds(popular_primary_schools_sf, \"data/rds/top10_primary_school_sf.rds\")\nwrite_rds(shopping_mall_sf, \"data/rds/shopping_mall_sf.rds\")"
   },
   {
-    "objectID": "code_draft/data/geospatial/MPSZ-2019.html",
-    "href": "code_draft/data/geospatial/MPSZ-2019.html",
+    "objectID": "code_draft/mapping.html",
+    "href": "code_draft/mapping.html",
+    "title": "Mapping and LCLQ",
+    "section": "",
+    "text": "pacman::p_load(readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table)"
+  },
+  {
+    "objectID": "code_draft/mapping.html#import-data",
+    "href": "code_draft/mapping.html#import-data",
+    "title": "Mapping and LCLQ",
+    "section": "Import Data",
+    "text": "Import Data\n\n#import data\nresale_sf<-readRDS(\"data/rds/resale_sf.rds\")\n\nmpsz_sf<-readRDS(\"data/rds/mpsz_sf.rds\")\n\nchildcare_sf <- readRDS(\"data/rds/childcare_sf.rds\")\neldercare_sf<- readRDS(\"data/rds/eldercare_sf.rds\")\nkindergartens_sf <- readRDS(\"data/rds/kindergartens_sf.rds\")\nhawkercentre_new_sf <- readRDS(\"data/rds/hawkercentre_new_sf.rds\")\nhawkercentre_healthy_sf<-readRDS(\"data/rds/hawkercentre_healthy_sf.rds\")\nnationalparks_sf<-readRDS(\"data/rds/nationalparks_sf.rds\")\ngyms_sf <-readRDS(\"data/rds/gyms_sf.rds\")\npharmacy_sf<-readRDS(\"data/rds/pharmacy_sf.rds\")\nspf_sf<-readRDS(\"data/rds/spf_sf.rds\")\nHDB_carpark_sf<-readRDS(\"data/rds/HDB_carpark_sf.rds\")\n\nsupermarket_sf<-readRDS(\"data/rds/supermarket_sf.rds\")\nbus_stop_sf<-readRDS(\"data/rds/bus_stop_sf.rds\")\nmrt_sf<-readRDS(\"data/rds/mrt_sf.rds\")\nprimary_school_sf<-readRDS(\"data/rds/primary_school_sf.rds\")\ntop10_primary_school_sf<-readRDS(\"data/rds/top10_primary_school_sf.rds\")\nshopping_mall_sf<-readRDS(\"data/rds/shopping_mall_sf.rds\")\n\n# combine street name and blk for HDB full address\nresale_sf$full_address <- paste(\"BLK\", resale_sf$block, resale_sf$street_name)"
+  },
+  {
+    "objectID": "code_draft/mapping.html#mapping",
+    "href": "code_draft/mapping.html#mapping",
+    "title": "Mapping and LCLQ",
+    "section": "Mapping",
+    "text": "Mapping\nHDB locations and relevant information\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\")\n\nHDB and Supermarket\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\") +\n  tm_shape(supermarket_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nHDB and Kindergartens\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(resale_sf_address) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#FCE883\",\n          size=0.05)+\ntm_shape(kindergartens_sf) +\n  tm_dots(alpha=0.5,\n          col=\"#FFD1DC\",\n          size=0.05)\n\nEarly Childhood/Primary Schools\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(childcare_sf) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#FCE883\",\n          size=0.05)+\ntm_shape(kindergartens_sf) +\n  tm_dots(alpha=0.5,\n          col=\"#FFD1DC\",\n          size=0.05) +\ntm_shape(primary_school_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nTransport (Bus)\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\ntm_shape(bus_stop_sf) +\n  tm_dots(alpha=0.5, #affects transparency of points\n          col=\"#007FFF\",\n          size=0.05)\n  tm_view(set.zoom.limits = c(10, 14))\n\nTransport(Train)\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) + \ntm_shape(mrt_sf)+ \n  tm_dots(col = \"red\",\n             size = 0.01,\n             border.col = \"black\",\n             border.lwd = 0.5,\n           legend.show = FALSE) +\n  tm_view(set.zoom.limits = c(10, 16))\n\nHDB and another amenity function\n\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons(\"REGION_N\",\n              alpha = 0.2) +\n  tm_shape(resale_sf) +\n  tm_dots(col = \"resale_price\", \n          id = \"full_address\", # bold in popup\n          popup.vars = c(\"Resale Price:\" = \"resale_price\",\n                         \"Flat Type:\" = \"flat_type\", \n                         \"Flat Model:\" = \"flat_model\",\n                         \"Floor Area (sqm):\" = \"floor_area_sqm\",\n                         \"Remaining Lease:\" = \"remaining_lease\"\n                         ),\n          title = \"Resale Prices\") +\n  tm_shape(supermarket_sf) +\n  tm_dots(alpha=0.5,\n        col=\"#FF0000\",\n        size=0.05) +\n  tm_view(set.zoom.limits = c(10, 16))"
+  },
+  {
+    "objectID": "code_draft/mapping.html#lclq",
+    "href": "code_draft/mapping.html#lclq",
+    "title": "Mapping and LCLQ",
+    "section": "LCLQ",
+    "text": "LCLQ\n\n#HDB locations\nhdb_a <- resale_sf %>%\n  select(geometry) %>% \n  mutate(geometry= geometry,\n         type = \"HDB\") \n\n\n#formula to get the LCLQ data\n\n#hdb_a, amenity df, amenity name\ncql_func <- function(df1,df2,nameB){\n  df2_b <- df2 %>%\n  select(geometry) %>% \n  mutate(geometry= geometry,\n         type = nameB) \n  combined <- rbindlist(list(df1, df2_b),use.names=FALSE)\n  combined_sf <- st_as_sf(combined) %>%\n  st_transform(crs = 3414)\n  \n  nb <- include_self(\n  st_knn(st_geometry(combined_sf), 6))\n  \n  wt <- st_kernel_weights(nb, \n                        combined_sf, \n                        \"gaussian\", \n                        adaptive = TRUE)\n  \n  hdb_locations <- combined_sf %>%\n  filter(type == \"HDB\")\n  A <- hdb_locations$type\n  \n  df2_locations <- combined_sf %>%\n  filter(type == nameB)\n  \n  B <- df2_locations$type\n  \n  LCLQ <- local_colocation(A, B, wt, nb, 99) # 100 simulations\n  LCLQ_stores <- cbind(combined_sf, LCLQ)\n  \n  write_rds(LCLQ_stores, paste0(\"data/rds/clq/hdb_\",nameB,\".rds\"))\n  }\n\n\n# dont run again\ncql_func(hdb_a,childcare_sf,\"Childcare\")\ncql_func(hdb_a,eldercare_sf,\"Eldercare\")\ncql_func(hdb_a,kindergartens_sf,\"Kindegarten\")\ncql_func(hdb_a,nationalparks_sf,\"NationalParks\")\ncql_func(hdb_a,gyms_sf,\"Gym\")\ncql_func(hdb_a,pharmacy_sf,\"Pharmacy\")\ncql_func(hdb_a,supermarket_sf,\"Supermarket\")\ncql_func(hdb_a,bus_stop_sf,\"Bus\")\ncql_func(hdb_a,HDB_carpark_sf,\"Carparks\")\ncql_func(hdb_a,mrt_sf,\"Mrt\")\ncql_func(hdb_a,primary_school_sf,\"PrimarySchool\")\ncql_func(hdb_a,hawkercentre_new_sf,\"Hawker\")\ncql_func(hdb_a,shopping_mall_sf,\"ShoppingMall\")"
+  },
+  {
+    "objectID": "code_draft/mapping.html#import-lclq-data",
+    "href": "code_draft/mapping.html#import-lclq-data",
+    "title": "Mapping and LCLQ",
+    "section": "Import LCLQ Data",
+    "text": "Import LCLQ Data\n\n# import the clq files\nchildcare_clq<- readRDS(\"data/rds/clq/hdb_Childcare.rds\")\neldercare_clq<- readRDS(\"data/rds/clq/hdb_Eldercare.rds\")\nkindergarten_clq<- readRDS(\"data/rds/clq/hdb_Kindegarten.rds\")\nnationalParks_clq<- readRDS(\"data/rds/clq/hdb_NationalParks.rds\")\ngym_clq<- readRDS(\"data/rds/clq/hdb_Gym.rds\")\npharmacy_clq<- readRDS(\"data/rds/clq/hdb_Pharmacy.rds\")\nsupermarket_clq<- readRDS(\"data/rds/clq/hdb_Supermarket.rds\")\nbus_clq<- readRDS(\"data/rds/clq/hdb_Bus.rds\")\ncarpark_clq<- readRDS(\"data/rds/clq/hdb_Carparks.rds\")\nmrt_clq<- readRDS(\"data/rds/clq/hdb_Mrt.rds\")\nprimarySchool_clq<- readRDS(\"data/rds/clq/hdb_PrimarySchool.rds\")\nhawker_clq<- readRDS(\"data/rds/clq/hdb_Hawker.rds\")\nshoppingMall_clq<- readRDS(\"data/rds/clq/hdb_ShoppingMall.rds\")\n\n#\nmpsz_sf<-readRDS(\"data/rds/mpsz_sf.rds\")\n\n\n#check pvalues\n\n unique(st_drop_geometry(childcare_clq)[, 3])\n unique(st_drop_geometry(eldercare_clq)[, 3])\n unique(st_drop_geometry(kindergarten_clq)[, 3])\n unique(st_drop_geometry(nationalParks_clq)[, 3])\n unique(st_drop_geometry(gym_clq)[, 3])\n unique(st_drop_geometry(pharmacy_clq)[, 3])\n unique(st_drop_geometry(supermarket_clq)[, 3])\n unique(st_drop_geometry(bus_clq)[, 3]) # has p-value above 0.05\n unique(st_drop_geometry(carpark_clq)[, 3])\n unique(st_drop_geometry(mrt_clq)[, 3])\n unique(st_drop_geometry(primarySchool_clq)[, 3])\n unique(st_drop_geometry(hawker_clq)[, 3])\n unique(st_drop_geometry(shoppingMall_clq)[, 3])\n\n\n#intepretation reference: https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm\n\n# filtered_data <- subset(eldercare_clq, p_sim_Eldercare < 0.05)\ntmap_mode(\"view\")\ntm_shape(mpsz_sf) +\n  tm_polygons() +\ntm_shape(bus_clq)+ \n  tm_dots(col = \"Bus\",\n             size = 0.01,\n             border.col = \"black\",\n             border.lwd = 0.5) \n#+ tm_view(set.zoom.limits = c(12, 16))"
+  },
+  {
+    "objectID": "the-right-space/data/geospatial/MPSZ-2019.html",
+    "href": "the-right-space/data/geospatial/MPSZ-2019.html",
     "title": "",
     "section": "",
     "text": "<!DOCTYPE qgis PUBLIC ‘http://mrcc.com/qgis.dtd’ ‘SYSTEM’>     dataset\n\n\n        0 0     false"
