@@ -315,6 +315,12 @@ supermarket_ppp_jit <- rjitter(supermarket_ppp,
 
 ```
 
+```{r}
+saveRDS(resale_ppp_jit, "data/rds/resale_ppp_jit.rds")
+
+
+```
+
 ### Creating ***owin*** object
 
 ```{r}
@@ -748,6 +754,111 @@ tm_shape(kde_resaleSG_bw_raster) +
 #### Extracting study area
 
 ```{r}
+area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+
+```
+
+```{r}
+area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+
+for (area_name in area_names) {
+  df_name <- paste0(tolower(gsub(" ", "_", area_name)), "_mpsz") # Create a name for the data frame
+  assign(df_name, mpsz[mpsz@data$PLN_AREA_N == area_name,]) # Subset the data and assign it to the new data frame
+}
+```
+
+```{r}
+df_names <- ls(pattern = "_mpsz$")
+df_names
+```
+
+## check
+
+```{r}
+bedok = mpsz[mpsz@data$PLN_AREA_N == "BEDOK",]
+bedok_sp = as(bedok, "SpatialPolygons")
+bedok_owin = as(bedok_sp, "owin")
+resale_bedok_ppp = resale_ppp_jit[bedok_owin]
+resale_bedok_ppp.km = rescale(resale_bedok_ppp, 1000, "km")
+#plot(resale_bedok_ppp.km, main="bedok")
+
+F_CK = Fest(resale_bedok_ppp.km)
+plot(F_CK)
+```
+
+```{r}
+set.seed(123)
+F_bedok.csr <- envelope(resale_bedok_ppp, Fest, nsim = 999)
+plot(F_bedok.csr)
+```
+
+```{r}
+L_bedok.csr <- envelope(resale_bedok_ppp, Lest, nsim = 39, rank = 1, glocal=TRUE)
+plot(L_bedok.csr, . - r ~ r, 
+     xlab="d", ylab="L(d)-r", xlim=c(0,500))
+```
+
+```{r}
+title <- "Pairwise Distance: L function"
+
+Lcsr_df <- as.data.frame(L_bedok.csr)
+
+colour=c("#0D657D","#ee770d","#D3D3D3")
+csr_plot <- ggplot(Lcsr_df, aes(r, obs-r))+
+  # plot observed value
+  geom_line(colour=c("#4d4d4d"))+
+  geom_line(aes(r,theo-r), colour="red", linetype = "dashed")+
+  # plot simulation envelopes
+  geom_ribbon(aes(ymin=lo-r,ymax=hi-r),alpha=0.1, colour=c("#91bfdb")) +
+  xlab("Distance r (m)") +
+  ylab("L(r)-r") +
+  geom_rug(data=Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,], sides="b", colour=colour[1])  +
+  geom_rug(data=Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,], sides="b", colour=colour[2]) +
+  geom_rug(data=Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,], sides="b", color=colour[3]) +
+  theme_tufte()+
+  ggtitle(title)
+
+text1<-"Significant clustering"
+text2<-"Significant segregation"
+text3<-"Not significant clustering/segregation"
+
+# the below conditional statement is required to ensure that the labels (text1/2/3) are assigned to the correct traces
+if (nrow(Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,])==0){ 
+  if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){ 
+    ggplotly(csr_plot, dynamicTicks=T) %>%
+      style(text = text3, traces = 4) %>%
+      rangeslider() 
+  }else if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){ 
+    ggplotly(csr_plot, dynamicTicks=T) %>%
+      style(text = text2, traces = 4) %>%
+      rangeslider() 
+  }else {
+    ggplotly(csr_plot, dynamicTicks=T) %>%
+      style(text = text2, traces = 4) %>%
+      style(text = text3, traces = 5) %>%
+      rangeslider() 
+  }
+} else if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){
+  if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){
+    ggplotly(csr_plot, dynamicTicks=T) %>%
+      style(text = text1, traces = 4) %>%
+      rangeslider() 
+  } else{
+    ggplotly(csr_plot, dynamicTicks=T) %>%
+      style(text = text1, traces = 4) %>%
+      style(text = text3, traces = 5) %>%
+      rangeslider()
+  }
+} else{
+  ggplotly(csr_plot, dynamicTicks=T) %>%
+    style(text = text1, traces = 4) %>%
+    style(text = text2, traces = 5) %>%
+    style(text = text3, traces = 6) %>%
+    rangeslider()
+  }
+```
+
+```{r}
 pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
 tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
 ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
@@ -781,6 +892,10 @@ jw_owin = as(jw_sp, "owin")
 ```
 
 #### Combining childcare points and the study area
+
+```{r}
+resale_ppp_jit
+```
 
 ```{r}
 resale_pg_ppp = resale_ppp_jit[pg_owin]

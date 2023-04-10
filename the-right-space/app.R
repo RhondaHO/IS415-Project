@@ -1,14 +1,19 @@
 #load packages
-pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table, leaflet, shinyjs, shinyWidgets, bslib, raster, spatstat)
+pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, 
+               plotly, data.table, leaflet, shinyjs, shinyWidgets, bslib, 
+               raster, spatstat, olsrr, ggplot2, ggthemes, rvest, httr, jsonlite, maptools)
+
 #library(shinythemes)
 
 #---------------------------------------- MAIN DATA IMPORTATION
 resale_sf<-readRDS("data/rds/resale_sf.rds")
 mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+resale_ppp_jit <- readRDS("data/rds/resale_ppp_jit.rds")
+
 
 #---------------------------------------- NETWORK ANALYSIS DATA IMPORTATION
-area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
-area_names <- gsub(" ", "_", area_names)
+area_names_1 <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+area_names <- gsub(" ", "_", area_names_1)
 
 setwd("data/rds/shape")
 files <- list.files(pattern = ".rds")
@@ -82,36 +87,37 @@ for (file in files) {
   assign(df_name, readRDS(file))
 }
 
-setwd("../../kfunc/childcare/multi")
-files <- list.files(pattern = ".rds")
-for (file in files) {
-  df_name <- sub(".rds", "", file)
-  assign(df_name, readRDS(file))
-}
-setwd("../../eldercare/multi")
-files <- list.files(pattern = ".rds")
-for (file in files) {
-  df_name <- sub(".rds", "", file)
-  assign(df_name, readRDS(file))
-}
-setwd("../../hawker_new/multi")
-files <- list.files(pattern = ".rds")
-for (file in files) {
-  df_name <- sub(".rds", "", file)
-  assign(df_name, readRDS(file))
-}
-setwd("../../gym/multi")
-files <- list.files(pattern = ".rds")
-for (file in files) {
-  df_name <- sub(".rds", "", file)
-  assign(df_name, readRDS(file))
-}
-setwd("../../hdb_carpark/multi")
-files <- list.files(pattern = ".rds")
-for (file in files) {
-  df_name <- sub(".rds", "", file)
-  assign(df_name, readRDS(file))
-}
+# setwd("../../kfunc/childcare/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
+
+# setwd("../../eldercare/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
+# setwd("../../hawker_new/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
+# setwd("../../gym/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
+# setwd("../../hdb_carpark/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
 
 #theme
 my_theme <- bs_theme(
@@ -125,7 +131,7 @@ ui <-
 navbarPage(img(src="logo_t.png", style="float:right", width = "190px", height = "55px",),
   #"the right space", 
            collapsible = TRUE,
-  #### HOME ####
+#### HOME ####
 tabPanel("Home",
          fluidPage(
            theme = my_theme,
@@ -299,7 +305,7 @@ tabPanel("Spatial Point Pattern Analysis",
                sidebarLayout(position = "right",
                              sidebarPanel(
                                h4("Description"),
-                               p("Please first select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Visualize KDE Graph' button. Take note that generating the graph may take some time."),
+                               p("Please first select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Plot KDE Graph' button. Take note that generating the graph may take some time."),
                                selectInput("kde_amenity", label = h4("Amenity Type"), 
                                            choices = c("HDB",
                                                        "Childcare Centres",
@@ -332,7 +338,9 @@ tabPanel("Spatial Point Pattern Analysis",
                                                        "Disc" ="disc"), 
                                            ),
                                
-                               actionButton("run_kde", "Visualise KDE graph")
+                               actionButton("run_kde", "Plot KDE graph"),
+                               h4("Intepretation"),
+                               p("XXX")
                              ),
                              mainPanel(
                                plotOutput("kde_plot")
@@ -340,27 +348,53 @@ tabPanel("Spatial Point Pattern Analysis",
                )
              )),
              #end of KDE
-             
+           
+           #### Tabset Ffunc ####
              tabPanel("F-Function", fluidPage(
                sidebarLayout(position = "right",
                              sidebarPanel(
-                               h4("Variables"),
-                               selectInput("net_areaName", label = h4("Area Name"), 
-                                           choices = area_names, 
-                                           selected = "ANG_MO_KIO"),
+                               h4("Description"),
+                               p("Please first select the area you would like to view the F-function graph of, and then click the 'Plot F-function graph' button. Take note that generating the graph may take some time."),
+                               selectInput("ffunc", label = h4("Area Name"), 
+                                           choices = area_names_1, 
+                                           selected = "BEDOK"),
+                               actionButton("run_ffunc", "Plot F-function graph"),
+                               h4("Intepretation"),
+                               p("XXX")
+                               
                              ),
                              mainPanel(
-                               #plotOutput("XX")
+                               plotOutput("ffunc_plot")
                              )
                )
              )),
              
              #end of F-function
-           ####RIPLEY####
-             tabPanel("Ripley (K-Function)"),
+           #### Tabset RIPLEY####
+             tabPanel("Ripley (L-Function)", fluidPage(
+               sidebarLayout(
+                 position = "right",
+                 sidebarPanel(
+                   h4("Description"),
+                   p("Please first select the area you would like to view the Ripley(L-function) graph of, and then click the 'Plot L-function graph' button. Take note that generating the graph may take some time."),
+                   
+                   selectInput("rip", label = h4("Area Name"), 
+                               choices = area_names_1, 
+                               selected = "BEDOK"),
+                   actionButton("run_rip", "Plot L-function graph"),
+                   h4("Intepretation"),
+                   p("XXX")
+                   
+                 ),
+                 mainPanel(
+                      plotlyOutput("rip_plot")
+                 )
+               )
+             ))
+           ,
            
            
-           ####NETWORK ####
+           #### Tabset NETWORK ####
              tabPanel("Network Constraint Analysis", fluidPage(
                sidebarLayout(
                  position = "right",
@@ -397,7 +431,8 @@ tabPanel("Data Upload",
          ))
 )
 
-#### Define server logic ####
+
+#### Define server logic
 server <- function(input, output) {
   delay(3000, hide("note")) #delay function
   observeEvent(input$toggle, {
@@ -519,11 +554,108 @@ server <- function(input, output) {
 
   #----- END KDE
   
-  #----- START Ffunction
+  #### Ffunction ####
+      observeEvent(input$run_ffunc,{
+        bedok = mpsz[mpsz@data$PLN_AREA_N == input$ffunc,]
+        bedok_sp = as(bedok, "SpatialPolygons")
+        bedok_owin = as(bedok_sp, "owin")
+        resale_bedok_ppp = resale_ppp_jit[bedok_owin]
+        #resale_bedok_ppp.km = rescale(resale_bedok_ppp, 1000, "km")
+        #plot(resale_bedok_ppp.km, main="bedok")
+
+        F_CK = Fest(resale_bedok_ppp)
+        #plot(F_CK)
+
+        set.seed(123)
+        F_bedok.csr <- envelope(resale_bedok_ppp, Fest, nsim = 49)
+
+        # Render plot
+        output$ffunc_plot <- renderPlot({
+          plot(F_bedok.csr, main="F-function Graph")
+        })
+      })
+      
   #----- END Ffunction
+      
+  #### Ripley ####
+      observeEvent(input$run_rip,{
+        
+        bedok = mpsz[mpsz@data$PLN_AREA_N == input$rip,]
+        bedok_sp = as(bedok, "SpatialPolygons")
+        bedok_owin = as(bedok_sp, "owin")
+        resale_bedok_ppp = resale_ppp_jit[bedok_owin]
+        
+        L_bedok.csr <- envelope(resale_bedok_ppp, Lest, nsim = 39, rank = 1, glocal=TRUE)
+        #plot(L_bedok.csr, . - r ~ r, 
+             #xlab="d", ylab="L(d)-r", xlim=c(0,500))
+        
+        title <- "Pairwise Distance: L function"
+        
+        Lcsr_df <- as.data.frame(L_bedok.csr)
+        
+        colour=c("#0D657D","#ee770d","#D3D3D3")
+        csr_plot <- ggplot(Lcsr_df, aes(r, obs-r))+
+          # plot observed value
+          geom_line(colour=c("#4d4d4d"))+
+          geom_line(aes(r,theo-r), colour="red", linetype = "dashed")+
+          # plot simulation envelopes
+          geom_ribbon(aes(ymin=lo-r,ymax=hi-r),alpha=0.1, colour=c("#91bfdb")) +
+          xlab("Distance r (m)") +
+          ylab("L(r)-r") +
+          geom_rug(data=Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,], sides="b", colour=colour[1])  +
+          geom_rug(data=Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,], sides="b", colour=colour[2]) +
+          geom_rug(data=Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,], sides="b", color=colour[3]) +
+          theme_tufte()+
+          ggtitle(title)+theme(plot.title = element_text(hjust = 0.5))  # Center plot title
+        
+        text1<-"Significant clustering"
+        text2<-"Significant segregation"
+        text3<-"Not significant clustering/segregation"
+        
+        # the below conditional statement is required to ensure that the labels (text1/2/3) are assigned to the correct traces
+        if (nrow(Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,])==0){ 
+          if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){ 
+            ggplotly(csr_plot, dynamicTicks=T) %>%
+              style(text = text3, traces = 4) %>%
+              rangeslider() 
+          }else if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){ 
+            ggplotly(csr_plot, dynamicTicks=T) %>%
+              style(text = text2, traces = 4) %>%
+              rangeslider() 
+          }else {
+            ggplotly(csr_plot, dynamicTicks=T) %>%
+              style(text = text2, traces = 4) %>%
+              style(text = text3, traces = 5) %>%
+              rangeslider() 
+          }
+        } else if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){
+          if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){
+            ggplotly(csr_plot, dynamicTicks=T) %>%
+              style(text = text1, traces = 4) %>%
+              rangeslider() 
+          } else{
+            ggplotly(csr_plot, dynamicTicks=T) %>%
+              style(text = text1, traces = 4) %>%
+              style(text = text3, traces = 5) %>%
+              rangeslider()
+          }
+        } else{
+          ggplotly(csr_plot, dynamicTicks=T) %>%
+            style(text = text1, traces = 4) %>%
+            style(text = text2, traces = 5) %>%
+            style(text = text3, traces = 6) %>%
+            rangeslider()
+        }
+        
+        # Render plot
+        output$rip_plot <- renderPlotly({
+          csr_plot
+        })
+      })
   
   
-  #NETWORK ANALYSIS
+  
+  #### NETWORK ANALYSIS ####
   output$networkLixel <- renderPlot(
     tm_shape(get(paste0("shape_", input$net_areaName))) +
       tm_polygons() +
