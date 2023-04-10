@@ -1,0 +1,1288 @@
+---
+title: "Network Constrained SP Pattern Analysis"
+
+execute: 
+  message: false
+  warning: false
+---
+
+# Importation
+
+## Packages
+
+```{r}
+pacman::p_load(sp, sf, rgdal, spNetwork, tmap, tidyverse)
+```
+
+## Area Names
+
+```{r}
+#| eval: false
+area_names <- c("MARINA EAST","RIVER VALLEY", "SINGAPORE RIVER","WESTERN ISLANDS", "MUSEUM","MARINE PARADE", "SOUTHERN ISLANDS","BUKIT MERAH", "DOWNTOWN CORE","STRAITS VIEW", "QUEENSTOWN","OUTRAM", "MARINA SOUTH","ROCHOR", "KALLANG","TANGLIN", "NEWTON","CLEMENTI", "BEDOK","PIONEER", "JURONG EAST","ORCHARD", "GEYLANG","BOON LAY", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "CHANGI BAY","PAYA LEBAR", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG","TENGAH", "SELETAR","SUNGEI KADUT", "YISHUN","MANDAI", "PUNGGOL","CHOA CHU KANG", "SENGKANG","CHANGI", "CENTRAL WATER CATCHMENT","SEMBAWANG", "WESTERN WATER CATCHMENT","WOODLANDS", "NORTH-EASTERN ISLANDS","SIMPANG", "LIM CHU KANG")
+area_names <- gsub(" ", "_", area_names)
+```
+
+```{r}
+#| eval: false
+area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+area_names <- gsub(" ", "_", area_names)
+```
+
+## RDS Files
+
+::: panel-tabset
+## Childcare
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/supermarket")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Eldercare
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/eldercare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Kindergarten
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/kindergarten")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## New Hawker
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/shopping_mall")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Healthy Hawker
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/hawker_healthy")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## The Rest
+
+```{r}
+# set directory
+setwd("data/rds/facilities/combined/hdb_carpark")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+:::
+
+## Shape
+
+```{r}
+# set directory
+setwd("data/rds/shape")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Network
+
+```{r}
+# set the directory containing the RDS files
+dir_path <- "data/rds/network"
+
+# get a list of all RDS files in the directory
+network_files <- list.files(path = dir_path, pattern = "^network_.*\\.rds$", full.names = TRUE)
+
+# loop through the list of files and read each RDS file into a new variable
+for (file_path in network_files) {
+  area_name <- gsub("^network_(.*?)\\.rds$", "\\1", basename(file_path))
+  area_name <- gsub(" ", "_", area_name)
+  network <- readRDS(file_path)
+  # Convert geometries to linestrings
+  network$geometry <- st_cast(network$geometry, "MULTILINESTRING")
+  assign(paste0("network_", area_name), network)
+}
+
+```
+
+## HDB Points
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/point")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+# Performing NetKDE
+
+::: panel-tabset
+## Childcare
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/childcare")
+
+# get data
+area_name <- area_names[30]
+
+hdb_childcare <- get(paste0("hdb_childcare_", area_name))
+hdb_childcare_points <- hdb_childcare %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_childcare_points,
+                  w = rep(1,nrow(hdb_childcare_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_childcare_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+
+## Eldercare
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/eldercare")
+
+# get data
+area_name <- area_names[30]
+
+hdb_eldercare <- get(paste0("hdb_eldercare_", area_name))
+hdb_eldercare_points <- hdb_eldercare %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_eldercare_points,
+                  w = rep(1,nrow(hdb_eldercare_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_eldercare_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+
+## Kindergarten
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/kindergarten")
+
+# get data
+area_name <- area_names[30]
+
+hdb_kindergarten <- get(paste0("hdb_kindergarten_", area_name))
+hdb_kindergarten_points <- hdb_kindergarten %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_kindergarten_points,
+                  w = rep(1,nrow(hdb_kindergarten_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_kindergarten_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+
+## New Hawker
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/hawker_new")
+
+# get data
+area_name <- area_names[30]
+
+hdb_hawker_new <- get(paste0("hdb_hawker_new_", area_name))
+hdb_hawker_new_points <- hdb_hawker_new %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_hawker_new_points,
+                  w = rep(1,nrow(hdb_hawker_new_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_hawker_new_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+
+## Healthy Hawker
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/hawker_healthy")
+
+# get data
+area_name <- area_names[1]
+
+hdb_hawker_healthy <- get(paste0("hdb_hawker_healthy_", area_name))
+hdb_hawker_healthy_points <- hdb_hawker_healthy %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_hawker_healthy_points,
+                  w = rep(1,nrow(hdb_hawker_healthy_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_hawker_healthy_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+
+## The Rest
+
+```{r}
+#| eval: false
+# set directory to save lixel RDS files
+setwd("data/rds/lixel/shopping_mall")
+
+# get data
+area_name <- area_names[30]
+
+hdb_facility <- get(paste0("hdb_shopping_mall_", area_name))
+hdb_facility_points <- hdb_facility %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# prepare lixel objects
+lixels <- lixelize_lines(area_network, 700, mindist = 350)
+
+# generate line centre points
+samples <- lines_center(lixels)
+
+# performing NetKDE
+
+densities <- nkde(area_network,
+                  events = hdb_facility_points,
+                  w = rep(1,nrow(hdb_facility_points)),
+                  samples = samples,
+                  kernel_name = "quartic",
+                  bw = 100, 
+                  div= "bw", 
+                  method = "simple", 
+                  digits = 1, 
+                  tol = 1,
+                  grid_shape = c(1,1), 
+                  max_depth = 8,
+                  agg = 5, 
+                  sparse = TRUE,
+                  verbose = FALSE)
+
+# add densities to samples and lixels
+samples$density <- densities
+lixels$density <- densities
+
+# rescale densities to help with mapping
+samples$density <- samples$density * 1000
+lixels$density <- lixels$density * 1000
+
+# save lixel as RDS with unique name
+lixel_name <- paste0("lixel_shopping_mall_", area_name, ".rds")
+saveRDS(lixels, lixel_name)
+```
+:::
+
+# Importing NetKDE
+
+::: panel-tabset
+## Childcare
+
+```{r}
+# set directory
+setwd("data/rds/lixel/childcare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Eldercare
+:::
+
+# Plotting NetKDE
+
+## Childcare
+
+::: panel-tabset
+## Ang Mo Kio
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_childcare_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_ANG_MO_KIO)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bedok
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BEDOK)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bishan
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BISHAN)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bukit Batok
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_BATOK)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bukit Merah
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_MERAH)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bukit Panjang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Bukit Timah
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Choa Chu Kang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Clementi
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_childcare_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_CLEMENTI)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Hougang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_HOUGANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Jurong East
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_childcare_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_JURONG_EAST)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Jurong West
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_childcare_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_JURONG_WEST)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Kallang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_KALLANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Marine Parade
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_childcare_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_MARINE_PARADE)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Novena
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_childcare_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_NOVENA)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Outram
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_childcare_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_OUTRAM)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(15,16))
+```
+
+## Paris Ris
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_PASIR_RIS)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Punggol
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_childcare_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_PUNGGOL)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Queenstown
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_QUEENSTOWN)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Rochor
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_childcare_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_ROCHOR)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(15,16))
+```
+
+## Sembawang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SEMBAWANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Sengkang
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SENGKANG)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Serangoon
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SERANGOON)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Tampines
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TAMPINES)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Tanglin
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TANGLIN)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Toa Payoh
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TOA_PAYOH)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Tuas
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TUAS)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(13,16))
+```
+
+## Woodlands
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_WOODLANDS)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+
+## Yishun
+
+```{r}
+tmap_mode('view')
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_YISHUN)+
+  tm_dots(col = "Point Type") +
+tm_view(set.zoom.limits = c(14,16))
+```
+:::
+
+# K-Function
+
+::: panel-tabset
+## All
+
+```{r}
+# MULTISTRING: 2,3,6,8,9,10-14,16,18-30
+# MULTISTRING: 2,3,8-12,14,16,18-21,23-30
+# MULTISTRING: 2,3,8-12,14,16,18,19,21,23-30
+# NOT COMPLETED: 
+# CHANGE NAME BELOW!!!!
+# set directory to save kfunc files
+setwd("data/rds/kfunc/supermarket/multi")
+
+# get data
+area_name <- area_names[25]
+
+# CHANGE NAME BELOW!!!!
+hdb_facility <- get(paste0("hdb_supermarket_", area_name))
+hdb_facility_points <- hdb_facility %>% select(c("geometry"))
+area_network <- get(paste0("network_", area_name))
+
+# kfunc
+kfun <- kfunctions(area_network, 
+                             hdb_facility_points,
+                             start = 0, 
+                             end = 1000, 
+                             step = 50, 
+                             width = 50, 
+                             nsim = 50, 
+                             resolution = 50,
+                             verbose = FALSE, 
+                             conf_int = 0.05)
+
+# CHANGE NAME BELOW!!!!
+# save kfunc as RDS with unique name
+kfunc_name <- paste0("kfunc_supermarket_", area_name, ".rds")
+saveRDS(kfun, kfunc_name)
+```
+
+## Eldercare
+
+```{r}
+
+```
+:::
+
+# Importing K-Function
+
+::: panel-tabset
+## Childcare
+
+## Eldercare
+
+```{r}
+
+# set directory
+setwd("data/rds/kfunc/eldercare/multi")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+:::
+
+# Plotting K-Function
+
+## Eldercare
+
+::: panel-tabset
+## Ang Mo Kio
+
+```{r}
+#LINESTRING
+kfunc_eldercare_ANG_MO_KIO$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_ANG_MO_KIO$plotk
+```
+
+## Bedok
+
+```{r}
+kfunc_eldercare_BEDOK$plotk
+```
+
+## Bishan
+
+```{r}
+kfunc_eldercare_BISHAN$plotk
+```
+
+## Bukit Batok
+
+```{r}
+#LINESTRING
+kfunc_eldercare_BUKIT_BATOK$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_BUKIT_BATOK$plotk
+```
+
+## Bukit Merah
+
+```{r}
+kfunc_eldercare_BUKIT_MERAH$plotk
+```
+
+## Bukit Panjang
+
+```{r}
+kfunc_eldercare_BUKIT_PANJANG$plotk
+```
+
+## Bukit Timah
+
+```{r}
+kfunc_eldercare_BUKIT_TIMAH$plotk
+```
+
+## Choa Chu Kang
+
+```{r}
+kfunc_eldercare_CHOA_CHU_KANG$plotk
+```
+
+## Clementi
+
+```{r}
+kfunc_eldercare_CLEMENTI$plotk
+```
+
+## Geylang
+
+```{r}
+kfunc_eldercare_GEYLANG$plotk
+```
+
+## Hougang
+
+```{r}
+kfunc_eldercare_HOUGANG$plotk
+```
+
+## Jurong East
+
+```{r}
+kfunc_eldercare_JURONG_EAST$plotk
+```
+
+## Jurong West
+
+```{r}
+kfunc_eldercare_JURONG_WEST$plotk
+```
+
+## Kallang
+
+```{r}
+#LINESTRING
+kfunc_eldercare_KALLANG$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_KALLANG$plotk
+```
+
+## Marine Parade
+
+```{r}
+#LINESTRING
+kfunc_eldercare_MARINE_PARADE$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_MARINE_PARADE$plotk
+```
+
+## Novena
+
+```{r}
+#LINESTRING
+kfunc_eldercare_NOVENA$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_NOVENA$plotk
+```
+
+## Outram
+
+```{r}
+#LINESTRING
+kfunc_eldercare_OUTRAM$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_OUTRAM$plotk
+```
+
+## Pasir Ris
+
+```{r}
+kfunc_eldercare_PASIR_RIS$plotk
+```
+
+## Punggol
+
+```{r}
+kfunc_eldercare_PUNGGOL$plotk
+```
+
+## Queenstown
+
+```{r}
+kfunc_eldercare_QUEENSTOWN$plotk
+```
+
+## Rochor
+
+```{r}
+#LINESTRING
+kfunc_eldercare_ROCHOR$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_ROCHOR$plotk
+```
+
+## Sembawang
+
+```{r}
+kfunc_eldercare_SEMBAWANG$plotk
+```
+
+## Sengkang
+
+```{r}
+kfunc_eldercare_SENGKANG$plotk
+```
+
+## Serangoon
+
+```{r}
+#LINESTRING
+kfunc_eldercare_SERANGOON$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_SERANGOON$plotk
+```
+
+## Tampines
+
+```{r}
+kfunc_eldercare_TAMPINES$plotk
+```
+
+## Tanglin
+
+```{r}
+#LINESTRING
+kfunc_eldercare_TANGLIN$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_TANGLIN$plotk
+```
+
+## Toa Payoh
+
+```{r}
+kfunc_eldercare_TOA_PAYOH$plotk
+```
+
+## Tuas
+
+```{r}
+#LINESTRING
+kfunc_eldercare_TUAS$plotk
+```
+
+```{r}
+#MULTILINESTRING
+kfunc_eldercare_TUAS$plotk
+```
+
+## Woodlands
+
+```{r}
+kfunc_eldercare_WOODLANDS$plotk
+```
+
+## Yishun
+
+```{r}
+kfunc_eldercare_YISHUN$plotk
+```
+:::
+
+## TO COPY AND PASTE
+
+::: panel-tabset
+## Ang Mo Kio
+
+## Bedok
+
+## Bishan
+
+## Bukit Batok
+
+## Bukit Merah
+
+## Bukit Panjang
+
+## Bukit Timah
+
+## Choa Chu Kang
+
+## Clementi
+
+## Geylang
+
+## Hougang
+
+## Jurong East
+
+## Jurong West
+
+## Kallang
+
+## Marine Parade
+
+## Novena
+
+## Outram
+
+## Pasir Ris
+
+## Punggol
+
+## Queenstown
+
+## Rochor
+
+## Sembawang
+
+## Sengkang
+
+## Serangoon
+
+## Tampines
+
+## Tanglin
+
+## Toa Payoh
+
+## Tuas
+
+## Woodlands
+
+## Yishun
+:::

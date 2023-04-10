@@ -1,0 +1,175 @@
+```{r}
+#| eval: false
+pacman::p_load(sp, sf, rgdal, spNetwork, tmap, tidyverse)
+```
+
+Data Frames:
+
+-   point_AREANAME: HDB points in area
+
+-   shape_AREANAME: mpsz shape in area
+
+-   network_AREANAME: network lines in area
+
+```{r}
+#| eval: false
+#import hdb points
+resale_sf<-readRDS("data/rds/resale_sf.rds")
+hdb_points <- resale_sf %>%
+  select(2,5, 11:12)
+
+#import shapefile
+mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+
+#import rds for facilities
+childcare_sf <- readRDS("data/rds/childcare_sf.rds")
+eldercare_sf<- readRDS("data/rds/eldercare_sf.rds")
+kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
+hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
+hawkercentre_healthy_sf<-readRDS("data/rds/hawkercentre_healthy_sf.rds")
+nationalparks_sf<-readRDS("data/rds/nationalparks_sf.rds")
+gyms_sf <-readRDS("data/rds/gyms_sf.rds")
+pharmacy_sf<-readRDS("data/rds/pharmacy_sf.rds")
+spf_sf<-readRDS("data/rds/spf_sf.rds")
+HDB_carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
+supermarket_sf<-readRDS("data/rds/supermarket_sf.rds")
+bus_stop_sf<-readRDS("data/rds/bus_stop_sf.rds")
+mrt_sf<-readRDS("data/rds/mrt_sf.rds")
+primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
+top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
+shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
+
+#select important columns
+```
+
+### Childcare
+
+```{r}
+#| eval: false
+#FOR SEPARATE
+
+#split each facility by area
+# join the points to the multipolygon based on their spatial relationship
+joined <- st_join(hawkercentre_new_sf, mpsz_sf)
+
+# group the resulting data frame by area_name and save the points for each group as a separate shapefile
+for (PLN_AREA_N in unique(joined$PLN_AREA_N)) {
+  area_points <- joined[joined$PLN_AREA_N == PLN_AREA_N,]
+  file_name <- paste0("hawker_", gsub(" ", "_", PLN_AREA_N), ".rds")
+  write_rds(area_points, file_name)
+}
+```
+
+```{r}
+#| eval: false
+# RUN THIS CODE HERE AND CHANGE THE NAMINGS!
+# initialize an empty list to store the output dataframes
+output_dfs <- list()
+
+# loop over the unique area_names for each multipolygon
+for (x in unique(mpsz_sf$PLN_AREA_N)) {
+  # subset the multipolygon dataframe by area_name
+  area_multipolygons <- mpsz_sf[mpsz_sf$PLN_AREA_N == x,]
+  # perform a spatial join between the points1 and area_multipolygons dataframes
+  points1_in_polygons <- st_intersection(hdb_points, area_multipolygons, join = st_within)
+  points1_in_polygons <- points1_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "HDB") %>%
+    relocate(`Point Type`, .before = 1)
+  # perform a spatial join between the points2 and area_multipolygons dataframes
+  points2_in_polygons <- st_intersection(childcare_sf, area_multipolygons, join = st_within)
+  points2_in_polygons <- points2_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "Childcare") %>%
+    relocate(`Point Type`, .before = 1)
+  # create a unique name for the output dataframe
+  output_name <- paste0("hdb_childcare_", gsub(" ", "_", x))
+  # store the output dataframes in the output_dfs list
+  output_dfs[[output_name]] <- bind_rows(points1_in_polygons, points2_in_polygons)
+}
+
+# write the output dataframes to RDS files
+
+for (i in seq_along(output_dfs)) {
+  filename <- gsub(" ", "_", names(output_dfs)[i]) # replace spaces with underscore
+  write_rds(output_dfs[[i]], paste0(filename, ".rds")) # save each data frame as an RDS file
+}
+```
+
+### Eldercare
+
+```{r}
+#| eval: false
+# initialize an empty list to store the output dataframes
+output_dfs <- list()
+
+# loop over the unique area_names for each multipolygon
+for (x in unique(mpsz_sf$PLN_AREA_N)) {
+  # subset the multipolygon dataframe by area_name
+  area_multipolygons <- mpsz_sf[mpsz_sf$PLN_AREA_N == x,]
+  # perform a spatial join between the points1 and area_multipolygons dataframes
+  points1_in_polygons <- st_intersection(hdb_points, area_multipolygons)
+  points1_in_polygons <- points1_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "HDB") %>%
+    relocate(`Point Type`, .before = 1)
+  
+  # CHANGE HERE-------------------------------------------------------------
+  # perform a spatial join between the points2 and area_multipolygons dataframes
+  points2_in_polygons <- st_intersection(shopping_mall_sf, area_multipolygons)
+  points2_in_polygons <- points2_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "Shopping Mall") %>%
+    relocate(`Point Type`, .before = 1)
+  # create a unique name for the output dataframe
+  output_name <- paste0("hdb_shopping_mall_", gsub(" ", "_", x))
+  # store the output dataframes in the output_dfs list
+  output_dfs[[output_name]] <- bind_rows(points1_in_polygons, points2_in_polygons)
+}
+
+# write the output dataframes to RDS files
+
+for (i in seq_along(output_dfs)) {
+  filename <- gsub(" ", "_", names(output_dfs)[i]) # replace spaces with underscore
+  write_rds(output_dfs[[i]], paste0(filename, ".rds")) # save each data frame as an RDS file
+}
+```
+
+### Kindergartens
+
+```{r}
+#| eval: false
+# initialize an empty list to store the output dataframes
+output_dfs <- list()
+
+# loop over the unique area_names for each multipolygon
+for (x in unique(mpsz_sf$PLN_AREA_N)) {
+  # subset the multipolygon dataframe by area_name
+  area_multipolygons <- mpsz_sf[mpsz_sf$PLN_AREA_N == x,]
+  # perform a spatial join between the points1 and area_multipolygons dataframes
+  points1_in_polygons <- st_intersection(hdb_points, area_multipolygons)
+  points1_in_polygons <- points1_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "HDB") %>%
+    relocate(`Point Type`, .before = 1)
+  
+  # CHANGE HERE-------------------------------------------------------------
+  # perform a spatial join between the points2 and area_multipolygons dataframes
+  points2_in_polygons <- st_intersection(spf_sf, area_multipolygons)
+  points2_in_polygons <- points2_in_polygons %>%
+    select(c("geometry")) %>%
+    mutate(`Point Type` = "SPF") %>%
+    relocate(`Point Type`, .before = 1)
+  # create a unique name for the output dataframe
+  output_name <- paste0("hdb_spf_", gsub(" ", "_", x))
+  # store the output dataframes in the output_dfs list
+  output_dfs[[output_name]] <- bind_rows(points1_in_polygons, points2_in_polygons)
+}
+
+# write the output dataframes to RDS files
+
+for (i in seq_along(output_dfs)) {
+  filename <- gsub(" ", "_", names(output_dfs)[i]) # replace spaces with underscore
+  write_rds(output_dfs[[i]], paste0(filename, ".rds")) # save each data frame as an RDS file
+}
+```

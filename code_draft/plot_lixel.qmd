@@ -1,0 +1,2468 @@
+---
+title: "Plotting Lixel"
+
+execute: 
+  message: false
+  warning: false
+---
+
+For plotting lixel, will require:
+
+-   HDB + Facility Points
+
+-   Lixel
+
+-   Shape
+
+```{r}
+pacman::p_load(sp, sf, rgdal, spNetwork, tmap, tidyverse)
+```
+
+```{r}
+#| eval: false
+area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+area_names <- gsub(" ", "_", area_names)
+```
+
+## Shape
+
+```{r}
+# set directory
+setwd("data/rds/shape")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+# Childcare
+
+::: panel-tabset
+## Import Childcare RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/childcare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/childcare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_childcare_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_childcare_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_childcare_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_childcare_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_childcare_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_childcare_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_childcare_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_childcare_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_childcare_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_childcare_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_childcare_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_childcare_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_childcare_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+
+-   3: punggol, sembawang
+
+-   2.5: cck, bukit batok, yishun
+
+-   2: sengkang
+
+-   0: tuas
+:::
+
+# Eldercare
+
+::: panel-tabset
+## Import Eldercare RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/eldercare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/eldercare")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_eldercare_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_eldercare_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+
+-   3: punggol, sembawang
+
+-   2.5: bukit batok, cck, yishun
+
+-   0: tuas
+:::
+
+# Kindergarten
+
+::: panel-tabset
+## Import Kindergarten RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/kindergarten")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/kindergarten")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_kindergarten_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_kindergarten_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+:::
+
+# New Hawkers
+
+::: panel-tabset
+## Import New Hawkers RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/hawker_new")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/hawker_new")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_new_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_new_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+:::
+
+# Park
+
+::: panel-tabset
+## Import Park RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/park")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/park")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_park_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_park_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_park_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_park_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_park_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_park_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_park_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_park_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_park_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_park_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_park_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_park_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_park_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_park_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_park_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_park_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_park_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_park_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_park_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_park_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_park_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_park_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_park_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_park_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_park_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_park_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_park_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_park_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_park_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_park_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_park_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+:::
+
+# Healthy Hawkers
+
+::: panel-tabset
+## Import Healthy Hawkers RDS
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/facilities/combined/hawker_healthy")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Import Lixel
+
+```{r}
+#| eval: false
+# set directory
+setwd("data/rds/lixel/hawker_healthy")
+
+# list all .rds files
+files <- list.files(pattern = ".rds")
+
+# loop through files and create separate dataframes
+for (file in files) {
+  # read in file and create dataframe with unique name
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+```
+
+## Ang Mo Kio
+
+```{r}
+#| eval: false
+tm_shape(shape_ANG_MO_KIO) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_ANG_MO_KIO)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_ANG_MO_KIO)+
+  tm_dots(col = "Point Type")
+```
+
+## Bedok
+
+```{r}
+#| eval: false
+tm_shape(shape_BEDOK) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BEDOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BEDOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bishan
+
+```{r}
+#| eval: false
+tm_shape(shape_BISHAN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BISHAN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BISHAN)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Batok
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_BATOK) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BUKIT_BATOK)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BUKIT_BATOK)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Merah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_MERAH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BUKIT_MERAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BUKIT_MERAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Panjang
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_PANJANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BUKIT_PANJANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BUKIT_PANJANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Bukit Timah
+
+```{r}
+#| eval: false
+tm_shape(shape_BUKIT_TIMAH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_BUKIT_TIMAH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_BUKIT_TIMAH)+
+  tm_dots(col = "Point Type")
+```
+
+## Choa Chu Kang
+
+```{r}
+#| eval: false
+tm_shape(shape_CHOA_CHU_KANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_CHOA_CHU_KANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_CHOA_CHU_KANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Clementi
+
+```{r}
+#| eval: false
+tm_shape(shape_CLEMENTI) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_CLEMENTI)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_CLEMENTI)+
+  tm_dots(col = "Point Type")
+```
+
+## Geylang
+
+```{r}
+#| eval: false
+tm_shape(shape_GEYLANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_GEYLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_GEYLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Hougang
+
+```{r}
+#| eval: false
+tm_shape(shape_HOUGANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_HOUGANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_HOUGANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong East
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_EAST) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_JURONG_EAST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_JURONG_EAST)+
+  tm_dots(col = "Point Type")
+```
+
+## Jurong West
+
+```{r}
+#| eval: false
+tm_shape(shape_JURONG_WEST) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_JURONG_WEST)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_JURONG_WEST)+
+  tm_dots(col = "Point Type")
+```
+
+## Kallang
+
+```{r}
+#| eval: false
+tm_shape(shape_KALLANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_KALLANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_KALLANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Marine Parade
+
+```{r}
+#| eval: false
+tm_shape(shape_MARINE_PARADE) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_MARINE_PARADE)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_MARINE_PARADE)+
+  tm_dots(col = "Point Type")
+```
+
+## Novena
+
+```{r}
+#| eval: false
+tm_shape(shape_NOVENA) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_NOVENA)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_NOVENA)+
+  tm_dots(col = "Point Type")
+```
+
+## Outram
+
+```{r}
+#| eval: false
+tm_shape(shape_OUTRAM) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_OUTRAM)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_OUTRAM)+
+  tm_dots(col = "Point Type")
+```
+
+## Pasir Ris
+
+```{r}
+#| eval: false
+tm_shape(shape_PASIR_RIS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_PASIR_RIS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_PASIR_RIS)+
+  tm_dots(col = "Point Type")
+```
+
+## Punggol
+
+```{r}
+#| eval: false
+tm_shape(shape_PUNGGOL) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_PUNGGOL)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_PUNGGOL)+
+  tm_dots(col = "Point Type")
+```
+
+## Queenstown
+
+```{r}
+#| eval: false
+tm_shape(shape_QUEENSTOWN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_QUEENSTOWN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_QUEENSTOWN)+
+  tm_dots(col = "Point Type")
+```
+
+## Rochor
+
+```{r}
+#| eval: false
+tm_shape(shape_ROCHOR) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_ROCHOR)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_ROCHOR)+
+  tm_dots(col = "Point Type")
+```
+
+## Sembawang
+
+```{r}
+#| eval: false
+tm_shape(shape_SEMBAWANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_SEMBAWANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_SEMBAWANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Sengkang
+
+```{r}
+#| eval: false
+tm_shape(shape_SENGKANG) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_SENGKANG)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_SENGKANG)+
+  tm_dots(col = "Point Type")
+```
+
+## Serangoon
+
+```{r}
+#| eval: false
+tm_shape(shape_SERANGOON) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_SERANGOON)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_SERANGOON)+
+  tm_dots(col = "Point Type")
+```
+
+## Tampines
+
+```{r}
+#| eval: false
+tm_shape(shape_TAMPINES) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_TAMPINES)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_TAMPINES)+
+  tm_dots(col = "Point Type")
+```
+
+## Tanglin
+
+```{r}
+#| eval: false
+tm_shape(shape_TANGLIN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_TANGLIN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_TANGLIN)+
+  tm_dots(col = "Point Type")
+```
+
+## Toa Payoh
+
+```{r}
+#| eval: false
+tm_shape(shape_TOA_PAYOH) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_TOA_PAYOH)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_TOA_PAYOH)+
+  tm_dots(col = "Point Type")
+```
+
+## Tuas
+
+```{r}
+#| eval: false
+tm_shape(shape_TUAS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_TUAS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_TUAS)+
+  tm_dots(col = "Point Type")
+```
+
+## Woodlands
+
+```{r}
+#| eval: false
+tm_shape(shape_WOODLANDS) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_WOODLANDS)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_WOODLANDS)+
+  tm_dots(col = "Point Type")
+```
+
+## Yishun
+
+```{r}
+#| eval: false
+tm_shape(shape_YISHUN) +
+  tm_polygons() +
+tm_shape(lixel_hawker_healthy_YISHUN)+
+  tm_lines(col="density", lwd=2)+
+tm_shape(hdb_hawker_healthy_YISHUN)+
+  tm_dots(col = "Point Type")
+```
+
+## Observation
+:::
