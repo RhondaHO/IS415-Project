@@ -26,6 +26,88 @@ resale_sf$full_address <- paste("BLK", resale_sf$block, resale_sf$street_name)
 # based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)
 resale_sf_map<- subset(resale_sf, full_address != "BLK 27 MARINE CRES")
 
+#---------------------------------------- NETWORK ANALYSIS DATA IMPORTATION
+area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
+area_names <- gsub(" ", "_", area_names)
+
+setwd("data/rds/shape")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../facilities/combined/childcare")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/childcare")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/eldercare")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/eldercare")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/hawker_new")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/hawker_new")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/gym")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/gym")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/hdb_carpark")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/hdb_carpark")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+# setwd("../../kfunc/childcare/multi")
+# files <- list.files(pattern = ".rds")
+# for (file in files) {
+#   df_name <- sub(".rds", "", file)
+#   assign(df_name, readRDS(file))
+# }
 
 #theme
 my_theme <- bs_theme(
@@ -131,13 +213,23 @@ tabPanel("Spatial Point Pattern Analysis",
              tabPanel("F-Function"),
              tabPanel("Ripley (K-Function)"),
              tabPanel("Network Constraint Analysis", fluidPage(
-               titlePanel("Hello Shiny!"),
                sidebarLayout(
                  sidebarPanel(
-                   sliderInput("obs", "Observations:", min = 0, max = 1000, value = 500)
+                   h2("Variables"),
+                   selectInput("net_areaName", label = h4("Area Name"), 
+                               choices = area_names, 
+                               selected = "ANG_MO_KIO"),
+                   selectInput("net_facility", label = h4("Area Name"), 
+                               choices = list("Childcare" = "childcare",
+                                              "Eldercare" = "eldercare",
+                                              "New Hawkers" = "hawker_new",
+                                              "Gym" = "gym",
+                                              "HDB Carparks" = "carpark"), 
+                               selected = "Childcare"),
                  ),
                  mainPanel(
-                   plotOutput("distPlot")
+                   plotOutput("networkLixel"),
+                   plotOutput("networkKFunc")
                  )
                )
              ))
@@ -178,6 +270,20 @@ server <- function(input, output) {
   
   # Render leaflet map
   output$map <- renderLeaflet(leaflet_map)
+  
+  
+  #NETWORK ANALYSIS
+  output$networkLixel <- renderPlot(
+    tm_shape(get(paste0("shape_", input$net_areaName))) +
+      tm_polygons() +
+      tm_shape(get(paste0("lixel_",input$net_facility, "_", input$net_areaName)))+
+      tm_lines(col="density", lwd=2)+
+      tm_shape(get(paste0("hdb_",input$net_facility, "_", input$net_areaName)))+
+      tm_dots(col = "Point Type", palette=c('blue', 'red'))
+  )
+  # output$networkKFunc <- renderPlot(
+  #   get(paste0("kfunc_", input$net_facility, "_", input$net_areaName))$plotk
+  # )
 }
 
 
