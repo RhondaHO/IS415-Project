@@ -103,15 +103,30 @@ length(which(st_is_valid(resale_sf) == FALSE))
 ```
 
 ```{r}
-#| eval: false
-write_rds(resale_sf, "data/rds/resale_sf.rds")
+# for filter in shiny app
+resale_sf <- resale_sf %>% 
+  mutate(resale_range = case_when(
+  resale_price <= 400000 ~ "200,000 to 400,000",
+  resale_price <= 600000 ~ "400,000 to 600,000",
+  resale_price <= 800000 ~ "600,000 to 800,000",
+  resale_price <= 1000000 ~ "800,000 to 1,000,000",
+  resale_price <= 1200000 ~ "1,000,000 to 1,200,000",
+  resale_price <= 1400000 ~ "1,200,000 to 1,400,000",
+  resale_price <= 1600000 ~ "1,400,000 to 1,600,000",
+))
 ```
 
 ```{r}
+# combine street name and blk for HDB full address
+resale_sf$full_address <- paste("BLK", resale_sf$block, resale_sf$street_name)
 # based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)
+resale_sf<- subset(resale_sf, full_address != "BLK 27 MARINE CRES")
 
-#resale_sf<- subset(resale_sf, full_address != "BLK 27 MARINE CRES")
+```
 
+```{r}
+#| eval: false
+write_rds(resale_sf, "data/rds/resale_sf.rds")
 ```
 
 # Geospatial

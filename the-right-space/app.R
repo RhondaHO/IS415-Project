@@ -2,10 +2,10 @@
 pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table, leaflet, shinyjs, shinyWidgets, bslib)
 #library(shinythemes)
 
-# import data
+#---------------------------------------- VISUALISATION DATA IMPORTATION
 resale_sf<-readRDS("data/rds/resale_sf.rds")
 mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
-childcare_sf <- readRDS("data/rds/childcare_sf.rds")
+#childcare_sf <- readRDS("data/rds/childcare_sf.rds")
 eldercare_sf<- readRDS("data/rds/eldercare_sf.rds")
 kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
 hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
@@ -14,17 +14,14 @@ nationalparks_sf<-readRDS("data/rds/nationalparks_sf.rds")
 gyms_sf <-readRDS("data/rds/gyms_sf.rds")
 pharmacy_sf<-readRDS("data/rds/pharmacy_sf.rds")
 spf_sf<-readRDS("data/rds/spf_sf.rds")
-HDB_carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
+carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
 supermarket_sf<-readRDS("data/rds/supermarket_sf.rds")
 bus_stop_sf<-readRDS("data/rds/bus_stop_sf.rds")
 mrt_sf<-readRDS("data/rds/mrt_sf.rds")
 primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
 top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
 shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
-# combine street name and blk for HDB full address
-resale_sf$full_address <- paste("BLK", resale_sf$block, resale_sf$street_name)
-# based on visualisations, realised an area is placed wrongly (api gave wrong coordinates, thus, i removed it)
-resale_sf_map<- subset(resale_sf, full_address != "BLK 27 MARINE CRES")
+
 
 #---------------------------------------- NETWORK ANALYSIS DATA IMPORTATION
 area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
@@ -121,6 +118,7 @@ ui <-
 navbarPage(img(src="logo_t.png", style="float:right", width = "190px", height = "55px",),
   #"the right space", 
            collapsible = TRUE,
+#---------------------------------------- HOMEPAGE
 tabPanel("Home",
          fluidPage(
            theme = my_theme,
@@ -178,6 +176,7 @@ tabPanel("Home",
          )
          
          ),
+#---------------------------------------- VISUALISATION
 tabPanel("Visualisation",
          fluidPage(
            #setBackgroundColor("#F5F5F5"),
@@ -187,16 +186,40 @@ tabPanel("Visualisation",
            sidebarLayout(position = "right",
                          
                          sidebarPanel(
-                           #style = "background-color:  #F9F9FF;",
-                           p(id="","In this panel, you can adjust the visualisation of HDB locations with different amenities and adjust the price range of the HDB flat."),
-                           selectInput("dataset_map", "What would like to view:",
-                                       choices = c("Overview of HDB Locations", "HDB and Supermarkets")),
-                           selectInput("price_range", "HDB Price Range:",
-                                       choices = c("All","200,000 to 400,000", "400,000 to 600,000"))
+                           p(id="","In this panel, you can adjust the visualisation of HDB locations(yellow/orange dots) with different amenities(light blue dots) and adjust the price range of the HDB flat."),
+                           selectInput("HDB_amenities", "What would like to view:",
+                                       choices = c("Overview of HDB Locations",
+                                                   "Childcare Centres",
+                                                   "Eldercare Centres",
+                                                   "Kindergartens",
+                                                   "Hawkercentres",
+                                                   "Healthier Hawkercentres",
+                                                   "National Parks",
+                                                   "Gyms",
+                                                   "Retail Pharmacy",
+                                                   "SPF",
+                                                   "Carparks",
+                                                   "Supermarkets",
+                                                   "Bus stops",
+                                                   "Mrt",
+                                                   "Primary Schools",
+                                                   "Shopping Malls"
+                                                   )),
+                           
+                           selectInput("resale_range", "HDB Price Range($):",
+                                       choices = c("All","200,000 to 400,000", 
+                                                   "400,000 to 600,000",
+                                                   "600,000 to 800,000","800,000 to 1,000,000",
+                                                   "1,000,000 to 1,200,000",
+                                                   "1,200,000 to 1,400,000",
+                                                   "1,400,000 to 1,600,000"),
+                                       selected = "All",
+                                       #multiple = TRUE
+                                       )
                            #numericInput("price", "Observations:", 10)
                          ),
                          mainPanel(
-                           #style = "background-color:  #F9F9FF;",
+            
                            leafletOutput("map"),
                            p(id="note","Note: The map will take a while to load."),
                            
@@ -205,8 +228,26 @@ tabPanel("Visualisation",
                          )
              )
          ), #end bracket for visualisation tab
+
+#---------------------------------------- SPATIAL POINT
 tabPanel("Spatial Point Pattern Analysis",
+
          fluidPage(
+           fluidRow(
+             column(width = 4,
+                    titlePanel("Spatial Point Pattern Analysis"),
+             ),
+             column(width = 8, style = "margin-top: 25px;",
+                    useShinyjs(),
+                    actionButton("toggle", "More Info"),
+             )
+           ),
+           div(
+             id = "tools_div",
+             style = "width: 90%; display: none;",
+             p("On this page, we offer several tools designed to help you analyze the spatial distribution of points in your dataset. Our tools includes the Local Colocation Quotient Analysis (CLQ), Kernel Density Estimation (KDE), F-Function, Ripley K-Function, and Network Constraint Analysis. To access these tools, simply click on the five tabs located at the top of the page. Each tool provides a unique perspective on the spatial patterns in your data, allowing you to gain valuable insights into the underlying processes driving your observations. Whether you seek to comprehend the level of clustering present in your dataset, identify spatial patterns, or investigate the influence of network constraints on your observations, our toolkit offers a range of analytical tools to cater to your needs.")
+           ),
+           
            tabsetPanel(
              tabPanel("CLQ"),
              tabPanel("KDE"),
@@ -251,26 +292,92 @@ server <- function(input, output) {
   
   delay(3000, hide("note"))
   
-  m <- tm_shape(mpsz_sf) +
-    tm_polygons("REGION_N", alpha = 0.2) +
-    tm_shape(resale_sf_map) +
-    tm_dots(col = "resale_price", 
-            id = "full_address", 
-            popup.vars = c("Resale Price:" = "resale_price",
-                           "Flat Type:" = "flat_type", 
-                           "Flat Model:" = "flat_model",
-                           "Floor Area (sqm):" = "floor_area_sqm",
-                           "Remaining Lease:" = "remaining_lease"
-            ),
-            title = "Resale Prices") +
-    tm_view(set.zoom.limits = c(10, 14))
- 
-  # Convert tmap object to leaflet object
-  leaflet_map <- tmap_leaflet(m)
+  observeEvent(input$toggle, {
+    toggle("tools_div")
+  })
   
-  # Render leaflet map
-  output$map <- renderLeaflet(leaflet_map)
   
+  #----- START VISUALISATIONS
+  amenities <- c("Childcare Centres" = "childcare_sf",
+                 "Eldercare Centres" = "eldercare_sf",
+                 "Kindergartens" = "kindergartens_sf",
+                 "Hawkercentres" = "hawkercentre_new_sf",
+                 "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+                 "National Parks" = "nationalparks_sf",
+                 "Gyms" = "gyms_sf",
+                 "Retail Pharmacy" = "pharmacy_sf",
+                 "SPF" = "spf_sf",
+                 "Carparks" = "carpark_sf",
+                 "Supermarkets" = "supermarket_sf",
+                 "Bus stops" = "bus_stop_sf",
+                 "Mrt" = "mrt_sf",
+                 "Primary Schools" = "primary_school_sf",
+                 "Shopping Malls" = "shopping_mall_sf")
+  
+  observeEvent(c(input$resale_range,input$HDB_amenities), {
+    #filter dataset for map
+    if (input$resale_range!= "All"){
+      resale_map <- resale_sf[resale_sf$resale_range == input$resale_range, ]
+    }else{
+      resale_map <-resale_sf
+    }
+    
+    if (input$HDB_amenities!= "Overview of HDB Locations"){
+      index <- match(input$HDB_amenities, names(amenities))
+      result_name <- amenities[index]
+      result <- readRDS(paste0("data/rds/",result_name, ".rds"))
+      
+      m <- tm_shape(mpsz_sf) +
+        tm_polygons("REGION_N",
+                    alpha = 0.2) +
+        tm_shape(resale_map) +
+        tm_dots(col = "resale_price", 
+                id = "full_address", # bold in popup
+                popup.vars = c("Resale Price:" = "resale_price",
+                               "Flat Type:" = "flat_type", 
+                               "Flat Model:" = "flat_model",
+                               "Floor Area (sqm):" = "floor_area_sqm",
+                               "Remaining Lease:" = "remaining_lease"
+                ),
+                title = "Resale Prices") +
+        tm_shape(result) +
+        tm_dots(
+                #alpha=0.2,
+                col="lightblue",
+                size=0.03) +
+        tm_view(set.zoom.limits = c(11, 16))
+      
+    }else{
+      m <- tm_shape(mpsz_sf) +
+        tm_polygons("REGION_N", alpha = 0.2) +
+        tm_shape(resale_map) +
+        tm_dots(col = "resale_price", 
+                id = "full_address", 
+                popup.vars = c("Resale Price:" = "resale_price",
+                               "Flat Type:" = "flat_type", 
+                               "Flat Model:" = "flat_model",
+                               "Floor Area (sqm):" = "floor_area_sqm",
+                               "Remaining Lease:" = "remaining_lease"
+                ),
+                title = "Resale Prices") +
+        tm_view(set.zoom.limits = c(10, 14))
+    }
+    
+   
+    
+    # Convert tmap object to leaflet object
+    leaflet_map <- tmap_leaflet(m)
+    
+    # Render leaflet map
+    output$map <- renderLeaflet(leaflet_map)
+  })
+  #----- END VISUALISATIONS
+  
+  #----- START CLQ
+  
+  
+  
+  #----- END CLQ
   
   #NETWORK ANALYSIS
   output$networkLixel <- renderPlot(
