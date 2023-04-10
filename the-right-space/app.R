@@ -1,27 +1,10 @@
 #load packages
-pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table, leaflet, shinyjs, shinyWidgets, bslib)
+pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, plotly, sfdep, data.table, leaflet, shinyjs, shinyWidgets, bslib, raster, spatstat)
 #library(shinythemes)
 
-#---------------------------------------- VISUALISATION DATA IMPORTATION
+#---------------------------------------- MAIN DATA IMPORTATION
 resale_sf<-readRDS("data/rds/resale_sf.rds")
 mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
-#childcare_sf <- readRDS("data/rds/childcare_sf.rds")
-eldercare_sf<- readRDS("data/rds/eldercare_sf.rds")
-kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
-hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
-hawkercentre_healthy_sf<-readRDS("data/rds/hawkercentre_healthy_sf.rds")
-nationalparks_sf<-readRDS("data/rds/nationalparks_sf.rds")
-gyms_sf <-readRDS("data/rds/gyms_sf.rds")
-pharmacy_sf<-readRDS("data/rds/pharmacy_sf.rds")
-spf_sf<-readRDS("data/rds/spf_sf.rds")
-carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
-supermarket_sf<-readRDS("data/rds/supermarket_sf.rds")
-bus_stop_sf<-readRDS("data/rds/bus_stop_sf.rds")
-mrt_sf<-readRDS("data/rds/mrt_sf.rds")
-primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
-top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
-shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
-
 
 #---------------------------------------- NETWORK ANALYSIS DATA IMPORTATION
 area_names <- c("MARINE PARADE", "BUKIT MERAH", "QUEENSTOWN","OUTRAM", "ROCHOR", "KALLANG","TANGLIN", "CLEMENTI", "BEDOK", "JURONG EAST", "GEYLANG", "BUKIT TIMAH","NOVENA", "TOA PAYOH","TUAS", "JURONG WEST","SERANGOON", "BISHAN","TAMPINES", "BUKIT BATOK","HOUGANG", "ANG MO KIO","PASIR RIS", "BUKIT PANJANG", "YISHUN", "PUNGGOL","CHOA CHU KANG", "SENGKANG","SEMBAWANG", "WOODLANDS")
@@ -142,7 +125,7 @@ ui <-
 navbarPage(img(src="logo_t.png", style="float:right", width = "190px", height = "55px",),
   #"the right space", 
            collapsible = TRUE,
-#---------------------------------------- HOMEPAGE
+  #### HOME ####
 tabPanel("Home",
          fluidPage(
            theme = my_theme,
@@ -201,36 +184,39 @@ tabPanel("Home",
          
          ),
 #---------------------------------------- VISUALISATION
+#### Visualisation ####
 tabPanel("Visualisation",
          fluidPage(
            #setBackgroundColor("#F5F5F5"),
            
            titlePanel("Mapping of HDB Locations and Relevant Amenities"),
-           
+           p(id="note","Note: Please wait a while for the map to load."),
            sidebarLayout(position = "right",
                          
                          sidebarPanel(
+                           h4("Description"),
                            p(id="","In this panel, you can adjust the visualisation of HDB locations(yellow/orange dots) with different amenities(light blue dots) and adjust the price range of the HDB flat."),
-                           selectInput("HDB_amenities", "What would like to view:",
+                           selectInput("HDB_amenities", label=h4("What would like to view:"),
                                        choices = c("Overview of HDB Locations",
-                                                   "Childcare Centres",
-                                                   "Eldercare Centres",
-                                                   "Kindergartens",
-                                                   "Hawkercentres",
-                                                   "Healthier Hawkercentres",
-                                                   "National Parks",
-                                                   "Gyms",
-                                                   "Retail Pharmacy",
-                                                   "SPF",
-                                                   "Carparks",
-                                                   "Supermarkets",
-                                                   "Bus stops",
-                                                   "Mrt",
-                                                   "Primary Schools",
-                                                   "Shopping Malls"
-                                                   )),
+                                                  "Childcare Centres" = "childcare_sf",
+                                                   "Eldercare Centres" = "eldercare_sf",
+                                                   "Kindergartens" = "kindergartens_sf",
+                                                   "Hawkercentres" = "hawkercentre_new_sf",
+                                                   "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+                                                   "National Parks" = "nationalparks_sf",
+                                                   "Gyms" = "gyms_sf",
+                                                   "Retail Pharmacy" = "pharmacy_sf",
+                                                   "SPF" = "spf_sf",
+                                                   "Carparks" = "carpark_sf",
+                                                   "Supermarkets" = "supermarket_sf",
+                                                   "Bus stops" = "bus_stop_sf",
+                                                   "Mrt" = "mrt_sf",
+                                                   "Primary Schools" = "primary_school_sf",
+                                                   "Shopping Malls" = "shopping_mall_sf"
+                                                   ), 
+                                       selected="Overview of HDB Locations"),
                            
-                           selectInput("resale_range", "HDB Price Range($):",
+                           selectInput("resale_range", label=h4("HDB Price Range($):"),
                                        choices = c("All","200,000 to 400,000", 
                                                    "400,000 to 600,000",
                                                    "600,000 to 800,000","800,000 to 1,000,000",
@@ -243,17 +229,14 @@ tabPanel("Visualisation",
                            #numericInput("price", "Observations:", 10)
                          ),
                          mainPanel(
-            
                            leafletOutput("map"),
-                           p(id="note","Note: The map will take a while to load."),
-                           
-                           
                           )
                          )
              )
          ), #end bracket for visualisation tab
 
 #---------------------------------------- SPATIAL POINT
+#### Spatialpoint ####
 tabPanel("Spatial Point Pattern Analysis",
 
          fluidPage(
@@ -271,12 +254,109 @@ tabPanel("Spatial Point Pattern Analysis",
              style = "width: 90%; display: none;",
              p("On this page, we offer several tools designed to help you analyze the spatial distribution of points in your dataset. Our tools includes the Local Colocation Quotient Analysis (CLQ), Kernel Density Estimation (KDE), F-Function, Ripley K-Function, and Network Constraint Analysis. To access these tools, simply click on the five tabs located at the top of the page. Each tool provides a unique perspective on the spatial patterns in your data, allowing you to gain valuable insights into the underlying processes driving your observations. Whether you seek to comprehend the level of clustering present in your dataset, identify spatial patterns, or investigate the influence of network constraints on your observations, our toolkit offers a range of analytical tools to cater to your needs.")
            ),
-           
+           #### Tabset CLQ ####
            tabsetPanel(
-             tabPanel("CLQ"),
-             tabPanel("KDE"),
-             tabPanel("F-Function"),
+             tabPanel("CLQ", fluidPage(
+               #p(id="note","Note: Please wait a while for the map to load."),
+               sidebarLayout(position = "right",
+                 sidebarPanel(
+                   h4("Description"),
+                   p("Please select the type of amenities you are interested in viewing the CLQ values. Take Note that the map may take some time to load."),
+                   selectInput("clq_amenities", label = h4("Amenity Type"), 
+                               choices = c("Childcare Centres" = "HDB_Childcare",
+                                           "Eldercare Centres" = "HDB_Eldercare",
+                                           "Kindergartens" = "HDB_Kindegarten",
+                                           "Hawkercentres" = "HDB_Hawker",
+                                           #"Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+                                           "National Parks" = "HDB_NationalParks",
+                                           "Gyms" = "HDB_Gym",
+                                           "Retail Pharmacy" = "HDB_Pharmacy",
+                                           #"SPF" = "spf_sf",
+                                           "Carparks" = "HDB_Carparks",
+                                           "Supermarkets" = "HDB_Supermarket",
+                                           "Bus stops" = "HDB_Bus",
+                                           "Mrt" = "HDB_Mrt",
+                                           "Primary Schools" = "HDB_PrimarySchool",
+                                           "Shopping Malls" = "HDB_ShoppingMall"
+                               ) 
+                               #selected = "ANG_MO_KIO"
+                               ),
+                   h4("Intepretation"),
+                   p("XXX")
+                 ),
+                 mainPanel(
+                   leafletOutput("clq_outputmap"),
+                   #p(id="note","Note: The map will take a while to load."),
+                 )
+               )
+             )),
+             #end of clq
+             
+           #### Tabset KDE ####
+             tabPanel("KDE",
+                      fluidPage(
+               sidebarLayout(position = "right",
+                             sidebarPanel(
+                               h4("Description"),
+                               p("Please select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Visualize KDE Graph' button. Take Note that generating the graph may take some time."),
+                               selectInput("kde_amenity", label = h4("Amenity Type"), 
+                                           choices = c("HDB",
+                                                       "Childcare Centres",
+                                                       "Eldercare Centres",
+                                                       "Kindergartens",
+                                                       "Hawkercentres",
+                                                       "Healthier Hawkercentres",
+                                                       "National Parks",
+                                                       "Gyms",
+                                                       "Retail Pharmacy",
+                                                       "SPF",
+                                                       "Carparks",
+                                                       "Supermarkets",
+                                                       "Bus stops",
+                                                       "Mrt",
+                                                       "Primary Schools",
+                                                       "Shopping Malls"
+                                           ), selected="HDB"
+                                           ),
+                               selectInput("kde_bw", label = h4("Bandwith"), 
+                                           choices = c(), 
+                                           ),
+                               selectInput("kde_kernel", label = h4("Kernel"), 
+                                           choices = c("Gaussian" = "gaussian",
+                                                       "Epanechnikov" ="epanechnikov",
+                                                       "Quartic" = "quartic",
+                                                       "Disc" ="disc"), 
+                                           ),
+                               
+                               actionButton("run_kde", "Visualise KDE graph")
+                             ),
+                             mainPanel(
+                               plotOutput("kde_plot")
+                             )
+               )
+             )),
+             #end of KDE
+             
+             tabPanel("F-Function", fluidPage(
+               sidebarLayout(position = "right",
+                             sidebarPanel(
+                               h4("Variables"),
+                               selectInput("net_areaName", label = h4("Area Name"), 
+                                           choices = area_names, 
+                                           selected = "ANG_MO_KIO"),
+                             ),
+                             mainPanel(
+                               #plotOutput("XX")
+                             )
+               )
+             )),
+             
+             #end of F-function
+           ####RIPLEY####
              tabPanel("Ripley (K-Function)"),
+           
+           
+           ####NETWORK ####
              tabPanel("Network Constraint Analysis", fluidPage(
                sidebarLayout(
                  position = "right",
@@ -313,34 +393,15 @@ tabPanel("Data Upload",
          ))
 )
 
-
-# Define server logic
+#### Define server logic ####
 server <- function(input, output) {
-  
-  delay(3000, hide("note"))
-  
+  delay(3000, hide("note")) #delay function
   observeEvent(input$toggle, {
     toggle("tools_div")
   })
   
   
-  #----- START VISUALISATIONS
-  amenities <- c("Childcare Centres" = "childcare_sf",
-                 "Eldercare Centres" = "eldercare_sf",
-                 "Kindergartens" = "kindergartens_sf",
-                 "Hawkercentres" = "hawkercentre_new_sf",
-                 "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
-                 "National Parks" = "nationalparks_sf",
-                 "Gyms" = "gyms_sf",
-                 "Retail Pharmacy" = "pharmacy_sf",
-                 "SPF" = "spf_sf",
-                 "Carparks" = "carpark_sf",
-                 "Supermarkets" = "supermarket_sf",
-                 "Bus stops" = "bus_stop_sf",
-                 "Mrt" = "mrt_sf",
-                 "Primary Schools" = "primary_school_sf",
-                 "Shopping Malls" = "shopping_mall_sf")
-  
+  #### Visualisations ####
   observeEvent(c(input$resale_range,input$HDB_amenities), {
     #filter dataset for map
     if (input$resale_range!= "All"){
@@ -350,9 +411,7 @@ server <- function(input, output) {
     }
     
     if (input$HDB_amenities!= "Overview of HDB Locations"){
-      index <- match(input$HDB_amenities, names(amenities))
-      result_name <- amenities[index]
-      result <- readRDS(paste0("data/rds/",result_name, ".rds"))
+      result <- readRDS(paste0("data/rds/",input$HDB_amenities, ".rds"))
       
       m <- tm_shape(mpsz_sf) +
         tm_polygons("REGION_N",
@@ -370,9 +429,9 @@ server <- function(input, output) {
         tm_shape(result) +
         tm_dots(
                 #alpha=0.2,
-                col="lightblue",
+                col="#78cce4",
                 size=0.03) +
-        tm_view(set.zoom.limits = c(11, 16))
+        tm_view(set.zoom.limits = c(10, 14))
       
     }else{
       m <- tm_shape(mpsz_sf) +
@@ -390,21 +449,74 @@ server <- function(input, output) {
         tm_view(set.zoom.limits = c(10, 14))
     }
     
-   
-    
+  
     # Convert tmap object to leaflet object
     leaflet_map <- tmap_leaflet(m)
-    
     # Render leaflet map
     output$map <- renderLeaflet(leaflet_map)
   })
   #----- END VISUALISATIONS
   
-  #----- START CLQ
+  #### CLQ ####
+  observeEvent(input$clq_amenities, {
+    result <- readRDS(paste0("data/rds/clq/",input$clq_amenities, ".rds"))
+    
+    amenity_name <- names(result)[2]
+    amenity_pvalue <- names(result)[3]
   
+    clq_map <- tm_shape(mpsz_sf) +
+      tm_polygons() +
+      tm_shape(result, subset = result$amenity_pvalue < 0.05) + #filter out p_value less than 0.05 
+      tm_dots(col = amenity_name,
+              size = 0.01,
+              border.col = "black",
+              border.lwd = 0.5) +
+      tm_view(set.zoom.limits = c(11, 14))
+     
+    output$clq_outputmap <- renderLeaflet(tmap_leaflet(clq_map))
+    })
+
+  #### KDE ####
+  kde_files <- c("HDB" = "hdbSG_ppp.km",
+                 "Childcare Centres" = "childcareSG_ppp.km",
+                 "Eldercare Centres" = "eldercareSG_ppp.km",
+                 "Kindergartens" = "kindergartensSG_ppp.km",
+                 "Hawkercentres" = "hawkercentre_newSG_ppp.km",
+                 "Healthier Hawkercentres" = "hawkercentre_healthySG_ppp.km",
+                 "National Parks" = "nationalparksSG_ppp.km",
+                 "Gyms" = "gymsSG_ppp.km",
+                 "Retail Pharmacy" = "pharmacySG_ppp.km",
+                 "SPF" = "spfSG_ppp.km",
+                 "Carparks" = "carparkSG_ppp.km",
+                 "Supermarkets" = "supermarketSG_ppp.km",
+                 "Bus stops" = "bus_stopSG_ppp.km",
+                 "Mrt" = "mrtSG_ppp.km",
+                 "Primary Schools" = "primary_schoolSG_ppp.km",
+                 "Shopping Malls" = "shopping_mallSG_ppp.km")
+
+      observeEvent(input$run_kde,{
+        
+        index_kde <- match(input$kde_amenity, names(kde_files))
+        kde_name <- kde_files[index_kde]
+        kde_rds <- readRDS(paste0("data/rds/kde/",kde_name,".rds"))
+        
+        # Calculate kernel density estimate
+        kde_result <- density(kde_rds, 
+                              sigma = input$kde_bw, 
+                              edge = TRUE, 
+                              kernel = input$kde_kernel)
+        
+        # Render plot
+        output$kde_plot <- renderPlot({
+          plot(kde_result)
+        })
+      })
+
+  #----- END KDE
   
+  #----- START Ffunction
+  #----- END Ffunction
   
-  #----- END CLQ
   
   #NETWORK ANALYSIS
   output$networkLixel <- renderPlot(
