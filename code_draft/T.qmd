@@ -1,0 +1,885 @@
+---
+title: "Data Pre-processing"
+
+execute: 
+  message: false
+  warning: false
+  eval: false
+---
+
+# 1 Load Packages
+
+```{r}
+pacman::p_load(readxl, sf, tidyverse, tmap, sfdep, rvest, httr, jsonlite, onemapsgapi, ggpubr, olsrr,ggplot2, plotly,maptools, raster, spatstat, tmap)
+```
+
+## Import Processed Data
+
+```{r}
+resale_sf<-readRDS("data/rds/resale_sf.rds")
+
+mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+
+childcare_sf <- readRDS("data/rds/childcare_sf.rds")
+eldercare_sf<- readRDS("data/rds/eldercare_sf.rds")
+kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
+hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
+hawkercentre_healthy_sf<-readRDS("data/rds/hawkercentre_healthy_sf.rds")
+nationalparks_sf<-readRDS("data/rds/nationalparks_sf.rds")
+gyms_sf <-readRDS("data/rds/gyms_sf.rds")
+pharmacy_sf<-readRDS("data/rds/pharmacy_sf.rds")
+spf_sf<-readRDS("data/rds/spf_sf.rds")
+HDB_carpark_sf<-readRDS("data/rds/HDB_carpark_sf.rds")
+
+supermarket_sf<-readRDS("data/rds/supermarket_sf.rds")
+bus_stop_sf<-readRDS("data/rds/bus_stop_sf.rds")
+mrt_sf<-readRDS("data/rds/mrt_sf.rds")
+primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
+top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
+shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
+
+```
+
+# 3 Converting sf data frames to sp's Spatial\* class+Converting the Spatial\* class into generic sp format+Converting the generic sp format into spatstat's ppp format
+
+```{r}
+mpsz   <-  as_Spatial(mpsz_sf)
+mpsz_sp   <- as(mpsz, "SpatialPolygons")
+```
+
+```{r}
+
+spf   <-  as_Spatial(spf_sf)
+spf_sp   <-  as(spf, "SpatialPoints")
+spf_ppp   <-  as(spf_sp, "ppp")
+
+mrt      <-  as_Spatial(mrt_sf)
+mrt_sp    <- as(mrt, "SpatialPoints")
+mrt_ppp   <- as(mrt_sp, "ppp")
+
+gyms   <-  as_Spatial(gyms_sf)
+gyms_sp   <- as(gyms, "SpatialPoints")
+gyms_ppp   <- as(gyms_sp, "ppp")
+
+resale<-  as_Spatial(resale_sf)
+resale_sp <-  as(resale, "SpatialPoints")
+resale_ppp <-  as(resale_sp, "ppp")
+
+childcare <-  as_Spatial(childcare_sf)
+childcare_sp <- as(childcare, "SpatialPoints")
+childcare_ppp <- as(childcare_sp, "ppp")
+
+eldercare<-  as_Spatial(eldercare_sf)
+eldercare_sp<-  as(eldercare, "SpatialPoints")
+eldercare_ppp<-  as(eldercare_sp, "ppp")
+
+pharmacy<-  as_Spatial(pharmacy_sf)
+pharmacy_sp<-   as(pharmacy, "SpatialPoints")
+pharmacy_ppp<-   as(pharmacy_sp, "ppp")
+
+bus_stop <-  as_Spatial(bus_stop_sf)
+bus_stop_sp <-   as(bus_stop, "SpatialPoints")
+bus_stop_ppp <-  as(bus_stop_sp, "ppp")
+
+kindergartens <-  as_Spatial(kindergartens_sf)
+kindergartens_sp <-   as(kindergartens, "SpatialPoints")
+kindergartens_ppp <-   as(kindergartens_sp, "ppp")
+
+shopping_mall <-  as_Spatial(shopping_mall_sf)
+shopping_mall_sp <-   as(shopping_mall, "SpatialPoints")
+shopping_mall_ppp <-   as(shopping_mall_sp, "ppp")
+
+primary_school<-  as_Spatial(primary_school_sf)
+primary_school_sp<-  as(primary_school, "SpatialPoints")
+primary_school_ppp<-  as(primary_school_sp, "ppp")
+
+nationalparks <-  as_Spatial(nationalparks_sf)
+nationalparks_sp <-   as(nationalparks, "SpatialPoints")
+nationalparks_ppp <-   as(nationalparks_sp, "ppp")
+
+HDB_carpark <-   as_Spatial(HDB_carpark_sf)
+HDB_carpark_sp <-    as(HDB_carpark, "SpatialPoints")
+HDB_carpark_ppp <-    as(HDB_carpark_sp, "ppp")
+
+supermarket <-   as_Spatial(supermarket_sf)
+supermarket_sp <-    as(supermarket, "SpatialPoints")
+supermarket_ppp <-    as(supermarket_sp, "ppp")
+
+hawkercentre_new <-  as_Spatial(hawkercentre_new_sf)
+hawkercentre_new_sp      <-  as(hawkercentre_new, "SpatialPoints")
+hawkercentre_new_ppp      <-  as(hawkercentre_new_sp, "ppp")
+
+top10_primary_school  <-  as_Spatial(top10_primary_school_sf)
+top10_primary_school_sp  <-  as(top10_primary_school, "SpatialPoints")
+top10_primary_school_ppp  <-  as(top10_primary_school_sp, "ppp")
+
+hawkercentre_healthy  <-  as_Spatial(hawkercentre_healthy_sf)
+hawkercentre_healthy_sp  <-  as(hawkercentre_healthy, "SpatialPoints")
+hawkercentre_healthy_ppp  <-  as(hawkercentre_healthy_sp, "ppp")
+```
+
+```{r}
+plot(spf_ppp)
+plot(mrt_ppp)
+plot(gyms_ppp)
+plot(resale_ppp)
+
+plot(childcare_ppp)
+plot(eldercare_ppp)
+plot(pharmacy_ppp)
+plot(bus_stop_ppp)
+
+plot(kindergartens_ppp)
+plot(shopping_mall_ppp)
+plot(primary_school_ppp)
+plot(nationalparks_ppp)
+
+plot(HDB_carpark_ppp)
+plot(supermarket_ppp)
+
+plot(hawkercentre_new_ppp)
+plot(top10_primary_school_ppp)
+plot(hawkercentre_healthy_ppp)
+
+
+```
+
+```{r}
+summary(spf_ppp)
+summary(mrt_ppp)
+summary(gyms_ppp)
+summary(resale_ppp)
+
+summary(childcare_ppp)
+summary(eldercare_ppp)
+summary(pharmacy_ppp)
+summary(bus_stop_ppp)
+
+summary(kindergartens_ppp)
+summary(shopping_mall_ppp)
+summary(primary_school_ppp)
+summary(nationalparks_ppp)
+
+summary(HDB_carpark_ppp)
+summary(supermarket_ppp)
+
+summary(hawkercentre_new_ppp)
+summary(top10_primary_school_ppp)
+summary(hawkercentre_healthy_ppp)
+
+```
+
+### Handling duplicated points
+
+We can check the duplication in a ***ppp*** object by using the code chunk below.
+
+```{r}
+
+
+any(duplicated(spf_ppp))
+any(duplicated(mrt_ppp))
+any(duplicated(gyms_ppp))
+any(duplicated(resale_ppp))
+
+any(duplicated(childcare_ppp))
+any(duplicated(eldercare_ppp))
+any(duplicated(pharmacy_ppp))
+any(duplicated(bus_stop_ppp))
+
+any(duplicated(kindergartens_ppp))
+any(duplicated(shopping_mall_ppp))
+any(duplicated(primary_school_ppp))
+any(duplicated(nationalparks_ppp))
+
+any(duplicated(HDB_carpark_ppp))
+any(duplicated(supermarket_ppp))
+
+any(duplicated(hawkercentre_new_ppp))
+any(duplicated(top10_primary_school_ppp))
+any(duplicated(hawkercentre_healthy_ppp))
+```
+
+To count the number of co-indicence point, we will use the *multiplicity()* function as shown in the code chunk below.
+
+```{r}
+
+
+multiplicity(spf_ppp)
+multiplicity(mrt_ppp)
+multiplicity(gyms_ppp)
+multiplicity(resale_ppp)
+
+multiplicity(childcare_ppp)
+multiplicity(eldercare_ppp)
+multiplicity(pharmacy_ppp)
+multiplicity(bus_stop_ppp)
+
+multiplicity(kindergartens_ppp)
+multiplicity(shopping_mall_ppp)
+multiplicity(primary_school_ppp)
+multiplicity(nationalparks_ppp)
+
+multiplicity(HDB_carpark_ppp)
+multiplicity(supermarket_ppp)
+
+multiplicity(hawkercentre_new_ppp)
+multiplicity(top10_primary_school_ppp)
+multiplicity(hawkercentre_healthy_ppp)
+```
+
+If we want to know how many locations have more than one point event, we can use the code chunk below.
+
+```{r}
+sum(multiplicity(spf_ppp) > 1)
+sum(multiplicity(mrt_ppp) > 1)
+sum(multiplicity(gyms_ppp) > 1)
+sum(multiplicity(resale_ppp) > 1)
+
+sum(multiplicity(childcare_ppp) > 1)
+sum(multiplicity(eldercare_ppp) > 1)
+sum(multiplicity(pharmacy_ppp) > 1)
+sum(multiplicity(bus_stop_ppp) > 1)
+
+sum(multiplicity(kindergartens_ppp) > 1)
+sum(multiplicity(shopping_mall_ppp) > 1)
+sum(multiplicity(primary_school_ppp) > 1)
+sum(multiplicity(nationalparks_ppp) > 1)
+
+sum(multiplicity(HDB_carpark_ppp) > 1)
+sum(multiplicity(supermarket_ppp) > 1)
+
+sum(multiplicity(hawkercentre_new_ppp) > 1)
+sum(multiplicity(top10_primary_school_ppp) > 1)
+sum(multiplicity(hawkercentre_healthy_ppp) > 1)
+
+
+
+```
+
+There are three ways to overcome this problem. The easiest way is to delete the duplicates. But, that will also mean that some useful point events will be lost.
+
+Use *jittering*, which will add a small perturbation to the duplicate points so that they do not occupy the exact same space.
+
+```{r}
+spf_ppp_jit <- rjitter(spf_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+gyms_ppp_jit <- rjitter(gyms_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+resale_ppp_jit <- rjitter(resale_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+childcare_ppp_jit <- rjitter(childcare_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+eldercare_ppp_jit <- rjitter(eldercare_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+pharmacy_ppp_jit <- rjitter(pharmacy_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+bus_stop_ppp_jit <- rjitter(bus_stop_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+kindergartens_ppp_jit <- rjitter(kindergartens_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+shopping_mall_ppp_jit <- rjitter(shopping_mall_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+primary_school_ppp_jit <- rjitter(primary_school_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+supermarket_ppp_jit <- rjitter(supermarket_ppp, 
+                             retry=TRUE, 
+                             nsim=1, 
+                             drop=TRUE)
+
+
+
+```
+
+### Creating ***owin*** object
+
+```{r}
+mpsz_owin<- as(mpsz_sp, "owin")
+plot(mpsz_owin)
+```
+
+```{r}
+summary(mpsz_owin)
+```
+
+```{r}
+
+
+
+
+spfSG_ppp = spf_ppp[mpsz_owin]
+mrtSG_ppp = mrt_ppp[mpsz_owin]
+gymsSG_ppp = gyms_ppp[mpsz_owin]
+resaleSG_ppp = resale_ppp[mpsz_owin]
+
+childcareSG_ppp = childcare_ppp[mpsz_owin]
+eldercareSG_ppp = eldercare_ppp[mpsz_owin]
+pharmacySG_ppp = pharmacy_ppp[mpsz_owin]
+bus_stopSG_ppp = bus_stop_ppp[mpsz_owin]
+
+
+kindergartensSG_ppp = kindergartens_ppp[mpsz_owin]
+shopping_mallSG_ppp = shopping_mall_ppp[mpsz_owin]
+primary_schoolSG_ppp = primary_school_ppp[mpsz_owin]
+nationalparksSG_ppp = nationalparks_ppp[mpsz_owin]
+
+HDB_carparkSG_ppp = HDB_carpark_ppp[mpsz_owin]
+supermarketSG_ppp = supermarket_ppp[mpsz_owin]
+
+hawkercentre_newSG_ppp = hawkercentre_new_ppp[mpsz_owin]
+top10_primary_schoolSG_ppp = top10_primary_school_ppp[mpsz_owin]
+hawkercentre_healthySG_ppp = hawkercentre_healthy_ppp[mpsz_owin]
+
+
+
+```
+
+```{r}
+
+
+summary(spfSG_ppp)
+summary(mrtSG_ppp)
+summary(gymsSG_ppp)
+summary(resaleSG_ppp)
+
+summary(childcareSG_ppp)
+summary(eldercareSG_ppp)
+summary(pharmacySG_ppp)
+summary(bus_stopSG_ppp)
+
+
+summary(kindergartensSG_ppp)
+summary(shopping_mallSG_ppp)
+summary(primary_schoolSG_ppp)
+summary(nationalparksSG_ppp)
+
+summary(HDB_carparkSG_ppp)
+summary(supermarketSG_ppp)
+
+summary(hawkercentre_newSG_ppp)
+summary(top10_primary_schoolSG_ppp)
+summary(hawkercentre_healthySG_ppp)
+```
+
+# 4 First-order Spatial Point Patterns Analysis
+
+### Kernel Density Estimation
+
+#### Computing kernel density estimation using automatic bandwidth selection method
+
+#### Rescalling KDE values
+
+In the code chunk below, *rescale()* is used to covert the unit of measurement from meter to kilometer.
+
+```{r}
+
+
+spfSG_ppp.km <- rescale(spfSG_ppp, 1000, "km")
+mrtSG_ppp.km <- rescale(mrtSG_ppp, 1000, "km")
+gymsSG_ppp.km <- rescale(gymsSG_ppp, 1000, "km")
+resaleSG_ppp.km <- rescale(resaleSG_ppp, 1000, "km")
+
+childcareSG_ppp.km <- rescale(childcareSG_ppp, 1000, "km")
+eldercareSG_ppp.km <- rescale(eldercareSG_ppp, 1000, "km")
+pharmacySG_ppp.km <- rescale(pharmacySG_ppp, 1000, "km")
+bus_stopSG_ppp.km <- rescale(bus_stopSG_ppp, 1000, "km")
+
+
+kindergartensSG_ppp.km <- rescale(kindergartensSG_ppp, 1000, "km")
+shopping_mallSG_ppp.km <- rescale(shopping_mallSG_ppp, 1000, "km")
+primary_schoolSG_ppp.km <- rescale(primary_schoolSG_ppp, 1000, "km")
+nationalparksSG_ppp.km <- rescale(nationalparksSG_ppp, 1000, "km")
+
+HDB_carparkSG_ppp.km <- rescale(HDB_carparkSG_ppp, 1000, "km")
+supermarketSG_ppp.km <- rescale(supermarketSG_ppp, 1000, "km")
+
+hawkercentre_newSG_ppp.km <- rescale(hawkercentre_newSG_ppp, 1000, "km")
+top10_primary_schoolSG_ppp.km <- rescale(top10_primary_schoolSG_ppp, 1000, "km")
+hawkercentre_healthySG_ppp.km <- rescale(hawkercentre_healthySG_ppp, 1000, "km")
+```
+
+save the files
+
+```{r}
+
+saveRDS(spfSG_ppp.km, "data/rds/kde/spfSG_ppp.km.rds")
+saveRDS(mrtSG_ppp.km, "data/rds/kde/mrtSG_ppp.km.rds")
+saveRDS(gymsSG_ppp.km, "data/rds/kde/gymsSG_ppp.km.rds")
+saveRDS(resaleSG_ppp.km, "data/rds/kde/hdbSG_ppp.km.rds")
+
+saveRDS(childcareSG_ppp.km, "data/rds/kde/childcareSG_ppp.km.rds")
+saveRDS(eldercareSG_ppp.km, "data/rds/kde/eldercareSG_ppp.km.rds")
+saveRDS(pharmacySG_ppp.km, "data/rds/kde/pharmacySG_ppp.km.rds")
+saveRDS(bus_stopSG_ppp.km, "data/rds/kde/bus_stopSG_ppp.km.rds")
+
+saveRDS(kindergartensSG_ppp.km, "data/rds/kde/kindergartensSG_ppp.km.rds")
+saveRDS(shopping_mallSG_ppp.km, "data/rds/kde/shopping_mallSG_ppp.km.rds")
+saveRDS(primary_schoolSG_ppp.km, "data/rds/kde/primary_schoolSG_ppp.km.rds")
+saveRDS(nationalparksSG_ppp.km, "data/rds/kde/nationalparksSG_ppp.km.rds")
+
+saveRDS(HDB_carparkSG_ppp.km, "data/rds/kde/HDB_carparkSG_ppp.km.rds")
+saveRDS(supermarketSG_ppp.km, "data/rds/kde/supermarketSG_ppp.km.rds")
+
+saveRDS(hawkercentre_newSG_ppp.km, "data/rds/kde/hawkercentre_newSG_ppp.km.rds")
+saveRDS(top10_primary_schoolSG_ppp.km, "data/rds/kde/top10_primary_schoolSG_ppp.km.rds")
+saveRDS(hawkercentre_healthySG_ppp.km, "data/rds/kde/hawkercentre_healthySG_ppp.km.rds")
+
+```
+
+```{r}
+
+```
+
+Now, we can re-run *density()* using the resale data set and plot the output kde map.
+
+```{r}
+kde_childcareSG.bw <- density(childcareSG_ppp.km,
+                              sigma=bw.ppl,
+                              edge=TRUE,
+                            kernel="epanechnikov") 
+
+plot(kde_childcareSG.bw)
+
+
+```
+
+```{r}
+
+
+kde_spfSG.bw <- density(spfSG_ppp.km,
+                              sigma=bw.diggle,
+                              edge=TRUE,
+                            kernel="gaussian") 
+plot(kde_spfSG.bw)
+
+
+
+```
+
+```{r}
+
+
+kde_gymsSG.bw <- density(gymsSG_ppp.km,
+                             sigma=bw.diggle,
+                              edge=TRUE,
+                         
+                            kernel="gaussian") 
+
+
+plot(kde_gymsSG.bw)
+
+```
+
+```{r}
+
+kde_hdbSG.bw <- density(resaleSG_ppp.km,
+                              sigma=bw.diggle,
+                              edge=TRUE,
+                            kernel="gaussian") 
+
+plot(kde_hdbSG.bw)
+
+```
+
+```{r}
+
+kde_eldercareSG.bw <- density(eldercareSG_ppp.km,
+                              sigma=bw.diggle,
+                              edge=TRUE,
+                            kernel="gaussian") 
+
+
+plot(kde_eldercareSG.bw)
+
+```
+
+```{r}
+
+kde_pharmacySG.bw <- density(pharmacySG_ppp.km,
+                              sigma=bw.diggle,
+                              edge=TRUE,
+                            kernel="gaussian") 
+plot(kde_pharmacySG.bw)
+
+
+```
+
+```{r}
+
+kde_bus_stopSG.bw <- density(bus_stopSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+
+plot(kde_bus_stopSG.bw)
+
+```
+
+```{r}
+kde_kindergartensSG.bw <- density(kindergartensSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian")
+
+plot(kde_kindergartensSG.bw)
+
+
+```
+
+```{r}
+
+kde_shopping_mallSG.bw <- density(shopping_mallSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+
+plot(kde_shopping_mallSG.bw)
+
+```
+
+```{r}
+kde_primary_schoolSG.bw <- density(primary_schoolSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+plot(kde_primary_schoolSG.bw)
+
+```
+
+```{r}
+kde_nationalparksSG.bw <- density(nationalparksSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+plot(kde_nationalparksSG.bw)
+
+
+```
+
+```{r}
+kde_HDB_carparkSG.bw <- density(HDB_carparkSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+plot(kde_HDB_carparkSG.bw)
+
+```
+
+```{r}
+kde_supermarketSG.bw <- density(supermarketSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+plot(kde_supermarketSG.bw)
+
+
+
+```
+
+```{r}
+kde_hawkercentre_newSG.bw <- density(hawkercentre_newSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+
+plot(kde_hawkercentre_newSG.bw)
+
+
+```
+
+```{r}
+
+kde_top10_primary_schoolSG.bw <- density(top10_primary_schoolSG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+
+plot(kde_top10_primary_schoolSG.bw)
+
+```
+
+```{r}
+kde_hawkercentre_healthySG.bw <- density(hawkercentre_healthySG_ppp.km,
+                          sigma=bw.diggle,
+                          edge=TRUE,
+                          kernel="gaussian") 
+
+plot(kde_hawkercentre_healthySG.bw)
+```
+
+### Working with different automatic badwidth methods
+
+```{r}
+ bw.CvL(resaleSG_ppp.km )
+ bw.scott(resaleSG_ppp.km )
+ bw.ppl(resaleSG_ppp.km )
+ bw.diggle(resaleSG_ppp.km )
+ 
+ kde_resaleSG.ppl <- density(resaleSG_ppp.km , 
+                               sigma=bw.ppl, 
+                               edge=TRUE,
+                               kernel="gaussian")
+par(mfrow=c(1,2))
+plot(kde_hdbSG.bw, main = "bw.diggle")
+plot(kde_resaleSG.ppl, main = "bw.ppl")
+```
+
+### Working with different kernel methods
+
+```{r}
+par(mfrow=c(2,2))
+plot(density(resaleSG_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="gaussian"), 
+     main="Gaussian")
+plot(density(resaleSG_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="epanechnikov"), 
+     main="Epanechnikov")
+plot(density(resaleSG_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="quartic"), 
+     main="Quartic")
+plot(density(resaleSG_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="disc"), 
+     main="Disc")
+
+```
+
+## Fixed and Adaptive KDE
+
+### Computing KDE by using fixed bandwidth
+
+```{r}
+kde_resaleSG_600 <- density(resaleSG_ppp.km, 
+                               sigma=0.6, 
+                               edge=TRUE, 
+                               kernel="gaussian")
+plot(kde_resaleSG_600)
+```
+
+### Computing KDE by using adaptive bandwidth
+
+```{r}
+kde_resaleSG_adaptive <- adaptive.density(resaleSG_ppp.km, 
+                                             method="kernel")
+plot(kde_resaleSG_adaptive)
+```
+
+```{r}
+par(mfrow=c(1,2))
+plot(kde_hdbSG.bw, main = "Fixed bandwidth")
+plot(kde_resaleSG_adaptive, main = "Adaptive bandwidth")
+```
+
+### Converting KDE output into grid object.
+
+```{r}
+gridded_kde_resaleSG_bw <- as.SpatialGridDataFrame.im(kde_hdbSG.bw)
+spplot(gridded_kde_resaleSG_bw)
+```
+
+#### Converting gridded output into raster
+
+```{r}
+kde_resaleSG_bw_raster <- raster(gridded_kde_resaleSG_bw)
+```
+
+```{r}
+kde_resaleSG_bw_raster
+```
+
+#### Assigning projection systems
+
+```{r}
+projection(kde_resaleSG_bw_raster) <- CRS("+init=EPSG:3414")
+kde_resaleSG_bw_raster
+```
+
+### Visualising the output in **tmap**
+
+```{r}
+tm_shape(kde_resaleSG_bw_raster) + 
+  tm_raster("v") +
+  tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
+```
+
+### Comparing Spatial Point Patterns using KDE
+
+#### Extracting study area
+
+```{r}
+pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
+tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
+ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
+jw = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(pg, main = "Ponggol")
+plot(tm, main = "Tampines")
+plot(ck, main = "Choa Chu Kang")
+plot(jw, main = "Jurong West")
+```
+
+#### Converting the spatial point data frame into generic sp format
+
+```{r}
+pg_sp = as(pg, "SpatialPolygons")
+tm_sp = as(tm, "SpatialPolygons")
+ck_sp = as(ck, "SpatialPolygons")
+jw_sp = as(jw, "SpatialPolygons")
+```
+
+#### Creating ***owin*** object
+
+```{r}
+pg_owin = as(pg_sp, "owin")
+tm_owin = as(tm_sp, "owin")
+ck_owin = as(ck_sp, "owin")
+jw_owin = as(jw_sp, "owin")
+```
+
+#### Combining childcare points and the study area
+
+```{r}
+resale_pg_ppp = resale_ppp_jit[pg_owin]
+resale_tm_ppp = resale_ppp_jit[tm_owin]
+resale_ck_ppp = resale_ppp_jit[ck_owin]
+resale_jw_ppp = resale_ppp_jit[jw_owin]
+```
+
+```{r}
+resale_pg_ppp.km = rescale(resale_pg_ppp, 1000, "km")
+resale_tm_ppp.km = rescale(resale_tm_ppp, 1000, "km")
+resale_ck_ppp.km = rescale(resale_ck_ppp, 1000, "km")
+resale_jw_ppp.km = rescale(resale_jw_ppp, 1000, "km")
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(resale_pg_ppp.km, main="Punggol")
+plot(resale_tm_ppp.km, main="Tampines")
+plot(resale_ck_ppp.km, main="Choa Chu Kang")
+plot(resale_jw_ppp.km, main="Jurong West")
+```
+
+#### Computing KDE
+
+```{r}
+par(mfrow=c(2,2))
+plot(density(resale_pg_ppp.km, 
+             sigma=bw.diggle, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Punggol")
+plot(density(resale_tm_ppp.km, 
+             sigma=bw.diggle, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Tempines")
+plot(density(resale_ck_ppp.km, 
+             sigma=bw.diggle, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Choa Chu Kang")
+plot(density(resale_jw_ppp.km, 
+             sigma=bw.diggle, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="JUrong West")
+```
+
+#### Computing fixed bandwidth KDE
+
+```{r}
+par(mfrow=c(2,2))
+plot(density(resale_ck_ppp.km, 
+             sigma=0.25, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Chou Chu Kang")
+plot(density(resale_jw_ppp.km, 
+             sigma=0.25, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="JUrong West")
+plot(density(resale_pg_ppp.km, 
+             sigma=0.25, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Punggol")
+plot(density(resale_tm_ppp.km, 
+             sigma=0.25, 
+             edge=TRUE, 
+             kernel="gaussian"),
+     main="Tampines")
+```
+
+# 5 Analysing Spatial Point Process Using F-Function
+
+### Choa Chu Kang planning area
+
+#### Computing F-function estimatio
+
+```{r}
+F_CK = Fest(resale_ck_ppp)
+plot(F_CK)
+```
+
+### Performing Complete Spatial Randomness Test
+
+```{r}
+F_CK.csr <- envelope(resale_ck_ppp, Fest, nsim = 999)
+```
+
+```{r}
+plot(F_CK.csr)
+```
+
+### Tampines planning area
+
+```{r}
+F_tm = Fest(resale_tm_ppp, correction = "best")
+plot(F_tm)
+```
+
+#### Performing Complete Spatial Randomness Test
+
+```{r}
+F_tm.csr <- envelope(resale_tm_ppp, Fest, correction = "all", nsim = 999)
+```
+
+```{r}
+plot(F_tm.csr)
+```
