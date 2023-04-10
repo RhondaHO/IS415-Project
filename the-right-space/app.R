@@ -237,7 +237,8 @@ tabPanel("Spatial Point Pattern Analysis",
                sidebarLayout(position = "right",
                  sidebarPanel(
                    h4("Description"),
-                   p("Please select the type of amenities you are interested in viewing the CLQ values. Take Note that the map may take some time to load."),
+                   p("Take note that the map may take some time to load. The map will display the Childcare Centres CLQ by default when the page loads."),
+                  p("Please select the type of amenities you are interested in viewing the CLQ values."),
                    selectInput("clq_amenities", label = h4("Amenity Type"), 
                                choices = c("Childcare Centres" = "HDB_Childcare",
                                            "Eldercare Centres" = "HDB_Eldercare",
@@ -274,7 +275,7 @@ tabPanel("Spatial Point Pattern Analysis",
                sidebarLayout(position = "right",
                              sidebarPanel(
                                h4("Description"),
-                               p("Please select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Visualize KDE Graph' button. Take Note that generating the graph may take some time."),
+                               p("Please first select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Visualize KDE Graph' button. Take note that generating the graph may take some time."),
                                selectInput("kde_amenity", label = h4("Amenity Type"), 
                                            choices = c("HDB",
                                                        "Childcare Centres",
@@ -295,7 +296,10 @@ tabPanel("Spatial Point Pattern Analysis",
                                            ), selected="HDB"
                                            ),
                                selectInput("kde_bw", label = h4("Bandwith"), 
-                                           choices = c(), 
+                                           choices = c("bw.diggle",
+                                                       "bw.ppl",
+                                                       "bw.CvL",
+                                                       "bw.scott"), 
                                            ),
                                selectInput("kde_kernel", label = h4("Kernel"), 
                                            choices = c("Gaussian" = "gaussian",
@@ -473,9 +477,10 @@ server <- function(input, output) {
         kde_name <- kde_files[index_kde]
         kde_rds <- readRDS(paste0("data/rds/kde/",kde_name,".rds"))
         
+        
         # Calculate kernel density estimate
         kde_result <- density(kde_rds, 
-                              sigma = input$kde_bw, 
+                              sigma = get(input$kde_bw), 
                               edge = TRUE, 
                               kernel = input$kde_kernel)
         

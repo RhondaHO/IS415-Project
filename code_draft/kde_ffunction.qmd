@@ -457,14 +457,24 @@ saveRDS(hawkercentre_healthySG_ppp.km, "data/rds/kde/hawkercentre_healthySG_ppp.
 Now, we can re-run *density()* using the resale data set and plot the output kde map.
 
 ```{r}
-kde_childcareSG.bw <- density(childcareSG_ppp.km,
-                              sigma=bw.ppl,
+kde_childcareSG.bw <- density(eldercareSG_ppp.km,
+                              sigma=bw.diggle,
                               edge=TRUE,
-                            kernel="epanechnikov") 
+                            kernel="gaussian"
+                          ) 
 
 plot(kde_childcareSG.bw)
 
 
+```
+
+```{r}
+kde_childcareSG.bw <- density(eldercareSG_ppp.km,
+                              sigma=bw.scott,
+                              edge=TRUE,
+                            kernel="gaussian") 
+
+plot(kde_childcareSG.bw)
 ```
 
 ```{r}
