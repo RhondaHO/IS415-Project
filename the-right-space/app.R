@@ -289,8 +289,9 @@ tabPanel("Spatial Point Pattern Analysis",
                                #selected = "ANG_MO_KIO"
                                ),
                    h4("Intepretation"),
-                   p("XXX")
-                 ),
+                   p("The application of colocation quotient (CLQ) is to determine whether the type of amenities is colocated with HDB. Each feature in the Category of Interest (category A) i.e HDB locations is evaluated individually for colocation with the presence of the Neighboring Category (category B) i.e other amenities found within its neighborhood. Generally, if a feature has a colocation quotient equal to one, it means the proportion of categories within their neighborhood is a good representation of the proportion of categories throughout the entire study area. Currently, for this CLQ map, it is already filtered to only show values where p_value <0.05."),
+                   tags$a(href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm", "Reference"),
+                  ),
                  mainPanel(
                    leafletOutput("clq_outputmap"),
                    #p(id="note","Note: The map will take a while to load."),
@@ -338,9 +339,11 @@ tabPanel("Spatial Point Pattern Analysis",
                                                        "Disc" ="disc"), 
                                            ),
                                
-                               actionButton("run_kde", "Plot KDE graph"),
+                               actionButton("run_kde", "Plot KDE Graph"),
                                h4("Intepretation"),
-                               p("XXX")
+                               p("Kernel density estimation is a widely utilized approach to display the density of spatial data points, which generates a smooth and continuous surface where each pixel represents a density value based on the number of points within a given distance bandwidth. The brighter clusters/areas tells us that the chosen amenity has a higher density in that area of the map."),
+                               tags$a(href="https://r4gdsa.netlify.app/chap04.html#first-order-spatial-point-patterns-analysis", "Reference"),
+                               
                              ),
                              mainPanel(
                                plotOutput("kde_plot")
@@ -360,7 +363,15 @@ tabPanel("Spatial Point Pattern Analysis",
                                            selected = "BEDOK"),
                                actionButton("run_ffunc", "Plot F-function graph"),
                                h4("Intepretation"),
-                               p("XXX")
+                               p("Empty space distance is the measure of distance from a fixed reference location in the study window to the nearest data point, while the F function is the cumulative distribution function of the empty space distance. To confirm the observed spatial patterns, a hypothesis test will be conducted. The hypothesis and test are as follows:"),
+                               
+                               p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
+                               
+                               p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
+                               
+                               p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05."),
+                               tags$a(href="https://r4gdsa.netlify.app/chap05.html#analysing-spatial-point-process-using-f-function", "Reference #1"),
+                               tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference #2"),
                                
                              ),
                              mainPanel(
@@ -376,14 +387,23 @@ tabPanel("Spatial Point Pattern Analysis",
                  position = "right",
                  sidebarPanel(
                    h4("Description"),
-                   p("Please first select the area you would like to view the Ripley(L-function) graph of, and then click the 'Plot L-function graph' button. Take note that generating the graph may take some time."),
+                   p("Please first select the area you would like to view the Ripley(L-function) graph of, and then click the 'Plot L-function Graph' button. Take note that generating the graph may take some time."),
                    
                    selectInput("rip", label = h4("Area Name"), 
                                choices = area_names_1, 
                                selected = "BEDOK"),
-                   actionButton("run_rip", "Plot L-function graph"),
+                   actionButton("run_rip", "Plot L-function Graph"),
                    h4("Intepretation"),
-                   p("XXX")
+                   p("Pairwise distance refers to the distance between every unique pair of points in a given pattern. The K function calculates the average number of points that fall within a given distance r, and normalizes the result by dividing by the intensity of the study area.
+An alternative form of the K-function is the L-function, which transforms the Poisson K-function into a straight line. The purpose is to make visual assessment of deviation easier. To confirm the observed spatial patterns, a hypothesis test will be conducted. The hypothesis and test are as follows:"),
+                   
+                   p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
+                   
+                   p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
+                   
+                   p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05."),
+                   
+                   tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference"),
                    
                  ),
                  mainPanel(
