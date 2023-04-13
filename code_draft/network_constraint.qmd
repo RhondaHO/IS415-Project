@@ -120,7 +120,7 @@ for (file in files) {
 
 ```{r}
 # set directory
-setwd("data/rds/facilities/combined/hdb_carpark")
+setwd("data/rds/point")
 
 # list all .rds files
 files <- list.files(pattern = ".rds")
@@ -918,13 +918,13 @@ tm_view(set.zoom.limits = c(14,16))
 # NOT COMPLETED: 
 # CHANGE NAME BELOW!!!!
 # set directory to save kfunc files
-setwd("data/rds/kfunc/supermarket/multi")
+setwd("data/rds/kfunc/hdb")
 
 # get data
-area_name <- area_names[25]
+area_name <- area_names[30]
 
 # CHANGE NAME BELOW!!!!
-hdb_facility <- get(paste0("hdb_supermarket_", area_name))
+hdb_facility <- get(paste0("point_", area_name))
 hdb_facility_points <- hdb_facility %>% select(c("geometry"))
 area_network <- get(paste0("network_", area_name))
 
@@ -942,7 +942,7 @@ kfun <- kfunctions(area_network,
 
 # CHANGE NAME BELOW!!!!
 # save kfunc as RDS with unique name
-kfunc_name <- paste0("kfunc_supermarket_", area_name, ".rds")
+kfunc_name <- paste0("kfunc_", area_name, ".rds")
 saveRDS(kfun, kfunc_name)
 ```
 
