@@ -1,16 +1,10 @@
 ---
-#title:
+title: "IS415 AY22-23 Project"
 ---
-
-::: {#quote}
-"If you're searching for your dream HDB flat in the lively heart of Singapore, here is the right place for you!" 🏘️
-:::
 
 ------------------------------------------------------------------------
 
-# IS415 AY22-23 Project
-
-#### Who we are
+#### About Us
 
 Hello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee.
 
@@ -18,6 +12,6 @@ Hello! We are G1T7, Nguyen Mai Phuong, Kwan Kai Xuan Belle and Rhonda Ho Kah Yee
 
 This project is created for an IS415 Geospatial Analytics & Application, a module in Singapore Management University (SMU) with the guidance of Professor Kam Tin Seong.
 
-#### Our Theme
+#### Our Project Theme and Goal
 
-Spatial Point Analysis
+The theme for this project is Spatial Point Analysis, and our goal is to provide a user-friendly analytical app that simplifies the process of understanding the amenities available in the vicinity of prospective HDB buyers. By utilizing advanced spatial point pattern analysis techniques, the app visualizes the distribution and clustering of relevant amenities, providing a tailored view that empowers HDB buyers to make informed decisions and feel confident in their chosen residence. To view more of our project deliverable, click [here](content.qmd).

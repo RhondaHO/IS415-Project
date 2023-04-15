@@ -9,8 +9,8 @@ website:
   
   navbar:
     foreground: "#5d5a88"
-    logo: "logo.png"
-    logo-href: "The Right Place" 
+    logo: "logo_t.png"
+    logo-href: index.qmd 
       
     #left: 
       
@@ -19,8 +19,13 @@ website:
       - text: About Us
         href: index.qmd
         
-      - text: Project Proposal
+      - text: Project Deliverable
+        href: content.qmd   
+      
+      - text: Research Paper
         href: project_proposal.qmd
+        
+      
         
       - icon: github
         href: https://github.com/G1T777/IS415-Project
@@ -31,7 +36,7 @@ format:
     theme: litera
     css: styles.css
     toc: true
-    mainfont: monospace
+    mainfont: Source Sans Pro
     
     fontcolor: "#5d5a88"
     

@@ -1,0 +1,14 @@
+name: the-right-space
+title: the-right-space
+username:
+account: rhky
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8862064
+bundleId: 7094010
+url: https://rhky.shinyapps.io/the-right-space/
+when: 1681591917.27309
+lastSyncTime: 1681591917.2731
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data

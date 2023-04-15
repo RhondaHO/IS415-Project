@@ -146,6 +146,10 @@ token <- get_token("email", "password")
 ```
 
 ```{r}
+avail_themes<-readRDS("data/rds/available_themes.rds")
+```
+
+```{r}
 #| eval: false
 avail_themes <-search_themes(token)
 write_rds(avail_themes, "data/rds/available_themes.rds")
@@ -543,4 +547,43 @@ primary_school_sf<-readRDS("data/rds/primary_school_sf.rds")
 top10_primary_school_sf<-readRDS("data/rds/top10_primary_school_sf.rds")
 shopping_mall_sf<-readRDS("data/rds/shopping_mall_sf.rds")
 
+```
+
+```{r}
+
+#test file for data upload
+
+#retrieve the data such as the geometry and name  accordingly to the theme
+test <- get_theme(token, "libraries")
+
+# to convert a data frame of coordinates to an sf object and transform the crs information and create a shapefile for it
+test_sf <- st_as_sf(test, coords=c("Lng", "Lat"),
+                        crs=4326) %>% 
+  st_transform(crs = 3414)
+
+#test_sf<-readRDS("data/rds/test_libraries.rds")
+
+```
+
+```{r}
+test_sf<-readRDS("data/rds/test_libraries.rds")
+test_sf <- test_sf[, c("NAME", "geometry")]
+write_rds(test_sf, "data/rds/test_libraries.rds")
+
+```
+
+```{r}
+length(which(st_is_valid(test_sf) == FALSE))
+
+```
+
+```{r}
+test_sf<-readRDS("data/rds/test_libraries.rds")
+```
+
+```{r}
+primary_school_sf_try<-readRDS("data/rds/primary_school.rds")
+kindergartens_sf <- readRDS("data/rds/kindergartens_sf.rds")
+hawkercentre_new_sf <- readRDS("data/rds/hawkercentre_new_sf.rds")
+hawkercentre_healthy_sf<-readRDS("data/rds/hawkercentre_healthy_sf.rds")
 ```

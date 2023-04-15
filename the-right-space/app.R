@@ -1,7 +1,10 @@
+#install.packages("dplyr")
+#install.packages("vctrs")
+
 #load packages
-pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, 
+pacman::p_load(dplyr, shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr, 
                plotly, data.table, leaflet, shinyjs, shinyWidgets, bslib, 
-               raster, spatstat, olsrr, ggplot2, ggthemes, rvest, httr, jsonlite, maptools)
+               raster, spatstat, olsrr, ggplot2, ggthemes, rvest, httr, jsonlite, maptools, vctrs)
 
 #library(shinythemes)
 
@@ -29,6 +32,7 @@ for (file in files) {
   df_name <- sub(".rds", "", file)
   assign(df_name, readRDS(file))
 }
+
 setwd("../../../lixel/childcare")
 files <- list.files(pattern = ".rds")
 for (file in files) {
@@ -234,365 +238,357 @@ my_theme <- bs_theme(
 
 #UI
 ui <- 
-navbarPage(img(src="logo_t.png", style="float:right", width = "190px", height = "55px",),
-  #"the right space", 
-           collapsible = TRUE,
-#### HOME ####
-tabPanel("Home",
-         fluidPage(
-           theme = my_theme,
-           #titlePanel("Enhancing HDB Buyer Decision-making: Spatial Point Pattern Analysis of Locations and Amenities"),
-           
-           # main with project description and motivation
-           sidebarLayout(
-             position = "right",
-             sidebarPanel(
-               div(style = "text-align: center;",
-                   fluidRow(
-                     column(6,  img(src='logo_t.png', align = "center", width = "190px", height = "55px", style = "display: block; margin: auto;")),
-                     column(6, img(src='smu.png', align = "center", width = "130px", height = "55px", style = "display: block; margin: auto;"))
-                   ),
-                  
-                   h6("Authors"),
-                   p("This project is done by G1T7, Nguyen Mai Phuong, Kwang Kai Xuan Belle and Rhonda Ho Kah Yee"),
-                   
-                   h6("Acknowledgements"),
-                   p("This project is done for IS415  Geospatial Analytics and Applications and we would like to thank Professor Kam Tin Seong for his guidance and resources."),
-               ),
-               #img(src='logo.PNG', align = "right"),
-               
-             ),
-             
-             # Main panel with analysis
-             mainPanel(
-               tags$head(
-                 tags$style(
-                   HTML("
+  navbarPage(img(src="logo_t.png", style="float:right", width = "190px", height = "55px",),
+             #"the right space", 
+             collapsible = TRUE,
+             #### HOME ####
+             tabPanel("Home",
+                      fluidPage(
+                        theme = my_theme,
+                        #titlePanel("Enhancing HDB Buyer Decision-making: Spatial Point Pattern Analysis of Locations and Amenities"),
+                        
+                        # main with project description and motivation
+                        sidebarLayout(
+                          position = "right",
+                          sidebarPanel(
+                            div(style = "text-align: center;",
+                                fluidRow(
+                                  column(6,  img(src='logo_t.png', align = "center", width = "190px", height = "55px", style = "display: block; margin: auto;")),
+                                  column(6, img(src='smu.png', align = "center", width = "130px", height = "55px", style = "display: block; margin: auto;"))
+                                ),
+                                
+                                h6("Authors"),
+                                p("This project is done by G1T7, Nguyen Mai Phuong, Kwang Kai Xuan Belle and Rhonda Ho Kah Yee"),
+                                
+                                h6("Acknowledgements"),
+                                p("This project is done for IS415  Geospatial Analytics and Applications and we would like to thank Professor Kam Tin Seong for his guidance and resources."),
+                            ),
+                            #img(src='logo.PNG', align = "right"),
+                            
+                          ),
+                          
+                          # Main panel with analysis
+                          mainPanel(
+                            tags$head(
+                              tags$style(
+                                HTML("
         p {
           text-align: justify;
           text-justify: inter-word;
         }
       ")
-                 )
-               ),
-               h2("Enhancing HDB Buyer Decision-making: Spatial Point Pattern Analysis of Locations and Amenities"),
-               br(),
-               img(src='istockphoto-466725040-170667a.jpg',width = "500px", height = "300px", align = "center", style = "display: block; margin: auto;"),
-               h3("Our Motivation"),
-               p("Many prospective HDB buyers face challenges in visualising and understanding the amenities and facilities available in the vicinity of their desired location. They often resort to manual searches on platforms like Google, which can be time-consuming and frustrating. Moreover, current mapping tools do not offer a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process by providing a user-friendly analytical app that enables HDB buyers to view and understand the surrounding amenities easily. Our app utilizes advanced spatial point pattern analysis techniques to visualize the distribution and clustering of amenities relevant to HDB buyers. By providing a customized view of amenities that cater specifically to the needs of HDB buyers, we aim to empower HDB buyers to make more informed decisions about their purchases and feel more confident in their chosen residence."),
-               
-               #h3("Our Objectives"),
-               #p(" We aim to perform the following objectives:"),
-               #p("1. Estimate the intensity of HDB locations and amenities across the study area using Kernel Density Estimation. 2. Determine whether the distribution of amenities around HDBs is random or clustered, and calculate the ratio of observed to expected nearest neighbor distances using F-Function analysis.
- #Measure the degree of clustering or dispersion of HDB locations and surrounding amenities using Ripley's K-function and L-function analysis.
- #Quantify the extent of spatial association and heterogeneity between HDB locations and surrounding amenities using Colocation Quotients (CLQs) analysis.
- #Conduct Network Constrained Spatial Point Patterns Analysis to analyze the spatial distribution of HDB flats over a street network.
-
-#Overall, we aim to simplify the process for HDB buyers by providing them with a user-friendly app that visualizes the amenities and facilities in their desired location. By utilizing advanced spatial point pattern analysis techniques, we will identify significant spatial patterns and trends to help buyers make more informed decisions about their purchases and feel more confident in their chosen residence. Furthermore, the insights we gain will inform planning and policy decisions related to urban development and resource allocation.")
-             )
-           )
-           
-         )
-         
-         ),
-#---------------------------------------- VISUALISATION
-#### Visualisation ####
-tabPanel("Visualisation",
-         fluidPage(
-           #setBackgroundColor("#F5F5F5"),
-           
-           titlePanel("Mapping of HDB Locations and Relevant Amenities"),
-           p(id="note","Note: Please wait a while for the map to load."),
-           sidebarLayout(position = "right",
-                         
-                         sidebarPanel(
-                           h4("Description"),
-                           p(id="","In this panel, you can adjust the visualisation of HDB locations(yellow/orange dots) with different amenities(light blue dots) and adjust the price range of the HDB flat."),
-                           selectInput("HDB_amenities", label=h4("What would like to view:"),
-                                       choices = c("Overview of HDB Locations",
-                                                  "Childcare Centres" = "childcare_sf",
-                                                   "Eldercare Centres" = "eldercare_sf",
-                                                   "Kindergartens" = "kindergartens_sf",
-                                                   "Hawkercentres" = "hawkercentre_new_sf",
-                                                   "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
-                                                   "National Parks" = "nationalparks_sf",
-                                                   "Gyms" = "gyms_sf",
-                                                   "Retail Pharmacy" = "pharmacy_sf",
-                                                   "SPF" = "spf_sf",
-                                                   "Carparks" = "carpark_sf",
-                                                   "Supermarkets" = "supermarket_sf",
-                                                   "Bus stops" = "bus_stop_sf",
-                                                   "Mrt" = "mrt_sf",
-                                                   "Primary Schools" = "primary_school_sf",
-                                                   "Shopping Malls" = "shopping_mall_sf"
-                                                   ), 
-                                       selected="Overview of HDB Locations"),
-                           
-                           selectInput("resale_range", label=h4("HDB Price Range($):"),
-                                       choices = c("All","200,000 to 400,000", 
-                                                   "400,000 to 600,000",
-                                                   "600,000 to 800,000","800,000 to 1,000,000",
-                                                   "1,000,000 to 1,200,000",
-                                                   "1,200,000 to 1,400,000",
-                                                   "1,400,000 to 1,600,000"),
-                                       selected = "All",
-                                       #multiple = TRUE
-                                       )
-                           #numericInput("price", "Observations:", 10)
-                         ),
-                         mainPanel(
-                           leafletOutput("map"),
+                              )
+                            ),
+                            h2("Enhancing HDB Buyer Decision-making: Spatial Point Pattern Analysis of Locations and Amenities"),
+                            br(),
+                            img(src='istockphoto-466725040-170667a.jpg',width = "500px", height = "300px", align = "center", style = "display: block; margin: auto;"),
+                            h3("Our Motivation"),
+                            p("Many prospective HDB buyers face challenges in visualising and understanding the amenities and facilities available in the vicinity of their desired location. They often resort to manual searches on platforms like Google, which can be time-consuming and frustrating. Moreover, current mapping tools do not offer a comprehensive and tailored view of amenities specific to HDBs. Our motivation is to simplify this process by providing a user-friendly analytical app that enables HDB buyers to view and understand the surrounding amenities easily. Our app utilizes advanced spatial point pattern analysis techniques to visualize the distribution and clustering of amenities relevant to HDB buyers. By providing a customized view of amenities that cater specifically to the needs of HDB buyers, we aim to empower HDB buyers to make more informed decisions about their purchases and feel more confident in their chosen residence."),
+                            
+                            #h3("Our Objectives"),
+                            #p(" We aim to perform the following objectives:"),
+                            #p("1. Estimate the intensity of HDB locations and amenities across the study area using Kernel Density Estimation. 2. Determine whether the distribution of amenities around HDBs is random or clustered, and calculate the ratio of observed to expected nearest neighbor distances using F-Function analysis.
+                            #Measure the degree of clustering or dispersion of HDB locations and surrounding amenities using Ripley's K-function and L-function analysis.
+                            #Quantify the extent of spatial association and heterogeneity between HDB locations and surrounding amenities using Colocation Quotients (CLQs) analysis.
+                            #Conduct Network Constrained Spatial Point Patterns Analysis to analyze the spatial distribution of HDB flats over a street network.
+                            
+                            #Overall, we aim to simplify the process for HDB buyers by providing them with a user-friendly app that visualizes the amenities and facilities in their desired location. By utilizing advanced spatial point pattern analysis techniques, we will identify significant spatial patterns and trends to help buyers make more informed decisions about their purchases and feel more confident in their chosen residence. Furthermore, the insights we gain will inform planning and policy decisions related to urban development and resource allocation.")
                           )
-                         )
-             )
-         ), #end bracket for visualisation tab
-
-#---------------------------------------- SPATIAL POINT
-#### Spatialpoint ####
-tabPanel("Spatial Point Pattern Analysis",
-
-         fluidPage(
-           fluidRow(
-             column(width = 4,
-                    titlePanel("Spatial Point Pattern Analysis"),
+                        )
+                        
+                      )
+                      
              ),
-             column(width = 8, style = "margin-top: 25px;",
-                    useShinyjs(),
-                    actionButton("toggle", "More Info"),
-             )
-           ),
-           div(
-             id = "tools_div",
-             style = "width: 90%; display: none;",
-             p("On this page, we offer several tools designed to help you analyze the spatial distribution of points in your dataset. Our tools includes the Local Colocation Quotient Analysis (CLQ), Kernel Density Estimation (KDE), F-Function, Ripley K-Function, and Network Constraint Analysis. To access these tools, simply click on the five tabs located at the top of the page. Each tool provides a unique perspective on the spatial patterns in your data, allowing you to gain valuable insights into the underlying processes driving your observations. Whether you seek to comprehend the level of clustering present in your dataset, identify spatial patterns, or investigate the influence of network constraints on your observations, our toolkit offers a range of analytical tools to cater to your needs.")
-           ),
-           #### Tabset CLQ ####
-           tabsetPanel(
-             tabPanel("CLQ", fluidPage(
-               #p(id="note","Note: Please wait a while for the map to load."),
-               sidebarLayout(position = "right",
-                 sidebarPanel(
-                   h4("Description"),
-                   p("Take note that the map may take some time to load. The map will display the Childcare Centres CLQ by default when the page loads."),
-                  p("Please select the type of amenities you are interested in viewing the CLQ values."),
-                   selectInput("clq_amenities", label = h4("Amenity Type"), 
-                               choices = c("Childcare Centres" = "HDB_Childcare",
-                                           "Eldercare Centres" = "HDB_Eldercare",
-                                           "Kindergartens" = "HDB_Kindegarten",
-                                           "Hawkercentres" = "HDB_Hawker",
-                                           #"Healthier Hawkercentres" = "hawkercentre_healthy_sf",
-                                           "National Parks" = "HDB_NationalParks",
-                                           "Gyms" = "HDB_Gym",
-                                           "Retail Pharmacy" = "HDB_Pharmacy",
-                                           #"SPF" = "spf_sf",
-                                           "Carparks" = "HDB_Carparks",
-                                           "Supermarkets" = "HDB_Supermarket",
-                                           "Bus stops" = "HDB_Bus",
-                                           "Mrt" = "HDB_Mrt",
-                                           "Primary Schools" = "HDB_PrimarySchool",
-                                           "Shopping Malls" = "HDB_ShoppingMall"
-                               ) 
-                               #selected = "ANG_MO_KIO"
-                               ),
-                   h4("Intepretation"),
-                   p("The application of colocation quotient (CLQ) is to determine whether the type of amenities is colocated with HDB. Each feature in the Category of Interest (category A) i.e HDB locations is evaluated individually for colocation with the presence of the Neighboring Category (category B) i.e other amenities found within its neighborhood. Generally, if a feature has a colocation quotient equal to one, it means the proportion of categories within their neighborhood is a good representation of the proportion of categories throughout the entire study area. Currently, for this CLQ map, it is already filtered to only show values where p_value <0.05."),
-                   tags$a(href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm", "Reference"),
-                  ),
-                 mainPanel(
-                   leafletOutput("clq_outputmap"),
-                   #p(id="note","Note: The map will take a while to load."),
-                 )
-               )
-             )),
-             #end of clq
-             
-           #### Tabset KDE ####
-             tabPanel("KDE",
+             #---------------------------------------- VISUALISATION
+             #### Visualisation ####
+             tabPanel("Visualisation",
                       fluidPage(
-               sidebarLayout(position = "right",
-                             sidebarPanel(
-                               h4("Description"),
-                               p("Please first select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Plot KDE Graph' button. Take note that generating the graph may take some time."),
-                               selectInput("kde_amenity", label = h4("Amenity Type"), 
-                                           choices = c("HDB",
-                                                       "Childcare Centres",
-                                                       "Eldercare Centres",
-                                                       "Kindergartens",
-                                                       "Hawkercentres",
-                                                       "Healthier Hawkercentres",
-                                                       "National Parks",
-                                                       "Gyms",
-                                                       "Retail Pharmacy",
-                                                       "SPF",
-                                                       "Carparks",
-                                                       "Supermarkets",
-                                                       "Bus stops",
-                                                       "Mrt",
-                                                       "Primary Schools",
-                                                       "Shopping Malls"
-                                           ), selected="HDB"
-                                           ),
-                               selectInput("kde_bw", label = h4("Bandwith"), 
-                                           choices = c("bw.diggle",
-                                                       "bw.ppl",
-                                                       "bw.CvL",
-                                                       "bw.scott"), 
-                                           ),
-                               selectInput("kde_kernel", label = h4("Kernel"), 
-                                           choices = c("Gaussian" = "gaussian",
-                                                       "Epanechnikov" ="epanechnikov",
-                                                       "Quartic" = "quartic",
-                                                       "Disc" ="disc"), 
-                                           ),
-                               
-                               actionButton("run_kde", "Plot KDE Graph"),
-                               h4("Intepretation"),
-                               p("Kernel density estimation is a widely utilized approach to display the density of spatial data points, which generates a smooth and continuous surface where each pixel represents a density value based on the number of points within a given distance bandwidth. The brighter clusters/areas tells us that the chosen amenity has a higher density in that area of the map."),
-                               tags$a(href="https://r4gdsa.netlify.app/chap04.html#first-order-spatial-point-patterns-analysis", "Reference"),
-                               
-                             ),
-                             mainPanel(
-                               plotOutput("kde_plot")
-                             )
-               )
-             )),
-             #end of KDE
-           
-           #### Tabset Ffunc ####
-             tabPanel("F-Function", fluidPage(
-               sidebarLayout(position = "right",
-                             sidebarPanel(
-                               h4("Description"),
-                               p("Please first select the area you would like to view the F-function graph of, and then click the 'Plot F-function graph' button. Take note that generating the graph may take some time."),
-                               selectInput("ffunc", label = h4("Area Name"), 
-                                           choices = area_names_1, 
-                                           selected = "BEDOK"),
-                               actionButton("run_ffunc", "Plot F-function graph"),
-                               h4("Intepretation"),
-                               p("Empty space distance is the measure of distance from a fixed reference location in the study window to the nearest data point, while the F function is the cumulative distribution function of the empty space distance. To confirm the observed spatial patterns, a hypothesis test will be conducted. The hypothesis and test are as follows:"),
-                               
-                               p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
-                               
-                               p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
-                               
-                               p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05."),
-                               tags$a(href="https://r4gdsa.netlify.app/chap05.html#analysing-spatial-point-process-using-f-function", "Reference #1"),
-                               tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference #2"),
-                               
-                             ),
-                             mainPanel(
-                               plotOutput("ffunc_plot")
-                             )
-               )
-             )),
+                        #setBackgroundColor("#F5F5F5"),
+                        
+                        titlePanel("Mapping of HDB Locations and Relevant Amenities"),
+                        p(id="note","Note: Please wait a while for the map to load."),
+                        sidebarLayout(position = "right",
+                                      
+                                      sidebarPanel(
+                                        h4("Description"),
+                                        p(id="","In this panel, you can adjust the visualisation of HDB locations(yellow/orange dots) with different amenities(light blue dots) and adjust the price range of the HDB flat."),
+                                        selectInput("HDB_amenities", label=h4("What would like to view:"),
+                                                    choices = c("Overview of HDB Locations",
+                                                                "Childcare Centres" = "childcare_sf",
+                                                                "Eldercare Centres" = "eldercare_sf",
+                                                                "Kindergartens" = "kindergartens_sf",
+                                                                "Hawkercentres" = "hawkercentre_new_sf",
+                                                                "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+                                                                "National Parks" = "nationalparks_sf",
+                                                                "Gyms" = "gyms_sf",
+                                                                "Retail Pharmacy" = "pharmacy_sf",
+                                                                "SPF" = "spf_sf",
+                                                                "Carparks" = "carpark_sf",
+                                                                "Supermarkets" = "supermarket_sf",
+                                                                "Bus stops" = "bus_stop_sf",
+                                                                "Mrt" = "mrt_sf",
+                                                                "Primary Schools" = "primary_school_sf",
+                                                                "Shopping Malls" = "shopping_mall_sf"
+                                                    ), 
+                                                    selected="Overview of HDB Locations"),
+                                        
+                                        selectInput("resale_range", label=h4("HDB Price Range($):"),
+                                                    choices = c("All","200,000 to 400,000", 
+                                                                "400,000 to 600,000",
+                                                                "600,000 to 800,000","800,000 to 1,000,000",
+                                                                "1,000,000 to 1,200,000",
+                                                                "1,200,000 to 1,400,000",
+                                                                "1,400,000 to 1,600,000"),
+                                                    selected = "All",
+                                                    #multiple = TRUE
+                                        )
+                                        #numericInput("price", "Observations:", 10)
+                                      ),
+                                      mainPanel(
+                                        leafletOutput("map"),
+                                      )
+                        )
+                      )
+             ), #end bracket for visualisation tab
              
-             #end of F-function
-           #### Tabset RIPLEY####
-             tabPanel("Ripley (L-Function)", fluidPage(
-               sidebarLayout(
-                 position = "right",
-                 sidebarPanel(
-                   h4("Description"),
-                   p("Please first select the area you would like to view the Ripley(L-function) graph of, and then click the 'Plot L-function Graph' button. Take note that generating the graph may take some time."),
-                   
-                   selectInput("rip", label = h4("Area Name"), 
-                               choices = area_names_1, 
-                               selected = "BEDOK"),
-                   actionButton("run_rip", "Plot L-function Graph"),
-                   h4("Intepretation"),
-                   p("Pairwise distance refers to the distance between every unique pair of points in a given pattern. The K function calculates the average number of points that fall within a given distance r, and normalizes the result by dividing by the intensity of the study area.
+             #---------------------------------------- SPATIAL POINT
+             #### Spatialpoint ####
+             tabPanel("Spatial Point Pattern Analysis",
+                      
+                      fluidPage(
+                        fluidRow(
+                          column(width = 4,
+                                 titlePanel("Spatial Point Pattern Analysis"),
+                          ),
+                          column(width = 8, style = "margin-top: 25px;",
+                                 useShinyjs(),
+                                 actionButton("toggle", "More Info"),
+                          )
+                        ),
+                        div(
+                          id = "tools_div",
+                          style = "width: 90%; display: none;",
+                          p("On this page, we offer several tools designed to help you analyze the spatial distribution of points in your dataset. Our tools includes the Local Colocation Quotient Analysis (CLQ), Kernel Density Estimation (KDE), F-Function, Ripley L-Function, and Network Constraint Analysis. To access these tools, simply click on the five tabs located at the top of the page. Each tool provides a unique perspective on the spatial patterns in your data, allowing you to gain valuable insights into the underlying processes driving your observations. Whether you seek to comprehend the level of clustering present in your dataset, identify spatial patterns, or investigate the influence of network constraints on your observations, our toolkit offers a range of analytical tools to cater to your needs.")
+                        ),
+                        #### Tabset CLQ ####
+                        tabsetPanel(
+                          tabPanel("CLQ", fluidPage(
+                            #p(id="note","Note: Please wait a while for the map to load."),
+                            sidebarLayout(position = "right",
+                                          sidebarPanel(
+                                            h4("Description"),
+                                            p("Take note that the map may take some time to load. The map will display the Childcare Centres CLQ by default when the page loads."),
+                                            p("Please select the type of amenities you are interested in viewing the CLQ values."),
+                                            selectInput("clq_amenities", label = h4("Amenity Type"), 
+                                                        choices = c("Childcare Centres" = "HDB_Childcare",
+                                                                    "Eldercare Centres" = "HDB_Eldercare",
+                                                                    "Kindergartens" = "HDB_Kindegarten",
+                                                                    "Hawkercentres" = "HDB_Hawker",
+                                                                    #"Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+                                                                    "National Parks" = "HDB_NationalParks",
+                                                                    "Gyms" = "HDB_Gym",
+                                                                    "Retail Pharmacy" = "HDB_Pharmacy",
+                                                                    #"SPF" = "spf_sf",
+                                                                    "Carparks" = "HDB_Carparks",
+                                                                    "Supermarkets" = "HDB_Supermarket",
+                                                                    "Bus stops" = "HDB_Bus",
+                                                                    "Mrt" = "HDB_Mrt",
+                                                                    "Primary Schools" = "HDB_PrimarySchool",
+                                                                    "Shopping Malls" = "HDB_ShoppingMall"
+                                                        ) 
+                                                        #selected = "ANG_MO_KIO"
+                                            ),
+                                            h4("Intepretation"),
+                                            p("The application of colocation quotient (CLQ) is to determine whether the type of amenities is colocated with HDB. Each feature in the Category of Interest (category A) i.e HDB locations is evaluated individually for colocation with the presence of the Neighboring Category (category B) i.e other amenities found within its neighborhood. Generally, if a feature has a colocation quotient equal to one, it means the proportion of categories within their neighborhood is a good representation of the proportion of categories throughout the entire study area. Currently, for this CLQ map, it is already filtered to only show values where p_value <0.05."),
+                                            tags$a(href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/learnmorecolocationanalysis.htm", "Reference"),
+                                          ),
+                                          mainPanel(
+                                            leafletOutput("clq_outputmap"),
+                                            #p(id="note","Note: The map will take a while to load."),
+                                          )
+                            )
+                          )),
+                          #end of clq
+                          
+                          #### Tabset KDE ####
+                          tabPanel("KDE",
+                                   fluidPage(
+                                     sidebarLayout(position = "right",
+                                                   sidebarPanel(
+                                                     h4("Description"),
+                                                     p("Please first select the type of KDE Amenity graph, the bandwidth, and the kernel from the dropdown menus, and then click the 'Plot KDE Graph' button. Take note that generating the graph may take some time."),
+                                                     selectInput("kde_amenity", label = h4("Amenity Type"), 
+                                                                 choices = c("HDB",
+                                                                             "Childcare Centres",
+                                                                             "Eldercare Centres",
+                                                                             "Kindergartens",
+                                                                             "Hawkercentres",
+                                                                             "Healthier Hawkercentres",
+                                                                             "National Parks",
+                                                                             "Gyms",
+                                                                             "Retail Pharmacy",
+                                                                             "SPF",
+                                                                             "Carparks",
+                                                                             "Supermarkets",
+                                                                             "Bus stops",
+                                                                             "Mrt",
+                                                                             "Primary Schools",
+                                                                             "Shopping Malls"
+                                                                 ), selected="HDB"
+                                                     ),
+                                                     selectInput("kde_bw", label = h4("Bandwith"), 
+                                                                 choices = c("bw.diggle",
+                                                                             "bw.ppl",
+                                                                             "bw.CvL",
+                                                                             "bw.scott"), 
+                                                     ),
+                                                     selectInput("kde_kernel", label = h4("Kernel"), 
+                                                                 choices = c("Gaussian" = "gaussian",
+                                                                             "Epanechnikov" ="epanechnikov",
+                                                                             "Quartic" = "quartic",
+                                                                             "Disc" ="disc"), 
+                                                     ),
+                                                     
+                                                     actionButton("run_kde", "Plot KDE Graph"),
+                                                     h4("Intepretation"),
+                                                     p("Kernel density estimation is a widely utilized approach to display the density of spatial data points, which generates a smooth and continuous surface where each pixel represents a density value based on the number of points within a given distance bandwidth. The brighter clusters/areas tells us that the chosen amenity has a higher density in that area of the map."),
+                                                     tags$a(href="https://r4gdsa.netlify.app/chap04.html#first-order-spatial-point-patterns-analysis", "Reference"),
+                                                     
+                                                   ),
+                                                   mainPanel(
+                                                     plotOutput("kde_plot")
+                                                   )
+                                     )
+                                   )),
+                          #end of KDE
+                          
+                          #### Tabset Ffunc ####
+                          tabPanel("F-Function", fluidPage(
+                            sidebarLayout(position = "right",
+                                          sidebarPanel(
+                                            h4("Description"),
+                                            p("Please first select the area you would like to view the F-function graph of, and then click the 'Plot F-function graph' button. Take note that generating the graph may take some time."),
+                                            selectInput("ffunc", label = h4("Area Name"), 
+                                                        choices = area_names_1, 
+                                                        selected = "BEDOK"),
+                                            actionButton("run_ffunc", "Plot F-function graph"),
+                                            h4("Intepretation"),
+                                            p("Empty space distance is the measure of distance from a fixed reference location in the study window to the nearest data point, while the F function is the cumulative distribution function of the empty space distance. To confirm the observed spatial patterns, a hypothesis test will be conducted. The hypothesis and test are as follows:"),
+                                            
+                                            p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
+                                            
+                                            p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
+                                            
+                                            p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05. If the observed F-function(the solid black line) lies outside the envelope(shaded area), it suggests that the data depart significantly from Complete Spatial Randomness (CSR)."),
+                                            tags$a(href="https://r4gdsa.netlify.app/chap05.html#analysing-spatial-point-process-using-f-function", "Reference #1"),
+                                            tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference #2"),
+                                            
+                                          ),
+                                          mainPanel(
+                                            plotOutput("ffunc_plot")
+                                          )
+                            )
+                          )),
+                          
+                          #end of F-function
+                          #### Tabset RIPLEY####
+                          tabPanel("Ripley (L-Function)", fluidPage(
+                            sidebarLayout(
+                              position = "right",
+                              sidebarPanel(
+                                h4("Description"),
+                                p("Please first select the area you would like to view the Ripley(L-function) graph of, and then click the 'Plot L-function Graph' button. Take note that generating the graph may take some time."),
+                                
+                                selectInput("rip", label = h4("Area Name"), 
+                                            choices = area_names_1, 
+                                            selected = "BEDOK"),
+                                actionButton("run_rip", "Plot L-function Graph"),
+                                h4("Intepretation"),
+                                p("Pairwise distance refers to the distance between every unique pair of points in a given pattern. The K function calculates the average number of points that fall within a given distance r, and normalizes the result by dividing by the intensity of the study area.
 An alternative form of the K-function is the L-function, which transforms the Poisson K-function into a straight line. The purpose is to make visual assessment of deviation easier. To confirm the observed spatial patterns, a hypothesis test will be conducted. The hypothesis and test are as follows:"),
-                   
-                   p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
-                   
-                   p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
-                   
-                   p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05."),
-                   
-                   tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference"),
-                   
-                 ),
-                 mainPanel(
-                      plotlyOutput("rip_plot")
-                 )
-               )
-             ))
-           ,
-           
-           
-           #### Tabset NETWORK ####
-             tabPanel("Network Constraint Analysis", fluidPage(
-               sidebarLayout(
-                 position = "right",
-                 sidebarPanel(
-                   style = "margin-top: 25px;",
-                   h2("Variables"),
-                   selectInput("net_areaName", label = h4("Area Name"), 
-                               choices = area_names, 
-                               selected = "BISHAN"),
-                   selectInput("net_facility", label = h4("Area Name"), 
-                               choices = list("Childcare" = "childcare",
-                                              "Eldercare" = "eldercare",
-                                              "New Hawkers" = "hawker_new",
-                                              "Healthy Hawkers" = "hawker_healthy",
-                                              "Gym" = "gym",
-                                              "HDB Carparks" = "carpark",
-                                              "Bus Stops" = "bus_stop",
-                                              "Kindergarten" = "kindergarten",
-                                              "MRT" = "mrt",
-                                              "Park" = "park",
-                                              "Pharmacy" = "pharmacy",
-                                              "Primary School" = "pri_schl",
-                                              "Shopping Mall" = "shopping_mall",
-                                              "SPF" = "spf",
-                                              "Supermarket" = "supermarket"), 
-                               selected = "Childcare"),
-                   h2("Intepretation"),
-                   p("The NetKDE analysis produces a density plot of road networks, where darker lines indicate more clustered or dense networks. This information can be useful in understanding which road networks generate more traffic, allowing potential HDB buyers to gauge the traffic situation in their preferred area. Additionally, we plotted the K-function to assess whether the observed spatial points of HDB flats were uniformly distributed over the street network. Our analysis showed that Punggol and Sembawang have the highest network density, followed by Choa Chu Kang, Bukit Batok, and Yishun. These regions are located in the north(-east) and west of Singapore. Conversely, the least dense network was observed in Tuas, which had only three HDB points. Overall, this information can be valuable for potential HDB buyers looking to make informed decisions based on their preferences and needs.")
-                 ),
-                 mainPanel(
-                   h3("Lixel Plot"),
-                   plotOutput("networkLixel"),
-                   h3("K-Function Plot"),
-                   plotOutput("networkKFunc")
-                 )
-               )
-             ))
-             ))), 
-#tabPanel("Dataset",
-#         fluidPage(
-           
-#         )),
-tabPanel("Data Upload",
-         fluidPage(
-           sidebarLayout(
-             sidebarPanel(
-               fileInput("upload", "Upload a file"),
-               textInput("delim", "Delimiter (leave blank to guess)", ""),
-               numericInput("skip", "Rows to skip", 0, min = 0),
-               numericInput("rows", "Rows to preview", 5, min = 1)
-               #https://mastering-shiny.org/action-transfer.html
-             ),
-             mainPanel(
-               h3("Raw data"),
-               tableOutput("uploadRaw")
-             )
-           ),
-           sidebarLayout(
-             sidebarPanel(
-               
-             ),
-             mainPanel(
-               h3("Plotting Spatial Points"),
-               plotOutput("uploadPlot")
-             )
-           )
-         ))
-)
+                                
+                                p("Ho = The distribution of HDB locations at your chosen area are randomly distributed."),
+                                
+                                p("H1= The distribution of HDB locations at your chosen area are not randomly distributed."),
+                                
+                                p("The null hypothesis will be rejected if p-value is smaller than alpha value of 0.05.If the observed L-function(the solid black line) lies outside the envelope(shaded area), it suggests that the data depart significantly from Complete Spatial Randomness (CSR)."),
+                                
+                                tags$a(href="https://rpubs.com/deniseadele/secondorder_pointpattern", "Reference"),
+                                
+                              ),
+                              mainPanel(
+                                plotlyOutput("rip_plot")
+                              )
+                            )
+                          ))
+                          ,
+                          
+                          
+                          #### Tabset NETWORK ####
+                          tabPanel("Network Constraint Analysis", fluidPage(
+                            sidebarLayout(
+                              position = "right",
+                              sidebarPanel(
+                                style = "margin-top: 25px;",
+                                h2("Variables"),
+                                selectInput("net_areaName", label = h4("Area Name"), 
+                                            choices = area_names, 
+                                            selected = "BISHAN"),
+                                selectInput("net_facility", label = h4("Amenity Type"), 
+                                            choices = list("Childcare" = "childcare",
+                                                           "Eldercare" = "eldercare",
+                                                           "New Hawkers" = "hawker_new",
+                                                           "Healthy Hawkers" = "hawker_healthy",
+                                                           "Gym" = "gym",
+                                                           "HDB Carparks" = "carpark",
+                                                           "Bus Stops" = "bus_stop",
+                                                           "Kindergarten" = "kindergarten",
+                                                           "MRT" = "mrt",
+                                                           "Park" = "park",
+                                                           "Pharmacy" = "pharmacy",
+                                                           "Primary School" = "pri_schl",
+                                                           "Shopping Mall" = "shopping_mall",
+                                                           "SPF" = "spf",
+                                                           "Supermarket" = "supermarket"), 
+                                            selected = "Childcare"),
+                                h2("Intepretation"),
+                                p("The NetKDE analysis produces a density plot of road networks, where darker lines indicate more clustered or dense networks. This information can be useful in understanding which road networks generate more traffic, allowing potential HDB buyers to gauge the traffic situation in their preferred area. Additionally, we plotted the K-function to assess whether the observed spatial points of HDB flats were uniformly distributed over the street network. Our analysis showed that Punggol and Sembawang have the highest network density, followed by Choa Chu Kang, Bukit Batok, and Yishun. These regions are located in the north(-east) and west of Singapore. Conversely, the least dense network was observed in Tuas, which had only three HDB points. Overall, this information can be valuable for potential HDB buyers looking to make informed decisions based on their preferences and needs.")
+                              ),
+                              mainPanel(
+                                h3("Lixel Plot"),
+                                plotOutput("networkLixel"),
+                                h3("K-Function Plot"),
+                                plotOutput("networkKFunc")
+                              )
+                            )
+                          ))
+                        ))), 
+
+             #### Tabset Data Upload ####
+             tabPanel("Data Upload",
+                      fluidPage(
+                        sidebarLayout(
+                          sidebarPanel(
+                            #fileInput("datafile", "Upload a file"),
+                            # textInput("delim", "Delimiter (leave blank to guess)", ""),
+                            # numericInput("skip", "Rows to skip", 0, min = 0),
+                            # numericInput("rows", "Rows to preview", 5, min = 1)
+                            #https://mastering-shiny.org/action-transfer.html
+                            
+                            fileInput("file", "Choose RDS file", accept = c(".rds")),
+                            actionButton("preview", "Preview Data")
+                          ),
+                          mainPanel(
+                            h3("Preview of Data (Top 10 Results)"),
+                            tableOutput("data")
+                          )
+                        )
+                      ))
+  )
 
 
 #### Define server logic
-server <- function(input, output) {
+server <- function(input, output, session) {
   delay(3000, hide("note")) #delay function
   observeEvent(input$toggle, {
     toggle("tools_div")
@@ -600,6 +596,8 @@ server <- function(input, output) {
   
   
   #### Visualisations ####
+  
+  #initial
   observeEvent(c(input$resale_range,input$HDB_amenities), {
     #filter dataset for map
     if (input$resale_range!= "All"){
@@ -626,9 +624,9 @@ server <- function(input, output) {
                 title = "Resale Prices") +
         tm_shape(result) +
         tm_dots(
-                #alpha=0.2,
-                col="#78cce4",
-                size=0.03) +
+          #alpha=0.2,
+          col="#78cce4",
+          size=0.03) +
         tm_view(set.zoom.limits = c(10, 14))
       
     }else{
@@ -647,7 +645,7 @@ server <- function(input, output) {
         tm_view(set.zoom.limits = c(10, 14))
     }
     
-  
+    
     # Convert tmap object to leaflet object
     leaflet_map <- tmap_leaflet(m)
     # Render leaflet map
@@ -661,7 +659,7 @@ server <- function(input, output) {
     
     amenity_name <- names(result)[2]
     amenity_pvalue <- names(result)[3]
-  
+    
     clq_map <- tm_shape(mpsz_sf) +
       tm_polygons() +
       tm_shape(result, subset = result$amenity_pvalue < 0.05) + #filter out p_value less than 0.05 
@@ -670,10 +668,10 @@ server <- function(input, output) {
               border.col = "black",
               border.lwd = 0.5) +
       tm_view(set.zoom.limits = c(11, 14))
-     
+    
     output$clq_outputmap <- renderLeaflet(tmap_leaflet(clq_map))
-    })
-
+  })
+  
   #### KDE ####
   kde_files <- c("HDB" = "hdbSG_ppp.km",
                  "Childcare Centres" = "childcareSG_ppp.km",
@@ -691,126 +689,127 @@ server <- function(input, output) {
                  "Mrt" = "mrtSG_ppp.km",
                  "Primary Schools" = "primary_schoolSG_ppp.km",
                  "Shopping Malls" = "shopping_mallSG_ppp.km")
-
-      observeEvent(input$run_kde,{
-        
-        index_kde <- match(input$kde_amenity, names(kde_files))
-        kde_name <- kde_files[index_kde]
-        kde_rds <- readRDS(paste0("data/rds/kde/",kde_name,".rds"))
-        
-        
-        # Calculate kernel density estimate
-        kde_result <- density(kde_rds, 
-                              sigma = get(input$kde_bw), 
-                              edge = TRUE, 
-                              kernel = input$kde_kernel)
-        
-        # Render plot
-        output$kde_plot <- renderPlot({
-          plot(kde_result)
-        })
-      })
-
+  
+  observeEvent(input$run_kde,{
+    
+    index_kde <- match(input$kde_amenity, names(kde_files))
+    kde_name <- kde_files[index_kde]
+    kde_rds <- readRDS(paste0("data/rds/kde/",kde_name,".rds"))
+    
+    
+    # Calculate kernel density estimate
+    kde_result <- density(kde_rds, 
+                          sigma = get(input$kde_bw), 
+                          edge = TRUE, 
+                          kernel = input$kde_kernel)
+    
+    # Render plot
+    output$kde_plot <- renderPlot({
+      plot(kde_result)
+    })
+  })
+  
   #----- END KDE
   
   #### Ffunction ####
-      observeEvent(input$run_ffunc,{
-        bedok = mpsz[mpsz@data$PLN_AREA_N == input$ffunc,]
-        bedok_sp = as(bedok, "SpatialPolygons")
-        bedok_owin = as(bedok_sp, "owin")
-        resale_bedok_ppp = resale_ppp_jit[bedok_owin]
-        #resale_bedok_ppp.km = rescale(resale_bedok_ppp, 1000, "km")
-        #plot(resale_bedok_ppp.km, main="bedok")
-
-        F_CK = Fest(resale_bedok_ppp)
-        #plot(F_CK)
-
-        set.seed(123)
-        F_bedok.csr <- envelope(resale_bedok_ppp, Fest, nsim = 49)
-
-        # Render plot
-        output$ffunc_plot <- renderPlot({
-          plot(F_bedok.csr, main="F-function Graph")
-        })
-      })
-      
+  observeEvent(input$run_ffunc,{
+    bedok = mpsz[mpsz@data$PLN_AREA_N == input$ffunc,]
+    bedok_sp = as(bedok, "SpatialPolygons")
+    bedok_owin = as(bedok_sp, "owin")
+    resale_bedok_ppp = resale_ppp_jit[bedok_owin]
+    #resale_bedok_ppp.km = rescale(resale_bedok_ppp, 1000, "km")
+    #plot(resale_bedok_ppp.km, main="bedok")
+    
+    #F_CK = Fest(resale_bedok_ppp)
+    #plot(F_CK)
+    
+    set.seed(123)
+    F_bedok.csr <- envelope(resale_bedok_ppp, Fest, nsim = 39)
+    
+    # Render plot
+    output$ffunc_plot <- renderPlot({
+      plot(F_bedok.csr, main="F-function Graph")
+    })
+  })
+  
   #----- END Ffunction
-      
+  
   #### Ripley ####
-      observeEvent(input$run_rip,{
-        
-        bedok = mpsz[mpsz@data$PLN_AREA_N  == input$rip,]
-        bedok_sp = as(bedok, "SpatialPolygons")
-        bedok_owin = as(bedok_sp, "owin")
-        resale_bedok_ppp = resale_ppp_jit[bedok_owin]
-        
-        L_bedok.csr <- envelope(resale_bedok_ppp, Lest, nsim = 39, rank = 1, glocal=TRUE)
-        #plot(L_bedok.csr, . - r ~ r, 
-             #xlab="d", ylab="L(d)-r", xlim=c(0,500))
-        
-        title <- "Pairwise Distance: L function"
-        
-        Lcsr_df <- as.data.frame(L_bedok.csr)
-        
-        colour=c("#0D657D","#ee770d","#D3D3D3")
-        csr_plot <- ggplot(Lcsr_df, aes(r, obs-r))+
-          # plot observed value
-          geom_line(colour=c("#4d4d4d"))+
-          geom_line(aes(r,theo-r), colour="red", linetype = "dashed")+
-          # plot simulation envelopes
-          geom_ribbon(aes(ymin=lo-r,ymax=hi-r),alpha=0.1, colour=c("#91bfdb")) +
-          xlab("Distance r (m)") +
-          ylab("L(r)-r") +
-          geom_rug(data=Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,], sides="b", colour=colour[1])  +
-          geom_rug(data=Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,], sides="b", colour=colour[2]) +
-          geom_rug(data=Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,], sides="b", color=colour[3]) +
-          theme_tufte()+
-          ggtitle(title)+theme(plot.title = element_text(hjust = 0.5))  # Center plot title
-        
-        text1<-"Significant clustering"
-        text2<-"Significant segregation"
-        text3<-"Not significant clustering/segregation"
-        
-        # the below conditional statement is required to ensure that the labels (text1/2/3) are assigned to the correct traces
-        if (nrow(Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,])==0){ 
-          if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){ 
-            ggplotly(csr_plot, dynamicTicks=T) %>%
-              style(text = text3, traces = 4) %>%
-              rangeslider() 
-          }else if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){ 
-            ggplotly(csr_plot, dynamicTicks=T) %>%
-              style(text = text2, traces = 4) %>%
-              rangeslider() 
-          }else {
-            ggplotly(csr_plot, dynamicTicks=T) %>%
-              style(text = text2, traces = 4) %>%
-              style(text = text3, traces = 5) %>%
-              rangeslider() 
-          }
-        } else if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){
-          if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){
-            ggplotly(csr_plot, dynamicTicks=T) %>%
-              style(text = text1, traces = 4) %>%
-              rangeslider() 
-          } else{
-            ggplotly(csr_plot, dynamicTicks=T) %>%
-              style(text = text1, traces = 4) %>%
-              style(text = text3, traces = 5) %>%
-              rangeslider()
-          }
-        } else{
-          ggplotly(csr_plot, dynamicTicks=T) %>%
-            style(text = text1, traces = 4) %>%
-            style(text = text2, traces = 5) %>%
-            style(text = text3, traces = 6) %>%
-            rangeslider()
-        }
-        
-        # Render plot
-        output$rip_plot <- renderPlotly({
-          csr_plot
-        })
-      })
+  observeEvent(input$run_rip,{
+    
+    bedok = mpsz[mpsz@data$PLN_AREA_N  == input$rip,]
+    bedok_sp = as(bedok, "SpatialPolygons")
+    bedok_owin = as(bedok_sp, "owin")
+    resale_bedok_ppp = resale_ppp_jit[bedok_owin]
+    
+    set.seed(123)
+    L_bedok.csr <- envelope(resale_bedok_ppp, Lest, nsim = 39, rank = 1, glocal=TRUE)
+    #plot(L_bedok.csr, . - r ~ r, 
+    #xlab="d", ylab="L(d)-r", xlim=c(0,500))
+    
+    title <- "Pairwise Distance: L function"
+    
+    Lcsr_df <- as.data.frame(L_bedok.csr)
+    
+    colour=c("#0D657D","#ee770d","#D3D3D3")
+    csr_plot <- ggplot(Lcsr_df, aes(r, obs-r))+
+      # plot observed value
+      geom_line(colour=c("#4d4d4d"))+
+      geom_line(aes(r,theo-r), colour="red", linetype = "dashed")+
+      # plot simulation envelopes
+      geom_ribbon(aes(ymin=lo-r,ymax=hi-r),alpha=0.1, colour=c("#91bfdb")) +
+      xlab("Distance r (m)") +
+      ylab("L(r)-r") +
+      geom_rug(data=Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,], sides="b", colour=colour[1])  +
+      geom_rug(data=Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,], sides="b", colour=colour[2]) +
+      geom_rug(data=Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,], sides="b", color=colour[3]) +
+      theme_tufte()+
+      ggtitle(title)+theme(plot.title = element_text(hjust = 0.5))  # Center plot title
+    
+    text1<-"Significant clustering"
+    text2<-"Significant segregation"
+    text3<-"Not significant clustering/segregation"
+    
+    # the below conditional statement is required to ensure that the labels (text1/2/3) are assigned to the correct traces
+    if (nrow(Lcsr_df[Lcsr_df$obs > Lcsr_df$hi,])==0){ 
+      if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){ 
+        ggplotly(csr_plot, dynamicTicks=T) %>%
+          style(text = text3, traces = 4) %>%
+          rangeslider() 
+      }else if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){ 
+        ggplotly(csr_plot, dynamicTicks=T) %>%
+          style(text = text2, traces = 4) %>%
+          rangeslider() 
+      }else {
+        ggplotly(csr_plot, dynamicTicks=T) %>%
+          style(text = text2, traces = 4) %>%
+          style(text = text3, traces = 5) %>%
+          rangeslider() 
+      }
+    } else if (nrow(Lcsr_df[Lcsr_df$obs < Lcsr_df$lo,])==0){
+      if (nrow(Lcsr_df[Lcsr_df$obs >= Lcsr_df$lo & Lcsr_df$obs <= Lcsr_df$hi,])==0){
+        ggplotly(csr_plot, dynamicTicks=T) %>%
+          style(text = text1, traces = 4) %>%
+          rangeslider() 
+      } else{
+        ggplotly(csr_plot, dynamicTicks=T) %>%
+          style(text = text1, traces = 4) %>%
+          style(text = text3, traces = 5) %>%
+          rangeslider()
+      }
+    } else{
+      ggplotly(csr_plot, dynamicTicks=T) %>%
+        style(text = text1, traces = 4) %>%
+        style(text = text2, traces = 5) %>%
+        style(text = text3, traces = 6) %>%
+        rangeslider()
+    }
+    
+    # Render plot
+    output$rip_plot <- renderPlotly({
+      csr_plot
+    })
+  })
   
   
   
@@ -824,26 +823,86 @@ server <- function(input, output) {
       tm_dots(col = "Point Type", palette=c('blue', 'red'))
   )
   output$networkKFunc <- renderPlot(
-      get(paste0("kfunc_", input$net_areaName))$plotk
+    get(paste0("kfunc_", input$net_areaName))$plotk
   )
   
-  #----- UPLOADED DATA
-  raw <- reactive({
-    req(input$upload)
-    delim <- if (input$delim == "") NULL else input$delim
-    vroom::vroom(input$upload$datapath, delim = delim, skip = input$skip)
+  #### Uploaded data ####
+
+  # Read data from RDS file
+  data <- reactive({
+    req(input$file)
+    readRDS(input$file$datapath)
   })
-  output$uploadRaw <- renderTable(head(raw(), input$rows))
+
+  # Convert to sf object and then data frame
+  data_df <- reactive({
+    if ("sf" %in% class(data())) {
+      st_as_sf(data()) %>% st_set_geometry(NULL) %>% as.data.frame()
+    } else {
+      data()
+    }
+  })
+
+  # Preview data when button is clicked
+  observeEvent(input$preview, {
+    output$data <- renderTable({
+      head(data_df(), n = 10)
+    })
+  })
   
-  upload_sf <- reactive({
-    st_as_sf(x = input$upload, 
-             coords = c("longitude", "latitude"),
-             crs = 3414)})
-  output$uploadPlot <- renderPlot(
-    tm_shape(upload_sf())+
-      tm_dots()
-  )
-      
+  observeEvent(input$file, {
+    # Read data from RDS file
+    data <- readRDS(input$file$datapath)
+    
+    # Update list of HDB amenities with new dataset name
+    hdb_amenities <- c(input$HDB_amenities, input$file$name)
+    
+    # Combine original and updated list of amenities
+    original_hdb_amenities <- c(
+      "Overview of HDB Locations",
+      "Childcare Centres" = "childcare_sf",
+      "Eldercare Centres" = "eldercare_sf",
+      "Kindergartens" = "kindergartens_sf",
+      "Hawkercentres" = "hawkercentre_new_sf",
+      "Healthier Hawkercentres" = "hawkercentre_healthy_sf",
+      "National Parks" = "nationalparks_sf",
+      "Gyms" = "gyms_sf",
+      "Retail Pharmacy" = "pharmacy_sf",
+      "SPF" = "spf_sf",
+      "Carparks" = "carpark_sf",
+      "Supermarkets" = "supermarket_sf",
+      "Bus stops" = "bus_stop_sf",
+      "Mrt" = "mrt_sf",
+      "Primary Schools" = "primary_school_sf",
+      "Shopping Malls" = "shopping_mall_sf"
+    )
+    
+    # Update HDB_amenities input with combined list of amenities
+    updateSelectInput(session, "HDB_amenities", choices = c(original_hdb_amenities, hdb_amenities))
+    
+    # Save dataset as RDS file in data/rds folder
+    saveRDS(data, paste0("data/rds/", input$file$name, ".rds"))
+  })
+  
+  
+  
+  
+  # raw <- reactive({
+  #   req(input$upload)
+  #   delim <- if (input$delim == "") NULL else input$delim
+  #   vroom::vroom(input$upload$datapath, delim = delim, skip = input$skip)
+  # })
+  # output$uploadRaw <- renderTable(head(raw(), input$rows))
+  # 
+  # upload_sf <- reactive({
+  #   st_as_sf(x = input$upload, 
+  #            coords = c("longitude", "latitude"),
+  #            crs = 3414)})
+  # output$uploadPlot <- renderPlot(
+  #   tm_shape(upload_sf())+
+  #     tm_dots()
+  # )
+  
 }
 
 

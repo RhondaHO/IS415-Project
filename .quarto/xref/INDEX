@@ -26,5 +26,26 @@
   },
   "the-right-space/data/geospatial/MPSZ-2019.qmd": {
     "MPSZ-2019.html": "c9aa12ae"
+  },
+  "code_draft/data_splitting.qmd": {
+    "data_splitting.html": "be1c79af"
+  },
+  "code_draft/kde_ffunction.qmd": {
+    "kde_ffunction.html": "e07ad51c"
+  },
+  "code_draft/mapping_clq.qmd": {
+    "mapping_clq.html": "626b08f5"
+  },
+  "code_draft/network_constraint.qmd": {
+    "network_constraint.html": "aa9e4465"
+  },
+  "code_draft/plot_lixel.qmd": {
+    "plot_lixel.html": "83f8e805"
+  },
+  "content.qmd": {
+    "content.html": "be179d39"
+  },
+  "user_guide.qmd": {
+    "user_guide.html": "2483295a"
   }
 }

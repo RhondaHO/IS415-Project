@@ -1,0 +1,15 @@
+---
+title: "Project Deliverable"
+---
+
+------------------------------------------------------------------------
+
+# 1. [Project Webpage](index.qmd)
+
+# 2. [Research Paper](project_proposal.qmd)
+
+# 3. R Shiny Application
+
+# 4. Poster
+
+![](img/GAA%20Poster.png)
