@@ -8,6 +8,7 @@ pacman::p_load(shiny,readxl, sf, tidyverse, tmap, sfdep,  ggpubr,
 #---------------------------------------- MAIN DATA IMPORTATION
 resale_sf<-readRDS("data/rds/resale_sf.rds")
 mpsz_sf<-readRDS("data/rds/mpsz_sf.rds")
+mpsz <- readRDS("data/rds/mpsz.rds")
 resale_ppp_jit <- readRDS("data/rds/resale_ppp_jit.rds")
 
 
@@ -48,13 +49,13 @@ for (file in files) {
   assign(df_name, readRDS(file))
 }
 
-setwd("../../facilities/combined/hawker_new")
+setwd("../../facilities/combined/pharmacy")
 files <- list.files(pattern = ".rds")
 for (file in files) {
   df_name <- sub(".rds", "", file)
   assign(df_name, readRDS(file))
 }
-setwd("../../../lixel/hawker_new")
+setwd("../../../lixel/pharmacy")
 files <- list.files(pattern = ".rds")
 for (file in files) {
   df_name <- sub(".rds", "", file)
@@ -87,37 +88,142 @@ for (file in files) {
   assign(df_name, readRDS(file))
 }
 
-# setwd("../../kfunc/childcare/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
+setwd("../../facilities/combined/bus_stop")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/bus_stop")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
 
-# setwd("../../eldercare/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
-# setwd("../../hawker_new/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
-# setwd("../../gym/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
-# setwd("../../hdb_carpark/multi")
-# files <- list.files(pattern = ".rds")
-# for (file in files) {
-#   df_name <- sub(".rds", "", file)
-#   assign(df_name, readRDS(file))
-# }
+setwd("../../facilities/combined/hawker_healthy")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/hawker_healthy")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/hawker_new")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/hawker_new")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/kindergarten")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/kindergarten")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/mrt")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/mrt")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/park")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/park")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/pri_schl")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/pri_schl")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/shopping_mall")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/shopping_mall")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/spf")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/spf")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../facilities/combined/supermarket")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+setwd("../../../lixel/supermarket")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
+
+setwd("../../kfunc")
+files <- list.files(pattern = ".rds")
+for (file in files) {
+  df_name <- sub(".rds", "", file)
+  assign(df_name, readRDS(file))
+}
 
 #theme
 my_theme <- bs_theme(
@@ -419,6 +525,7 @@ An alternative form of the K-function is the L-function, which transforms the Po
                sidebarLayout(
                  position = "right",
                  sidebarPanel(
+                   style = "margin-top: 25px;",
                    h2("Variables"),
                    selectInput("net_areaName", label = h4("Area Name"), 
                                choices = area_names, 
@@ -427,9 +534,21 @@ An alternative form of the K-function is the L-function, which transforms the Po
                                choices = list("Childcare" = "childcare",
                                               "Eldercare" = "eldercare",
                                               "New Hawkers" = "hawker_new",
+                                              "Healthy Hawkers" = "hawker_healthy",
                                               "Gym" = "gym",
-                                              "HDB Carparks" = "carpark"), 
+                                              "HDB Carparks" = "carpark",
+                                              "Bus Stops" = "bus_stop",
+                                              "Kindergarten" = "kindergarten",
+                                              "MRT" = "mrt",
+                                              "Park" = "park",
+                                              "Pharmacy" = "pharmacy",
+                                              "Primary School" = "pri_schl",
+                                              "Shopping Mall" = "shopping_mall",
+                                              "SPF" = "spf",
+                                              "Supermarket" = "supermarket"), 
                                selected = "Childcare"),
+                   h2("Intepretation"),
+                   p("The NetKDE analysis produces a density plot of road networks, where darker lines indicate more clustered or dense networks. This information can be useful in understanding which road networks generate more traffic, allowing potential HDB buyers to gauge the traffic situation in their preferred area. Additionally, we plotted the K-function to assess whether the observed spatial points of HDB flats were uniformly distributed over the street network. Our analysis showed that Punggol and Sembawang have the highest network density, followed by Choa Chu Kang, Bukit Batok, and Yishun. These regions are located in the north(-east) and west of Singapore. Conversely, the least dense network was observed in Tuas, which had only three HDB points. Overall, this information can be valuable for potential HDB buyers looking to make informed decisions based on their preferences and needs.")
                  ),
                  mainPanel(
                    h3("Lixel Plot"),
@@ -446,8 +565,28 @@ An alternative form of the K-function is the L-function, which transforms the Po
 #         )),
 tabPanel("Data Upload",
          fluidPage(
-           fileInput("upload", "Upload a file")
-           #https://mastering-shiny.org/action-transfer.html
+           sidebarLayout(
+             sidebarPanel(
+               fileInput("upload", "Upload a file"),
+               textInput("delim", "Delimiter (leave blank to guess)", ""),
+               numericInput("skip", "Rows to skip", 0, min = 0),
+               numericInput("rows", "Rows to preview", 5, min = 1)
+               #https://mastering-shiny.org/action-transfer.html
+             ),
+             mainPanel(
+               h3("Raw data"),
+               tableOutput("uploadRaw")
+             )
+           ),
+           sidebarLayout(
+             sidebarPanel(
+               
+             ),
+             mainPanel(
+               h3("Plotting Spatial Points"),
+               plotOutput("uploadPlot")
+             )
+           )
          ))
 )
 
@@ -600,7 +739,7 @@ server <- function(input, output) {
   #### Ripley ####
       observeEvent(input$run_rip,{
         
-        bedok = mpsz[mpsz@data$PLN_AREA_N == input$rip,]
+        bedok = mpsz[mpsz@data$PLN_AREA_N  == input$rip,]
         bedok_sp = as(bedok, "SpatialPolygons")
         bedok_owin = as(bedok_sp, "owin")
         resale_bedok_ppp = resale_ppp_jit[bedok_owin]
@@ -685,13 +824,26 @@ server <- function(input, output) {
       tm_dots(col = "Point Type", palette=c('blue', 'red'))
   )
   output$networkKFunc <- renderPlot(
-    if(exists(paste0("kfunc_", input$net_facility, "_", input$net_areaName))) {
-      get(paste0("kfunc_", input$net_facility, "_", input$net_areaName))$plotk
-    } else {
-      message("There is no K-Function generated for this area")
-      p("There is no K-Function generated for this area")
-    }
+      get(paste0("kfunc_", input$net_areaName))$plotk
   )
+  
+  #----- UPLOADED DATA
+  raw <- reactive({
+    req(input$upload)
+    delim <- if (input$delim == "") NULL else input$delim
+    vroom::vroom(input$upload$datapath, delim = delim, skip = input$skip)
+  })
+  output$uploadRaw <- renderTable(head(raw(), input$rows))
+  
+  upload_sf <- reactive({
+    st_as_sf(x = input$upload, 
+             coords = c("longitude", "latitude"),
+             crs = 3414)})
+  output$uploadPlot <- renderPlot(
+    tm_shape(upload_sf())+
+      tm_dots()
+  )
+      
 }
 
 
