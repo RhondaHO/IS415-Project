@@ -8,10 +8,10 @@ title: "Project Deliverable"
 
 # 2. [Research Paper](research_paper.qmd)
 
-# 3. R Shiny Application
+# 3. [R Shiny Application](https://bellekwang.shinyapps.io/the-right-space/)
 
 # 4. [User Guide R Shiny Application](user_guide.qmd)
 
-# 5. Poster
+# 5. Poster 
 
 ![](img/GAA%20Poster.png)

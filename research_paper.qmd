@@ -60,7 +60,7 @@ In the initial stages of our project, we collected a range of datasets to analyz
 Below is a table of the data sets that we will be using for our project.
 
 | Name                                        | Description                                                                                                                                                                                                                                     | File Format |
-|------------------|------------------------------------|------------------|
+|------------------|-----------------------------------|------------------|
 | HDB Resale Flat Prices                      | Provides HDB addresses, blocks and street name \| [Data.gov.sg](https://data.gov.sg/dataset/resale-flat-prices)                                                                                                                                 | .csv        |
 | School Directory and Information            | Provides a list of primary schools in Singapore \| [Data.gov.sg](https://data.gov.sg/dataset/school-directory-and-information)                                                                                                                  | .csv        |
 | Shopping Malls                              | Provides a list of shopping mall and its geometry in Singapore \| Web scrapped shopping mall data in 2019 by [Valery Lim](https://github.com/ValaryLim/Mall-Coordinates-Web-Scraper)                                                            | .csv        |
@@ -598,7 +598,7 @@ kfunc_area_name$plotk
 
 ##### 3.4.4 Problems Faced
 
-Another reason why we chose to only do the K-function analysis for HDB points rather than both HDB and facility points is because of the huge file size of each rds file saved. After completing the K-Function analysis for 12 facility points for 30 planning areas, we ended up with a total of 8.51GB for file size. We also contemplated if we wanted to save each K-function as a photo instead but loading over 360 photos together with other files we have into our shiny app would take too much time. Lastly, we also had the option to just load the K-function on the Shiny app itself but this can also take up a lot of time depending on the planning area. Thus,we ended up keeping the 30 K-function analysis that included only HDB points at 30 planning areas.
+Another reason why we chose to only do the K-function analysis for HDB points rather than both HDB and facility points is because of the huge file size of each rds file saved. After completing the K-Function analysis for 12 facility points for 30 planning areas, we ended up with a total of 8.51GB for file size. We also contemplated if we wanted to save each K-function as a photo instead but loading over 360 photos together with other files we have into our shiny app would take too much time. Lastly, we also had the option to just load the K-function on the Shiny app itself but this can also take up a lot of time depending on the planning area. After deploying the application, we realised that pushing even just the 30 rds files of around 1 GB was too much for the Shiny application to run. Thus,we ended up keeping the 30 K-function analysis pictures that included only HDB points at 30 planning areas.
 
 ##### 3.4.5 Observations
 

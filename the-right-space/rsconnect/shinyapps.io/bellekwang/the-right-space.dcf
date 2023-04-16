@@ -5,9 +5,9 @@ account: bellekwang
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8863445
-bundleId: 7094984
+bundleId: 7095253
 url: https://bellekwang.shinyapps.io/the-right-space/
-when: 1681626402.3252
-lastSyncTime: 1681626402.32522
+when: 1681635471.73355
+lastSyncTime: 1681635471.73355
 asMultiple: FALSE
 asStatic: FALSE
