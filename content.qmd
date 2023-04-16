@@ -12,6 +12,6 @@ title: "Project Deliverable"
 
 # 4. [User Guide R Shiny Application](user_guide.qmd)
 
-# 5. Poster 
+# 5. Poster
 
 ![](img/GAA%20Poster.png)

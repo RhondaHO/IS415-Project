@@ -879,8 +879,10 @@ When visualizing the results in the Shiny app, I filtered the data to display on
 </section>
 <section id="section" class="level5">
 <h5 class="anchored" data-anchor-id="section"></h5>
-<p>3.4.4 Problems Faced</p>
-<p>Another reason why we chose to only do the K-function analysis for HDB points rather than both HDB and facility points is because of the huge file size of each rds file saved. After completing the K-Function analysis for 12 facility points for 30 planning areas, we ended up with a total of 8.51GB for file size. We also contemplated if we wanted to save each K-function as a photo instead but loading over 360 photos together with other files we have into our shiny app would take too much time. Lastly, we also had the option to just load the K-function on the Shiny app itself but this can also take up a lot of time depending on the planning area. Thus,we ended up keeping the 30 K-function analysis that included only HDB points at 30 planning areas.</p>
+</section>
+<section id="problems-faced" class="level5">
+<h5 class="anchored" data-anchor-id="problems-faced">3.4.4 Problems Faced</h5>
+<p>Another reason why we chose to only do the K-function analysis for HDB points rather than both HDB and facility points is because of the huge file size of each rds file saved. After completing the K-Function analysis for 12 facility points for 30 planning areas, we ended up with a total of 8.51GB for file size. We also contemplated if we wanted to save each K-function as a photo instead but loading over 360 photos together with other files we have into our shiny app would take too much time. Lastly, we also had the option to just load the K-function on the Shiny app itself but this can also take up a lot of time depending on the planning area. After deploying the application, we realised that pushing even just the 30 rds files of around 1 GB was too much for the Shiny application to run. Thus,we ended up keeping the 30 K-function analysis pictures that included only HDB points at 30 planning areas.</p>
 </section>
 <section id="observations-4" class="level5">
 <h5 class="anchored" data-anchor-id="observations-4">3.4.5 Observations</h5>
@@ -915,6 +917,27 @@ The blue line is at 0 across the whole distance and there is no grey area. This 
 </div>
 </section>
 </section>
+<section id="general-problems-faced" class="level4">
+<h4 class="anchored" data-anchor-id="general-problems-faced">3.5 General Problems Faced</h4>
+<p>When we deployed our Shiny app, we realized that it was using too much memory, which caused performance issues. As a result, we had to find a solution that would allow us to display the images in the app without actually computing them in real-time. To achieve this, we had to generate the images beforehand and then render them in the app.</p>
+<p>For example, in the case of the CLQ map, we had to modify our code to generate the plot as an image file and save it to disk. Then, we used the renderImage() function in Shiny to display the image in the app. This approach helped us reduce the memory usage of the app and improve its performance.</p>
+<p>Here’s an example of the modified code:</p>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>clq_outputmap <span class="ot">&lt;-</span> <span class="fu">renderImage</span>({</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    filename <span class="ot">&lt;-</span> <span class="fu">normalizePath</span>(<span class="fu">file.path</span>(<span class="st">'./images'</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">paste</span>(input<span class="sc">$</span>clq_amenities, <span class="st">'.PNG'</span>, <span class="at">sep=</span><span class="st">''</span>)))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return a list containing the filename and alt text</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">src =</span> filename, </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">width =</span> <span class="st">"80%"</span>, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">height =</span> <span class="st">"auto"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>      }, <span class="at">deleteFile =</span> <span class="cn">FALSE</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
 </section>
 </section>
 <section id="literature-review" class="level2">
@@ -924,7 +947,7 @@ The blue line is at 0 across the whole distance and there is no grey area. This 
 <p>This article highlights that the MEPHAS tool has been designed to support various statistical analyses, including probability, hypothesis testing, regression modeling, and dimensional analysis. Each design interface contains multiple tabs for different analysis methods, an input panel on the left, and an output panel on the right. MEPHAS also allows for data input, parameter configuration, and result output.</p>
 <section id="how-does-it-link-to-our-project" class="level5">
 <h5 class="anchored" data-anchor-id="how-does-it-link-to-our-project">How does it link to our project?</h5>
-<p>We plan to follow and utilise a similar design of the MEPHAS tool, making it a useful template for structuring your HDB app. We will be including navigation bar/tab panels to allow users to switch between the different spatial point analysis tools and implementing a side panel to allow users customize the visualizations and a main panel to generate the graph outputs.</p>
+<p>We plan to follow and utilise a similar design of the MEPHAS tool, making it a useful template for structuring our HDB app. We will be including navigation bar/tab panels to allow users to switch between the different spatial point analysis tools and implementing a side panel to allow users customize the visualizations and a main panel to generate the graph outputs.</p>
 </section>
 </section>
 <section id="analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data-chen-q-et-al.-2023" class="level4">

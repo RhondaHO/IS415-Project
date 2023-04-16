@@ -60,7 +60,7 @@ In the initial stages of our project, we collected a range of datasets to analyz
 Below is a table of the data sets that we will be using for our project.
 
 | Name                                        | Description                                                                                                                                                                                                                                     | File Format |
-|------------------|-----------------------------------|------------------|
+|-------------------|-----------------------------------|-------------------|
 | HDB Resale Flat Prices                      | Provides HDB addresses, blocks and street name \| [Data.gov.sg](https://data.gov.sg/dataset/resale-flat-prices)                                                                                                                                 | .csv        |
 | School Directory and Information            | Provides a list of primary schools in Singapore \| [Data.gov.sg](https://data.gov.sg/dataset/school-directory-and-information)                                                                                                                  | .csv        |
 | Shopping Malls                              | Provides a list of shopping mall and its geometry in Singapore \| Web scrapped shopping mall data in 2019 by [Valery Lim](https://github.com/ValaryLim/Mall-Coordinates-Web-Scraper)                                                            | .csv        |
@@ -648,7 +648,7 @@ This article highlights that the MEPHAS tool has been designed to support variou
 
 ##### How does it link to our project?
 
-We plan to follow and utilise a similar design of the MEPHAS tool, making it a useful template for structuring your HDB app. We will be including navigation bar/tab panels to allow users to switch between the different spatial point analysis tools and implementing a side panel to allow users customize the visualizations and a main panel to generate the graph outputs.
+We plan to follow and utilise a similar design of the MEPHAS tool, making it a useful template for structuring our HDB app. We will be including navigation bar/tab panels to allow users to switch between the different spatial point analysis tools and implementing a side panel to allow users customize the visualizations and a main panel to generate the graph outputs.
 
 #### 2. Analysing the global and local spatial associations of medical resources across Wuhan city using POI data [(Chen, Q et al., 2023)](https://link.springer.com/article/10.1186/s12913-023-09051-0)
 

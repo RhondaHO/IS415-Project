@@ -6,7 +6,9 @@ Welcome to the user guide for our application! When you first visit our applicat
 
 ![](img/homepagedesign.PNG)
 
-From there, you can find a navigation bar that allows you to easily switch between different pages. These pages include:
+From there, you can find a navigation bar that allows you to easily switch between different pages. Please take note that all the content on the tab should be loaded completely before switching to another tab. This will prevent any delays or errors caused by incomplete loading of the page.
+
+The navigation bar pages include:
 
 -   Visualization page: Here, you can observe the mapping of HDB flats and relevant amenities in Singapore.
 
@@ -50,11 +52,9 @@ From there, you can find a navigation bar that allows you to easily switch betwe
 
     -   Ripley L-Function
 
-    <!-- -->
-
         ![](img/lfuncdesign.PNG)
 
-        -   By default, it will show nothing until the user press the "Plot L-function graph" button.
+        -   By default, it will show nothing until the user press the "Plot L-function graph" button
 
         -   Users can compute and plot the L-function based on an area of their choice.
 
