@@ -1652,21 +1652,34 @@ server <- function(input, output, session) {
   
   #### CLQ ####
   observeEvent(input$clq_amenities, {
-    result <- readRDS(paste0("data/rds/clq/",input$clq_amenities, ".rds"))
     
-    amenity_name <- names(result)[2]
-    amenity_pvalue <- names(result)[3]
-    tmap_mode("plot")
-    clq_map <-
-      tm_shape(mpsz_sf) +
-      tm_polygons() +
-      tm_shape(result, subset = result$amenity_pvalue < 0.05) + #filter out p_value less than 0.05 
-      tm_dots(col = amenity_name,
-              size = 0.01,
-              border.col = "black",
-              border.lwd = 0.5)
+    output$clq_outputmap <- renderImage({
+      filename <- normalizePath(file.path('./images',
+                                          paste(input$clq_amenities, '.PNG', sep='')))
+      
+      # Return a list containing the filename and alt text
+      list(src = filename, 
+           width = "80%", # specify the desired width of the image in pixels or as a percentage
+           height = "auto") # specify the desired height of the image as "auto" to maintain aspect ratio
+      }, deleteFile = FALSE
+    )
     
-    output$clq_outputmap <- renderPlot(tmap_leaflet(clq_map))
+    # Takes too much to memory to run
+    # result <- readRDS(paste0("data/rds/clq/",input$clq_amenities, ".rds"))
+    # 
+    # amenity_name <- names(result)[2]
+    # amenity_pvalue <- names(result)[3]
+    # tmap_mode("plot")
+    # clq_map <-
+    #   tm_shape(mpsz_sf) +
+    #   tm_polygons() +
+    #   tm_shape(result, subset = result$amenity_pvalue < 0.05) + #filter out p_value less than 0.05 
+    #   tm_dots(col = amenity_name,
+    #           size = 0.01,
+    #           border.col = "black",
+    #           border.lwd = 0.5)
+    # 
+    # output$clq_outputmap <- renderPlot(tmap_leaflet(clq_map))
   })
   
   #### KDE ####
@@ -1807,7 +1820,6 @@ server <- function(input, output, session) {
       csr_plot
     })
   })
-  
   
   
   #### NETWORK ANALYSIS ####
